@@ -1,7 +1,9 @@
 class Player {
-    constructor(radius, playerCoors) {
-	    this.r = radius;
-	    this.pos = {'x': playerCoors.x, 'y': playerCoors.y};
+    constructor(radius, windowDimentions) {
+		this.r = radius;
+		this.rHand = Math.floor(radius / 4);
+		this.pos = {'x': windowDimentions.x / 2, 'y': windowDimentions.y / 2};
+		this.windowDimBy2 = this.pos;
 		this.dirMove = [false, false, false, false]; //WASD
 
 		this.playerSpeed = 8;
@@ -9,10 +11,20 @@ class Player {
 	}
 
 	update() {
-		fill('#db5151');
-		ellipse(this.pos.x, this.pos.y, this.r, this.r);
+		fill(PLAYERCOLOR);
+
+		push();
+
+		ellipseMode(CENTER);
+		translate(this.pos.x, this.pos.y);
+		rotate(atan2(mouseY - this.windowDimBy2.y, mouseX - this.windowDimBy2.x));
+
+		ellipse(0, 0, this.r, this.r); //body
+		ellipse(0, -35, this.rHand, this.rHand); //left hand
+		ellipse(0, 35, this.rHand, this.rHand); //right hand
+		pop();
+
 		this.controller();
-		console.log('pos.x = ' + this.pos.x + ' pos.y = ' + this.pos.y);
 	}
 
 	controller() {
@@ -41,11 +53,4 @@ class Player {
 			this.playerSpeed = this.boostedPlayerSpeed / 5;
 		}
 	}
-	/*
-    resetPLayerDirection() {
-        for(let i = 0; i < playerDirection.length; i++) {
-            playerDirection[i] = true;
-        }
-	}
-	*/
 }
