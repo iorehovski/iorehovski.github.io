@@ -8,11 +8,11 @@ const game = new Phaser.Game(
 
 function preload() {
     //map
-    game.load.tilemap('map', 'map.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('tiles', 'terrainSet.png');
+    game.load.tilemap('map', 'assets/map/map.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('tiles', 'assets/map/terrainSet.png');
 
-    game.load.image('background','../images/background.png');
-	game.load.image('player','../images/player.png');
+    game.load.image('background','assets/background.png');
+	game.load.image('player','assets/player.png');
 }
 
 var map;
@@ -22,8 +22,8 @@ var cursors;
 
 function create() {
     game.stage.backgroundColor = "#2e2e2e";
-    game.add.tileSprite(0, 0, 1920, 1920, 'background');
-	game.world.setBounds(0, 0, 1920, 1920);
+    //game.add.tileSprite(0, 0, 1920, 1920, 'background');
+	//game.world.setBounds(0, 0, 1920, 1920);
 
     map = game.add.tilemap('map');
     map.addTilesetImage('terrainSet', 'tiles');
@@ -39,8 +39,6 @@ function create() {
 
 	game.camera.follow(player);
 }
-
-
 
 function update() {
 	var playerSpeed = 300;
