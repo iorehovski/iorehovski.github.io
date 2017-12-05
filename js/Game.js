@@ -1,9 +1,6 @@
-import x from 'Map';
 
-console.log(x);
-
-//var map = new Map("ground");
-//map.sayName();
+var map = new Map("ground");
+map.sayName();
 
 function preload() {
 

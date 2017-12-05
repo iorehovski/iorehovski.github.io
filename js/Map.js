@@ -8,4 +8,3 @@ class Map {
     }
 }
 
-export var x = 5;
