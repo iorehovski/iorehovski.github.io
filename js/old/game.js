@@ -70,8 +70,6 @@ const bgColor = 50;
 const collisionColor = '#0DA7F2';
 const treeColor = '#267036';
 
-var playerDirection = [true, true, true, true]; //wasd
-
 var handAnim;
 function preload() {
 	playerImg = loadImage(playerPath);
@@ -123,28 +121,6 @@ function GroundSprite(w, h) {
 
 function controller(plDir) {
 
-	//w
-	if(keyIsDown(87) && plDir[0]){
-		player.pos.y -= playerSpeed;
-	}
-	//a
-	if(keyIsDown(65) && plDir[1]){
-		player.pos.x -= playerSpeed;
-	}
-	//s
-	if(keyIsDown(83) && plDir[2]){
-		player.pos.y += playerSpeed;
-	}
-	//d
-	if(keyIsDown(68) && plDir[3]){
-		player.pos.x += playerSpeed;
-	}
-
-	if(keyIsDown(16)){
-		playerSpeed = boostedPlayerSpeed;
-	} else {
-		playerSpeed = boostedPlayerSpeed / 5;
-	}
 }
 
 function technicalData() {
