@@ -30,9 +30,6 @@ function create() {
     layer = map.createLayer('World1');
     layer.resizeWorld();
 
-    game.add.tileSprite(0, 0, 1920, 1920, 'background');
-	game.world.setBounds(0, 0, 1920, 1920);
-
 	game.physics.startSystem(Phaser.Physics.P2JS);
 
 	player = game.add.sprite(game.world.centerX, game.world.centerY, 'player');
