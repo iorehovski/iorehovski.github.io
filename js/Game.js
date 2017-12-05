@@ -3,8 +3,6 @@ let map = new Map();
 let player = {};
 let techData;
 
-let 
-
 function preload() {
 
 }
