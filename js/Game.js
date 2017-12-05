@@ -17,12 +17,9 @@ function setup() {
 function draw() {
     background(BGCOLOR);
 
-    
-    /*
     printTechData({
         'xPlayer': player.pos.x, 
         'yPlayer': player.pos.y 
     });
-    */
     player.update();
 }
