@@ -6,6 +6,9 @@ class Player {
 		this.windowDimBy2 = this.pos;
 		this.dirMove = [false, false, false, false]; //WASD
 
+		this.weapon = new Weapon('',20); //availible weapon
+		this.currentSbjInHand = this.weapon; //current subject in hand
+		
 		this.playerSpeed = 8;
 		this.boostedPlayerSpeed = this.playerSpeed * 5;
 	}
@@ -21,7 +24,16 @@ class Player {
 		ellipse(0, 0, this.r, this.r); //body
 		ellipse(0, -35, this.rHand, this.rHand); //left hand
 		ellipse(0, 35, this.rHand, this.rHand); //right hand
+
+		if(this.currentSbjInHand){
+			this.currentSbjInHand.update(); //weapon
+		}
+		
 		pop();
+
+		if(this.currentSbjInHand){
+			this.currentSbjInHand.shootQueue(); //shooting
+		}
 
 		this.controller();
 	}
