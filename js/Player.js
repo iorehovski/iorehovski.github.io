@@ -18,8 +18,7 @@ class Player {
 
 		ellipseMode(CENTER);
 		translate(this.pos.x, this.pos.y);
-		rotate(atan2(mouseY - this.windowDimBy2.y, mouseX - this.windowDimBy2.x));
-
+		rotate(atan2(mouseY - WIN_HEIGHT_HALF, mouseX - WIN_WIDTH_HALF));
 		ellipse(0, 0, this.r, this.r); //body
 		ellipse(0, -35, this.rHand, this.rHand); //left hand
 		ellipse(0, 35, this.rHand, this.rHand); //right hand
