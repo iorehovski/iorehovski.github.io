@@ -11,7 +11,8 @@ class Player {
 	}
 
 	update() {
-		fill(PLAYERCOLOR);
+		fill(PLAYER_COLOR);
+
 
 		push();
 
@@ -25,6 +26,10 @@ class Player {
 		pop();
 
 		this.controller();
+	}
+
+	focusCamera() {
+		camera(this.pos.x - this.windowDimBy2.x, this.pos.y - this.windowDimBy2.y);
 	}
 
 	controller() {
