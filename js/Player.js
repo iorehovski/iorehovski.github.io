@@ -61,6 +61,13 @@ class Player {
 			player.pos.x += this.playerSpeed;
 		}
 
+		//fire
+		if(keyIsDown(32)) {
+			if(player.currentSbjInHand){
+				player.currentSbjInHand.makeShot(player.pos);
+			}
+		}
+
 		//shift(boosted movement)
 		if(keyIsDown(16)){
 			this.playerSpeed = this.boostedPlayerSpeed;

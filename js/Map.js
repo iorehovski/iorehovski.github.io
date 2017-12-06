@@ -25,13 +25,36 @@ class Map {
     update(pX, pY) {
         fill(GRASS_COLOR);
 
-        let a = (pX / TILE_W) | 0;
-        let b = (pY / TILE_H) | 0;
+        let playerTileX = (pX / TILE_W) | 0;
+        let playerTileY = (pY / TILE_H) | 0;
 
-        console.log('x: ' + a + ' y: ' + b);
+        let lW = playerTileX - ((WIN_WIDTH_HALF / TILE_W) | 0) - 1;
+        let rW = playerTileX + ((WIN_WIDTH_HALF / TILE_W) | 0) + 2;
+        let uH = playerTileY - ((WIN_HEIGHT_HALF / TILE_H) | 0) - 2;
+        let dH = playerTileY + ((WIN_HEIGHT_HALF / TILE_H) | 0) + 2;
 
-        for(let i = 0; i < MAP_SIZE_X; i++) {
-            for(let j = 0; j < MAP_SIZE_Y; j++) {
+        if(playerTileX < this.map.length / 2){
+            if(lW < 0){
+                lW = 0;
+            }
+        } else {
+            if(rW > this.map.length){
+                rW = this.map.length;
+            }
+        }
+        //y
+        if(playerTileY < this.map[0].length / 2){
+            if(uH < 0){
+                uH = 0;
+            }
+        } else {
+            if(dH > this.map[0].length){
+                dH = this.map[0].length;
+            }
+        }
+
+        for(let i = lW; i < rW; i++) {
+            for(let j = uH; j < dH; j++) {
                 this.map[i][j].update();
             }
         }

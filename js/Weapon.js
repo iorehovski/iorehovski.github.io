@@ -9,8 +9,8 @@ class Weapon {
     }
 
     update() {
-        fill('red');
-        rect(this.position.x,this.position.y,50,25);
+        fill('#282828');
+        rect(this.position.x,this.position.y, 20, 8);
         //image(this.img,this.position.x,this.position.y);
     }
     

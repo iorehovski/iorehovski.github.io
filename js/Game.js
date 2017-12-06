@@ -34,7 +34,6 @@ function draw() {
     if(randInt(0, 300) == 0) {
         enemies.push(new Enemy(randInt(0, MAP_SIZE_X * TILE_W), randInt(0, MAP_SIZE_Y * TILE_H), 50));
     }
-
     fill(ENEMY_COLOR);
 
     let eLen = enemies.length;

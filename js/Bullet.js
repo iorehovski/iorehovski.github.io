@@ -1,6 +1,6 @@
 class Bullet {
-    constructor(x,y,mousePosX,mousePosY) {
-        this.bulletSpeed  = 20;
+    constructor(x, y, mousePosX, mousePosY) {
+        this.bulletSpeed = 18;
         this.xStart = x;
         this.yStart = y;
         this.x = x;
@@ -13,7 +13,7 @@ class Bullet {
         this.error2 = 0;
     }
 
-    swap(first,second) {
+    swap(first, second) {
         let tmp = first;
         first = second;
         second = tmp;
@@ -39,7 +39,7 @@ class Bullet {
     }
 
     drawBullet() {
-        ellipse(this.x,this.y,15,15)
+        ellipse(this.x, this.y, 10, 10)
     }
     update() {
         this.setDirection();
