@@ -22,8 +22,13 @@ class Map {
         this.map = tmpMap;
     }
 
-    update() {
+    update(pX, pY) {
         fill(GRASS_COLOR);
+
+        let a = (pX / TILE_W) | 0;
+        let b = (pY / TILE_H) | 0;
+
+        console.log('x: ' + a + ' y: ' + b);
 
         for(let i = 0; i < MAP_SIZE_X; i++) {
             for(let j = 0; j < MAP_SIZE_Y; j++) {

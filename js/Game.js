@@ -1,12 +1,16 @@
 let map;
 let player = {};
 let techData;
+let enemies = [];
+
+let fps;
 
 function preload() {
 
 }
 
 function setup() {
+    frameRate(60);
     createCanvas(WIN_WIDTH, WIN_HEIGHT);
     player = new Player(50, {
         'x': WIN_WIDTH,
@@ -25,11 +29,25 @@ function draw() {
 
     background(BGCOLOR);
 
-    map.update();
+    map.update(player.pos.x, player.pos.y);
+
+    if(randInt(0, 300) == 0) {
+        enemies.push(new Enemy(randInt(0, MAP_SIZE_X * TILE_W), randInt(0, MAP_SIZE_Y * TILE_H), 50));
+    }
+
+    fill(ENEMY_COLOR);
+
+    let eLen = enemies.length;
+    for(let i = 0; i < eLen; i++) {
+        enemies[i].update(player.pos.x, player.pos.y);
+    }
 
     printTechData({
         'xPlayer': player.pos.x, 
-        'yPlayer': player.pos.y 
+        'yPlayer': player.pos.y,
+        'frameRate': frameRate().toFixed(2),
+        'enemiesNum': enemies.length
     });
+
     player.update();
 }

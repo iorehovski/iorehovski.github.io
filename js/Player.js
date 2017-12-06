@@ -1,7 +1,7 @@
 class Player {
     constructor(radius, windowDimentions) {
 		this.r = radius;
-		this.rHand = Math.floor(radius / 4);
+		this.rHand = (radius / 4) | 0;
 		this.pos = {'x': windowDimentions.x / 2, 'y': windowDimentions.y / 2};
 		this.windowDimBy2 = this.pos;
 		this.dirMove = [false, false, false, false]; //WASD
@@ -12,7 +12,6 @@ class Player {
 
 	update() {
 		fill(PLAYER_COLOR);
-
 
 		push();
 
