@@ -28,10 +28,10 @@ class Map {
         let playerTileX = (pX / TILE_W) | 0;
         let playerTileY = (pY / TILE_H) | 0;
 
-        let lW = playerTileX - ((WIN_WIDTH_HALF / TILE_W) | 0) - 1;
-        let rW = playerTileX + ((WIN_WIDTH_HALF / TILE_W) | 0) + 2;
-        let uH = playerTileY - ((WIN_HEIGHT_HALF / TILE_H) | 0) - 2;
-        let dH = playerTileY + ((WIN_HEIGHT_HALF / TILE_H) | 0) + 2;
+        let lW = playerTileX - REND_MAP_LEFT;
+        let rW = playerTileX + REND_MAP_RIGHT;
+        let uH = playerTileY - REND_MAP_UP;
+        let dH = playerTileY + REND_MAP_DOWN;
 
         if(playerTileX < this.map.length / 2){
             if(lW < 0){
@@ -42,7 +42,7 @@ class Map {
                 rW = this.map.length;
             }
         }
-        //y
+
         if(playerTileY < this.map[0].length / 2){
             if(uH < 0){
                 uH = 0;

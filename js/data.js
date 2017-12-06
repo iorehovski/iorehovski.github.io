@@ -15,3 +15,9 @@ const MAP_SIZE_Y = 20;
 
 const TILE_W = 100; 
 const TILE_H = 100;
+
+const REND_MAP_LEFT = ((WIN_WIDTH_HALF / TILE_W) | 0) + 1;
+const REND_MAP_RIGHT = ((WIN_WIDTH_HALF / TILE_W) | 0) + 2;
+const REND_MAP_UP = ((WIN_HEIGHT_HALF / TILE_H) | 0) + 1;
+const REND_MAP_DOWN = ((WIN_HEIGHT_HALF / TILE_H) | 0) + 1;
+
