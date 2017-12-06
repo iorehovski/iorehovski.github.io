@@ -25,7 +25,6 @@ function draw() {
 
     background(BGCOLOR);
 
-
     map.update();
 
     printTechData({
