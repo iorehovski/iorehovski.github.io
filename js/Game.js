@@ -33,3 +33,11 @@ function draw() {
     });
     player.update();
 }
+
+function mouseClicked(){
+    
+    //fire
+    if(player.currentSbjInHand){
+        player.currentSbjInHand.makeShot(player.pos);
+    }
+};
