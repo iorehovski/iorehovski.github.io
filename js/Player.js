@@ -6,7 +6,12 @@ class Player {
 		this.windowDimBy2 = this.pos;
 		this.dirMove = [false, false, false, false]; //WASD
 
-		this.weapon = new Weapon('',20); //availible weapon
+		this.weapon = new Weapon({	//availible weapon
+			'srcImage':'src/to/image',
+			'countBullets': 100,
+			'countBulletsInHolder':2
+		}); 
+
 		this.currentSbjInHand = this.weapon; //current subject in hand
 		
 		this.playerSpeed = 8;
