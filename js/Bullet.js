@@ -31,7 +31,7 @@ class Bullet {
         }
     }
 
-    isLife(){
+    isLife() {
         if(this.x < this.xStart - WIN_WIDTH_HALF || this.x > this.xStart + WIN_WIDTH_HALF || this.y < this.yStart - WIN_HEIGHT_HALF || this.y > this.yStart + WIN_HEIGHT_HALF) {
             return false;
         }

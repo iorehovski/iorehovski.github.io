@@ -1,7 +1,7 @@
 let map;
 let player = {};
 let techData;
-let enemies = [];
+let enemies;
 
 let fps;
 
@@ -10,9 +10,10 @@ function preload() {
 }
 
 function setup() {
+    enemies = [];
     frameRate(60);
     createCanvas(WIN_WIDTH, WIN_HEIGHT);
-    player = new Player(50, {
+    player = new Player(ENTITY_DIAMETR / 2, {
         'x': WIN_WIDTH,
         'y': WIN_HEIGHT});
     map = new Map({
@@ -29,12 +30,14 @@ function draw() {
 
     background(BGCOLOR);
 
-    map.update(player.pos.x, player.pos.y);
+    map.update(player.pos);
 
     if(randInt(0, 300) == 0) {
-        enemies.push(new Enemy(randInt(0, MAP_SIZE_X * TILE_W), randInt(0, MAP_SIZE_Y * TILE_H), 50));
+        enemies.push(new Enemy(randInt(0, MAP_SIZE_X * TILE_W), randInt(0, MAP_SIZE_Y * TILE_H), ENTITY_DIAMETR / 2));
     }
     fill(ENEMY_COLOR);
+
+    checkCollisionEnemies(enemies);
 
     let eLen = enemies.length;
     for(let i = 0; i < eLen; i++) {

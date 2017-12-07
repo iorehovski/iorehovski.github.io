@@ -22,11 +22,11 @@ class Map {
         this.map = tmpMap;
     }
 
-    update(pX, pY) {
+    update(pCoors) {
         fill(GRASS_COLOR);
 
-        let playerTileX = (pX / TILE_W) | 0;
-        let playerTileY = (pY / TILE_H) | 0;
+        let playerTileX = (pCoors.x / TILE_W) | 0;
+        let playerTileY = (pCoors.y / TILE_H) | 0;
 
         let lW = playerTileX - REND_MAP_LEFT;
         let rW = playerTileX + REND_MAP_RIGHT;

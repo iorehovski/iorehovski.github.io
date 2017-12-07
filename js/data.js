@@ -8,6 +8,7 @@ const ENEMY_COLOR = '#f73b3b';
 const BGCOLOR = '#686868';
 const GRASS_COLOR = '#2e8c27';
 const TEXTSIZE_TECHDATA = 14;
+const ENTITY_DIAMETR = 100;
 
 //map
 const MAP_SIZE_X = 40;

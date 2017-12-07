@@ -17,15 +17,15 @@ class Weapon {
     makeShot(pos) {
         
         if(this.bulletsRoom > 0) {
-            this.bulletsRoom--;
+            //this.bulletsRoom--;
             var x1 =  pos.x; // gun x
             var y1 =  pos.y; // gun y
             var x2 = mouseX + pos.x - WIN_WIDTH_HALF;  //mouse x
             var y2 = mouseY + pos.y - WIN_HEIGHT_HALF; //mouse y
-            this.processingBullets.push(new Bullet(x1,y1,x2,y2));
+            this.processingBullets.push(new Bullet(x1, y1, x2, y2));
         }else{
             //reload bullets
-            setTimeout(this.recharge.bind(this),2000);
+            setTimeout(this.recharge.bind(this), 2000);
         }
     }
 

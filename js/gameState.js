@@ -10,3 +10,23 @@ function printTechData(objData) {
 function randInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+function checkCollisionEnemies(enemies) {
+    let eLen = enemies.length;
+    if(enemies.length > 1) {
+        for(let i = 0; i < eLen; i++) {
+            for(let j = i; j < eLen; j++) {
+                let d = dist(
+                    enemies[i].pos.x,
+                    enemies[i].pos.y,
+                    enemies[j].pos.x,
+                    enemies[j].pos.y,
+                );
+                
+                //console.log(d);
+                if(d < 75) {
+                }
+            }
+        }
+    }
+}
