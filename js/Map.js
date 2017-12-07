@@ -7,7 +7,6 @@ class Map {
     }
 
     createMap(json) {
-        const MAP_SIZE = MAP_SIZE_X * MAP_SIZE_Y;
         let tmpMap = [];
         let tileX = 0;
         let tileY = 0;

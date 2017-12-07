@@ -27,6 +27,9 @@ function setup() {
     map.createMap(jsonMap);
 
     background(BGCOLOR);
+
+    let healthBar = new HealthBar();
+    console.log(healthBar.value);
 }
 
 function draw() {
@@ -43,26 +46,9 @@ function draw() {
     checkCollisionEnemies(enemies);
 
     let eLen = enemies.length;
-    
-    //update enemies
-    enemies.forEach(function(itemEnemy,index,obj){
-        itemEnemy.update(player.pos.x, player.pos.y);
-
-        //check bullet hit the enemy
-        if(player.currentSbjInHand instanceof Weapon){
-            let bullets = player.currentSbjInHand.bullets.getBullets();
-            bullets.forEach(function(itemBullet,indexBullet,objBullets){
-                if( Math.sqrt(Math.pow(itemBullet.x - itemEnemy.pos.x,2) + Math.pow(itemBullet.y - itemEnemy.pos.y,2)) < itemEnemy.r){
-                    objBullets.splice(indexBullet,1);
-                    itemEnemy.hp -= player.currentSbjInHand.damage;
-                }
-            });
-        }
-
-        if(itemEnemy.hp <= 0){
-            obj.splice(index, 1);
-        }
-    });
+    for(let i = 0; i < eLen; i++) {
+        enemies[i].update(player.pos.x, player.pos.y);
+    }
 
     printTechData({
         'xPlayer': player.pos.x, 
