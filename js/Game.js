@@ -3,9 +3,12 @@ let player = {};
 let techData;
 let enemies;
 
-let fps;
+let jsonMap;
+let images;
 
 function preload() {
+    jsonMap = loadJSON('/js/mapJSON.json');
+    images = loadImage('../img/terrainSet.png');
 
 }
 
@@ -20,7 +23,8 @@ function setup() {
         'x': 0,
         'y': 0
     });
-    map.createMap();
+    map.imagesSet = images;
+    map.createMap(jsonMap);
 
     background(BGCOLOR);
 }

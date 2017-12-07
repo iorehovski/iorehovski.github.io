@@ -24,8 +24,8 @@ function checkCollisionEnemies(enemies) {
                 );
 
                 if(d < 50) {
-                    enemies[i].changeColor();
-                    enemies[j].changeColor();
+                    //enemies[i].changeColor();
+                    //enemies[j].changeColor();
 
                     if(enemies[i].pos.x < enemies[j].pos.x) {
                         enemies[i].pos.x -= 1;
