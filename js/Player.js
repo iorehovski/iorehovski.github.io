@@ -31,9 +31,9 @@ class Player {
 		
 		pop();
 
-		if(this.currentSbjInHand){
-			this.currentSbjInHand.shootQueue(); //shooting
-		}
+		//render and update bullets
+		this.weapon.bullets.update(0.01);
+		this.weapon.bullets.render();
 
 		this.controller();
 	}
