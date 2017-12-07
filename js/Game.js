@@ -47,18 +47,15 @@ function draw() {
         //check bullet hit the enemy
         if(player.currentSbjInHand instanceof Weapon){
             let bullets = player.currentSbjInHand.bullets.getBullets();
-
             bullets.forEach(function(itemBullet,indexBullet,objBullets){
                 if( Math.sqrt(Math.pow(itemBullet.x - itemEnemy.pos.x,2) + Math.pow(itemBullet.y - itemEnemy.pos.y,2)) < itemEnemy.r){
                     objBullets.splice(indexBullet,1);
                     itemEnemy.hp -= player.currentSbjInHand.damage;
-                    console.log(bullets);
                 }
             });
         }
 
         if(itemEnemy.hp <= 0){
-            console.log(itemEnemy.hp)
             obj.splice(index, 1);
         }
     });
