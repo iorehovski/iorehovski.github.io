@@ -1,11 +1,13 @@
 class Enemy {
     constructor(x, y, r) {
         this.r = r;
-        this.pos = {'x': x, 'y': y};
+        this.pos = createVector(x, y);
         this.moveSpeed = 2;
+        this.color = color(255);
     }
 
     update(playerX, playerY) {
+        fill(this.color);
         let dx = playerX - this.pos.x;
         let dy = playerY - this.pos.y;
 
@@ -25,5 +27,9 @@ class Enemy {
             this.pos.y -= 1;
         }
         ellipse(this.pos.x, this.pos.y, this.r, this.r);
+    }
+
+    changeColor() {
+        this.color = color(random(255), random(255), random(255));
     }
 }

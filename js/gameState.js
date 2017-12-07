@@ -15,7 +15,7 @@ function checkCollisionEnemies(enemies) {
     let eLen = enemies.length;
     if(enemies.length > 1) {
         for(let i = 0; i < eLen; i++) {
-            for(let j = i; j < eLen; j++) {
+            for(let j = i + 1; j < eLen; j++) {
                 let d = dist(
                     enemies[i].pos.x,
                     enemies[i].pos.y,
@@ -24,7 +24,10 @@ function checkCollisionEnemies(enemies) {
                 );
                 
                 //console.log(d);
-                if(d < 75) {
+                if(d < 50) {
+                    enemies[i].changeColor();
+                    enemies[j].changeColor();
+                    //console.log(enemies[i].pos.heading());
                 }
             }
         }
