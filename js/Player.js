@@ -9,7 +9,7 @@ class Player {
 		this.weapon = new Weapon({	//availible weapon
 			'srcImage':'src/to/image',
 			'countBullets': 100,
-			'countBulletsInHolder':2
+			'countBulletsInHolder':20
 		}); 
 
 		this.currentSbjInHand = this.weapon; //current subject in hand
@@ -37,7 +37,7 @@ class Player {
 		pop();
 
 		//render and update bullets
-		this.weapon.bullets.update(0.01);
+		this.weapon.bullets.update(0.02);
 		this.weapon.bullets.render();
 
 		this.controller();

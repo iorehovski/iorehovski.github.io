@@ -7,6 +7,7 @@ class Weapon {
         this.countBulletsInHolder = weapon.countBulletsInHolder;
         this.bulletsHolder = weapon.countBulletsInHolder;
         this.reload = false;
+        this.canShoot = true;
 
         this.bullets = new Bullet();
     }
@@ -18,11 +19,12 @@ class Weapon {
     }
     
     makeShot(pos) {
-        console.log(this.bulletsCount + ' ' + this.bulletsHolder);
-        
-        //update bullets holder
-        
-        if(this.bulletsHolder > 0) {
+        if(this.bulletsHolder > 0 && this.canShoot) {
+
+            //delay between shots
+            this.canShoot = false;
+            setTimeout(this.allowShoot.bind(this), 400);
+
             this.bulletsHolder--;
             var x1 =  pos.x; // gun x
             var y1 =  pos.y; // gun y
@@ -35,14 +37,20 @@ class Weapon {
                 angle: angleBullet,
                 v: 1000         //speed bullet
             });
-        }else if(this.bulletsHolder == 0 && this.bulletsCount > 0 && !this.reload){
+        }else if(this.bulletsHolder == 0 && this.bulletsCount > 0 && !this.reload) {  //update bullets holder
             this.reload = true;
             setTimeout(this.recharge.bind(this), 2000);
         }
     }
+    
     recharge() {
         this.bulletsHolder = this.countBulletsInHolder;
         this.bulletsCount -= this.countBulletsInHolder;
         this.reload = false;
     }
+
+    allowShoot(){
+        this.canShoot = true;
+    }
+
 }

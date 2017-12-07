@@ -17,7 +17,7 @@ class Bullet {
         this.objects.forEach(function(item, index, obj) {
             item.x += item.vx * dt;
             item.y += item.vy * dt;
-            if(item.x < item.xInit - WIN_WIDTH_HALF || item.x > item.xInit + WIN_WIDTH_HALF || item.y < item.yInit - WIN_HEIGHT_HALF || item.y > item.yInit + WIN_HEIGHT_HALF){
+            if(item.x < item.xInit - WIN_WIDTH_HALF*3 || item.x > item.xInit + WIN_WIDTH_HALF*3 || item.y < item.yInit - WIN_HEIGHT_HALF*3 || item.y > item.yInit + WIN_HEIGHT_HALF*3){
                 obj.splice(index, 1);
             }
         });
