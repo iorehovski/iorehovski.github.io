@@ -1,48 +1,30 @@
 class Bullet {
-    constructor(x, y, mousePosX, mousePosY) {
-        this.bulletSpeed = 18;
-        this.xStart = x;
-        this.yStart = y;
-        this.x = x;
-        this.y = y;
-        this.dX = Math.abs(x - mousePosX);
-        this.dY = Math.abs(y - mousePosY);
-        this.signX = x < mousePosX ?  this.bulletSpeed : - this.bulletSpeed;
-		this.signY = y < mousePosY ?  this.bulletSpeed : - this.bulletSpeed;
-        this.error = this.dX - this.dY;
-        this.error2 = 0;
+    constructor() {
+        this.objects = [];
     }
 
-    swap(first, second) {
-        let tmp = first;
-        first = second;
-        second = tmp;
+    init(bullet) {
+        bullet.vx = bullet.v * Math.cos(bullet.angle);
+        bullet.vy = bullet.v * Math.sin(bullet.angle);
+        bullet.xInit = bullet.x;
+        bullet.yInit = bullet.y;
     }
-
-    setDirection() {
-        this.error2 = this.error * 2;
-        if (this.error2 > -this.dY) {
-            this.error -= this.dY;
-            this.x += this.signX;
-        }
-        if (this.error2 < this.dX) {
-            this.error += this.dX;
-            this.y += this.signY;
-        }
+    pushBullet(bullet) {
+        this.init(bullet);
+        this.objects.push(bullet);
     }
-
-    isLife() {
-        if(this.x < this.xStart - WIN_WIDTH_HALF || this.x > this.xStart + WIN_WIDTH_HALF || this.y < this.yStart - WIN_HEIGHT_HALF || this.y > this.yStart + WIN_HEIGHT_HALF) {
-            return false;
-        }
-        return true;
+    update(dt) {
+        this.objects.forEach(function(item, index, obj) {
+            item.x += item.vx * dt;
+            item.y += item.vy * dt;
+            if(item.x < item.xInit - WIN_WIDTH_HALF || item.x > item.xInit + WIN_WIDTH_HALF || item.y < item.yInit - WIN_HEIGHT_HALF || item.y > item.yInit + WIN_HEIGHT_HALF){
+                obj.splice(index, 1);
+            }
+        });
     }
-
-    drawBullet() {
-        ellipse(this.x, this.y, 10, 10)
-    }
-    update() {
-        this.setDirection();
-        this.drawBullet();
+    render() {
+        this.objects.forEach(function(item, index, obj) {
+            ellipse(item.x, item.y, 10, 10);
+        });
     }
 }

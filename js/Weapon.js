@@ -4,8 +4,7 @@ class Weapon {
         //this.img = loadImage(srcImage);
         this.position = {'x': 0, 'y': 25};
         this.bulletsCount = bCount;
-        this.bulletsRoom = bCount;
-        this.processingBullets = [];
+        this.bullets = new Bullet();
     }
 
     update() {
@@ -15,32 +14,26 @@ class Weapon {
     }
     
     makeShot(pos) {
-        
-        if(this.bulletsRoom > 0) {
-            //this.bulletsRoom--;
+        if(this.bulletsCount > 0) {
+            this.bulletsCount--;
             var x1 =  pos.x; // gun x
             var y1 =  pos.y; // gun y
             var x2 = mouseX + pos.x - WIN_WIDTH_HALF;  //mouse x
             var y2 = mouseY + pos.y - WIN_HEIGHT_HALF; //mouse y
-            this.processingBullets.push(new Bullet(x1, y1, x2, y2));
-        }else{
+            var angleBullet = atan2(y2 - y1, x2 - x1);
+            console.log('make shoot');
+            this.bullets.pushBullet({
+                x: x1,
+                y: y1,
+                angle: angleBullet,
+                v: 1000         //speed bullet
+            });
+        }else {
             //reload bullets
             setTimeout(this.recharge.bind(this), 2000);
         }
     }
-
-    recharge(){
+    recharge() {
         this.bulletsRoom = this.bulletsCount;
-    }
-
-    shootQueue() { 
-        if(this.processingBullets.length > 0){
-            this.processingBullets.forEach(function(item,index,obj){
-                if(!item.isLife()){
-                    obj.splice(index, 1);
-                }
-                item.update();
-            });
-        }
     }
 }
