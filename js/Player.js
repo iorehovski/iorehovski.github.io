@@ -7,9 +7,10 @@ class Player {
 		this.dirMove = [false, false, false, false]; //WASD
 
 		this.weapon = new Weapon({	//availible weapon
+			'damage': 100,
 			'srcImage':'src/to/image',
-			'countBullets': 100,
-			'countBulletsInHolder':20
+			'countBullets': 600,
+			'countBulletsInHolder':200
 		}); 
 
 		this.currentSbjInHand = this.weapon; //current subject in hand

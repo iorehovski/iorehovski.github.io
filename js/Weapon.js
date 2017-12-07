@@ -1,6 +1,6 @@
 class Weapon {
     constructor(weapon) {
-        this.damage = 0;
+        this.damage = weapon.damage;
         //this.img = loadImage(weapon.srcImage);
         this.position = {'x': 0, 'y': 25};
         this.bulletsCount = weapon.countBullets;
@@ -23,7 +23,7 @@ class Weapon {
 
             //delay between shots
             this.canShoot = false;
-            setTimeout(this.allowShoot.bind(this), 400);
+            setTimeout(this.allowShoot.bind(this), 100);
 
             this.bulletsHolder--;
             var x1 =  pos.x; // gun x

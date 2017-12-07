@@ -4,6 +4,8 @@ class Enemy {
         this.pos = createVector(x, y);
         this.moveSpeed = 2;
         this.color = color(255);
+
+        this.hp = 100;
     }
 
     update(playerX, playerY) {
