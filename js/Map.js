@@ -12,28 +12,25 @@ class Map {
         let tileX = 0;
         let tileY = 0;
 
-        /*
-        for(let x = 0; x < MAP_SIZE_X; x++) {
-            tmpMap[x] = [];
-            for(let y = 0; y < MAP_SIZE_Y; y++) {
-                tmpMap[x][y] = new Tile(tileX, tileY);
-                tileY += TILE_H;
-            }
-            tileX += TILE_W;
-            tileY = 0;
-        }
-        */
 
         let jsonIndex = 0;
         let imgID = 0;
         for(let i = 0; i < MAP_SIZE_Y; i++) {
             tmpMap[i] = [];
             for(let j = 0; j < MAP_SIZE_X; j++) {
-                let imgX = 100, imgY = 100;
-                if(json.layers[0].data[jsonIndex] == 1) {
-                    imgX = 0;
-                    imgY = 0;
+                let imgX = 0, imgY = 0;
+
+                switch(json.layers[0].data[jsonIndex]) {
+                    case 2: 
+                        imgX = 100;
+                        imgY = 0;
+                        break;
+                    case 5: //sand 
+                        imgX = 0;
+                        imgY = 100;
+                        break;
                 }
+
                 tmpMap[i][j] = new Tile(tileX, tileY, imgX, imgY);
 
                 jsonIndex++;
