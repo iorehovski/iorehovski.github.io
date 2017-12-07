@@ -22,12 +22,34 @@ function checkCollisionEnemies(enemies) {
                     enemies[j].pos.x,
                     enemies[j].pos.y,
                 );
-                
-                //console.log(d);
+
                 if(d < 50) {
                     enemies[i].changeColor();
                     enemies[j].changeColor();
-                    //console.log(enemies[i].pos.heading());
+
+                    if(enemies[i].pos.x < enemies[j].pos.x) {
+                        enemies[i].pos.x -= 1;
+                        enemies[j].pos.x += 1;
+                        enemies[i].pos.y += randInt(-1, 1);
+                        enemies[j].pos.y += randInt(-1, 1);
+                    } else {
+                        enemies[i].pos.x += 1;
+                        enemies[j].pos.x -= 1;
+                        enemies[i].pos.y += randInt(-1, 1);
+                        enemies[j].pos.y += randInt(-1, 1);
+                    } 
+
+                    if(enemies[i].pos.y < enemies[j].pos.y) {
+                        enemies[i].pos.y += 1;
+                        enemies[j].pos.y -= 1;
+                        enemies[i].pos.x += randInt(-1, 1);
+                        enemies[j].pos.x += randInt(-1, 1);
+                    } else {
+                        enemies[i].pos.y -= 1;
+                        enemies[j].pos.y += 1;
+                        enemies[i].pos.x += randInt(-1, 1);
+                        enemies[j].pos.x += randInt(-1, 1);
+                    }
                 }
             }
         }
