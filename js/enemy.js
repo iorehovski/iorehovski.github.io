@@ -6,9 +6,16 @@ class Enemy {
         this.color = color(255);
 
         this.hp = 100;
+        this.damageToPlayer = 0.5;
     }
 
     update(playerX, playerY) {
+        if(this.isIntersects(playerX, playerY)) {
+            this.damageToPlayer = 0.5;
+        } else {
+            this.damageToPlayer = 0;
+        }
+
         fill(this.color);
         let dx = playerX - this.pos.x;
         let dy = playerY - this.pos.y;
@@ -29,9 +36,20 @@ class Enemy {
             this.pos.y -= 1;
         }
         ellipse(this.pos.x, this.pos.y, this.r, this.r);
+
+        return this.damageToPlayer;
+        
     }
 
     changeColor() {
         this.color = color(random(255), random(255), random(255));
+    }
+
+    isIntersects(playerX, playerY) {
+        let d = dist(this.pos.x, this.pos.y, playerX, playerY);
+        if(d < 50) {
+            return true;
+        }
+        return false;
     }
 }

@@ -24,8 +24,8 @@ const ENEMY_COLOR = '#f73b3b';
 const BGCOLOR = '#686868';
 const GRASS_COLOR = '#2e8c27';
 
-const HP_BAR_COLOR = '#ba1f1f';
-const HUNGER_BAR_COLOR = '#acd31d';
-const COLD_BAR_COLOR = '#5bb7d3';
+const HP_BAR_COLOR = '#c01111';
+const HUNGER_BAR_COLOR = '#1fc633';
+const COLD_BAR_COLOR = '#1295d8';
 const ENDURANCE_BAR_COLOR = '#b3ced6';
 

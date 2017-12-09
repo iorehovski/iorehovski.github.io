@@ -27,9 +27,6 @@ function setup() {
     map.createMap(jsonMap);
 
     background(BGCOLOR);
-
-    let healthBar = new HealthBar();
-    console.log(healthBar.value);
 }
 
 function draw() {
@@ -45,25 +42,46 @@ function draw() {
 
     checkCollisionEnemies(enemies);
 
-    let eLen = enemies.length;
-    for(let i = 0; i < eLen; i++) {
-        enemies[i].update(player.pos.x, player.pos.y);
-    }
+    //update enemies
+    enemies.forEach(function(itemEnemy,index,obj) {
+        let damageValue = itemEnemy.update(player.pos.x, player.pos.y);
+        player.healthBar.value -= damageValue;
+        //check player hp value
+        if(player.getHealthValue() <= 0) {
+        } else {
+            player.healthBar.w -= damageValue;
+        }
 
-    printTechData({
+        //check bullet hit the enemy
+        if(player.currentObjInHand instanceof Weapon) {
+            let bullets = player.currentObjInHand.bullets.getBullets();
+            bullets.forEach(function(itemBullet,indexBullet,objBullets) {
+                if( Math.sqrt(Math.pow(itemBullet.x - itemEnemy.pos.x,2) + Math.pow(itemBullet.y - itemEnemy.pos.y,2)) < itemEnemy.r){
+                    objBullets.splice(indexBullet, 1);
+                    itemEnemy.hp -= player.currentObjInHand.damage;
+                }
+            });
+        }
+
+        if(itemEnemy.hp <= 0){
+            obj.splice(index, 1);
+        }
+    });
+
+    printTechData( {
         'xPlayer': player.pos.x, 
         'yPlayer': player.pos.y,
-        'frameRate': frameRate().toFixed(2),
+        'frameRate': frameRate().toFixed(0),
         'enemiesNum': enemies.length
     });
 
     player.update();
 }
 
-function mouseClicked(){
+function mouseClicked() {
     
     //fire
-    if(player.currentSbjInHand){
-        player.currentSbjInHand.makeShot(player.pos);
+    if(player.currentObjInHand) {
+        player.currentObjInHand.makeShot(player.pos);
     }
 };
