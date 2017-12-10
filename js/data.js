@@ -29,3 +29,4 @@ const HUNGER_BAR_COLOR = '#1fc633';
 const COLD_BAR_COLOR = '#1295d8';
 const ENDURANCE_BAR_COLOR = '#b3ced6';
 
+const BULLETS_COLOR_YELLOW = '#EFFF00';

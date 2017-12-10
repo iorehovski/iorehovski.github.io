@@ -14,11 +14,12 @@ class Weapon {
 
     update() {
         fill('#282828');
-        rect(this.position.x,this.position.y, 20, 8);
+        rotate(-0.07);
+        rect(this.position.x,this.position.y, 50, 8);
         //image(this.img,this.position.x,this.position.y);
     }
     
-    makeShot(pos) {
+    makeShot(player) {
         if(this.bulletsHolder > 0 && this.canShoot) {
 
             //delay between shots
@@ -26,16 +27,27 @@ class Weapon {
             setTimeout(this.allowShoot.bind(this), 100);
 
             this.bulletsHolder--;
-            var x1 =  pos.x; // gun x
-            var y1 =  pos.y; // gun y
-            var x2 = mouseX + pos.x - WIN_WIDTH_HALF;  //mouse x
-            var y2 = mouseY + pos.y - WIN_HEIGHT_HALF; //mouse y
+
+            //player property
+            var xp = player.pos.x;
+            var yp = player.pos.y;
+
+            var x2 = mouseX + player.pos.x - WIN_WIDTH_HALF;  //mouse x
+            var y2 = mouseY + player.pos.y - WIN_HEIGHT_HALF; //mouse y
+            var angleP = atan2(y2 - yp, x2 - xp);
+
+            var x1 = xp + player.r * Math.sin(- angleP + 1); // gun x
+            var y1 = yp + player.r * Math.cos(- angleP + 1); // gun y
             var angleBullet = atan2(y2 - y1, x2 - x1);
+
+
             this.bullets.pushBullet({
                 x: x1,
                 y: y1,
                 angle: angleBullet,
-                v: 1000         //speed bullet
+                v: 1200,            //speed bullet
+                bulletsLength: 10,  //length of bullet
+                bulletsColor: BULLETS_COLOR_YELLOW //color
             });
         }else if(this.bulletsHolder == 0 && this.bulletsCount > 0 && !this.reload) {  //update bullets holder
             this.reload = true;

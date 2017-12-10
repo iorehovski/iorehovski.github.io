@@ -107,7 +107,7 @@ class Player {
 		//fire
 		if(keyIsDown(32)) {
 			if(player.currentObjInHand){
-				player.currentObjInHand.makeShot(player.pos);
+				player.currentObjInHand.makeShot(player);
 			}
 		}
 

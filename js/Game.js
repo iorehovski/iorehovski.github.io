@@ -56,7 +56,7 @@ function draw() {
         if(player.currentObjInHand instanceof Weapon) {
             let bullets = player.currentObjInHand.bullets.getBullets();
             bullets.forEach(function(itemBullet,indexBullet,objBullets) {
-                if( Math.sqrt(Math.pow(itemBullet.x - itemEnemy.pos.x,2) + Math.pow(itemBullet.y - itemEnemy.pos.y,2)) < itemEnemy.r){
+                if( Math.sqrt(Math.pow(itemBullet.x - itemEnemy.pos.x,2) + Math.pow(itemBullet.y - itemEnemy.pos.y,2)) < (itemEnemy.r - itemBullet.bulletsLength*2)){
                     objBullets.splice(indexBullet, 1);
                     itemEnemy.hp -= player.currentObjInHand.damage;
                 }
@@ -82,6 +82,6 @@ function mouseClicked() {
     
     //fire
     if(player.currentObjInHand) {
-        player.currentObjInHand.makeShot(player.pos);
+        player.currentObjInHand.makeShot(player);
     }
 };
