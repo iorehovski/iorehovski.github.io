@@ -27,7 +27,15 @@ class Bullet {
     }
     render() {
         this.objects.forEach(function(item, index, obj) {
-            ellipse(item.x, item.y, 10, 10);
+            push();
+            
+            fill(item.bulletsColor);            
+            rectMode(CENTER);
+            translate(item.x, item.y);
+            rotate(item.angle);
+            rect(0, 0, item.bulletsLength,3);
+
+            pop();
         });
     }
     getBullets() {
