@@ -27,7 +27,7 @@ class Player {
 		this.enduranceBar = new EnduranceBar(ENDURANCE_BAR_COLOR);
 	}
 
-	update() {
+	update(map) {
 		fill(PLAYER_COLOR);
 
 		push();
@@ -61,6 +61,7 @@ class Player {
 		}
 		
 		this.controller();
+;		this.checkCollisionWithSolidObjects(map);
 	}
 
 	focusCamera() {
@@ -90,6 +91,7 @@ class Player {
 		//w
 		if(keyIsDown(87) && !this.dirMove[0]){
 			player.pos.y -= this.playerSpeed;
+
 		}
 		//a
 		if(keyIsDown(65) && !this.dirMove[1]){
@@ -121,6 +123,31 @@ class Player {
 			}
 		} else {
 			this.playerSpeed = this.boostedPlayerSpeed / 5;
+		}
+	}
+
+	checkCollisionWithSolidObjects(map) {
+		let playerTileX = (this.pos.x / TILE_W) | 0;
+        let playerTileY = (this.pos.x / TILE_H) | 0;
+
+        let lW = playerTileX - 2;
+        let rW = playerTileX + 2;
+        let uH = playerTileY - 2;
+		let dH = playerTileY + 2;
+
+		for(let i = lW; i < rW; i++) {
+            for(let j = uH; j < dH; j++) {
+				if(map.map[j][i].spriteID == 9) {
+					this.isIntersects(this.pos.x, this.pos.y, map.map[j][i].pos.x, map.map[j][i].pos.y);
+				}
+            }
+		}
+	}
+
+	isIntersects(plX, plY, tileX, tileY) {
+		//-->
+		if(plX > tileX && plX < tileX + TILE_W && plY > tileY && plY < tileX + TILE_H) {
+			this.pos.x = tileX - 1;
 		}
 	}
 }

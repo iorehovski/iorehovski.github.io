@@ -75,7 +75,7 @@ function draw() {
         'enemiesNum': enemies.length
     });
 
-    player.update();
+    player.update(map);
 }
 
 function mouseClicked() {

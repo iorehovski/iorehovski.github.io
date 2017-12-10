@@ -28,9 +28,12 @@ class Map {
                         imgX = 0;
                         imgY = 100;
                         break;
+                    case 9: 
+                        imgX = 0;
+                        imgY = 200;
                 }
 
-                tmpMap[i][j] = new Tile(tileX, tileY, imgX, imgY);
+                tmpMap[i][j] = new Tile(tileX, tileY, imgX, imgY, json.layers[0].data[jsonIndex]);
 
                 jsonIndex++;
                 tileX += TILE_H;
