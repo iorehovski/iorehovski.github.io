@@ -40,14 +40,14 @@ class Weapon {
             var y1 = yp + player.r * Math.cos(- angleP + 1); // gun y
             var angleBullet = atan2(y2 - y1, x2 - x1);
 
-
             this.bullets.pushBullet({
                 x: x1,
                 y: y1,
                 angle: angleBullet,
-                v: 1200,            //speed bullet
+                v: 1800,            //speed bullet
                 bulletsLength: 10,  //length of bullet
-                bulletsColor: BULLETS_COLOR_YELLOW //color
+                bulletsColor: BULLETS_COLOR_YELLOW, //color
+                lifeTime: 30,
             });
         }else if(this.bulletsHolder == 0 && this.bulletsCount > 0 && !this.reload) {  //update bullets holder
             this.reload = true;

@@ -61,7 +61,7 @@ class Player {
 		}
 		
 		this.controller();
-;		this.checkCollisionWithSolidObjects(map);
+		//this.checkCollisionWithSolidObjects(map);
 	}
 
 	focusCamera() {

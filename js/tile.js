@@ -7,7 +7,7 @@ class Tile {
 
     update() {
         if(this.spriteID == 9) {
-            
+
         }
 
         image(images,
@@ -20,6 +20,4 @@ class Tile {
             TILE_W, 
             TILE_W);
     }
-
-    
 }
