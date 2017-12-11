@@ -7,8 +7,8 @@ const TEXTSIZE_TECHDATA = 14;
 const ENTITY_DIAMETR = 100;
 
 //map
-const MAP_SIZE_X = 40;
-const MAP_SIZE_Y = 20;
+const MAP_SIZE_X = 80;
+const MAP_SIZE_Y = 80;
 
 const TILE_W = 100; 
 const TILE_H = 100;

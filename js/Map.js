@@ -20,17 +20,22 @@ class Map {
                 let imgX = 0, imgY = 0;
 
                 switch(json.layers[0].data[jsonIndex]) {
+                    case 1: //grass
+                        imgX = 0;
+                        imgY = 0;
+                        break;
                     case 2: 
                         imgX = 100;
                         imgY = 0;
                         break;
-                    case 5: //sand 
-                        imgX = 0;
-                        imgY = 100;
-                        break;
-                    case 9: 
+                    case 9: //brick wall 
                         imgX = 0;
                         imgY = 200;
+                        break;
+                    case 13: //wooden floor
+                        imgX = 0;
+                        imgY = 300;
+                        break;
                 }
 
                 tmpMap[i][j] = new Tile(tileX, tileY, imgX, imgY, json.layers[0].data[jsonIndex]);

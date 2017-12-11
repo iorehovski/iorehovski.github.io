@@ -25,6 +25,7 @@ class Player {
 		this.hungerBar = new HungerBar(HUNGER_BAR_COLOR);
 		this.coldBar = new ColdBar(COLD_BAR_COLOR);
 		this.enduranceBar = new EnduranceBar(ENDURANCE_BAR_COLOR);
+
 	}
 
 	update(map) {
@@ -61,7 +62,8 @@ class Player {
 		}
 		
 		this.controller();
-		//this.checkCollisionWithSolidObjects(map);
+		this.checkCollisionWithSolidObjects(map);
+		
 	}
 
 	focusCamera() {
@@ -127,27 +129,69 @@ class Player {
 	}
 
 	checkCollisionWithSolidObjects(map) {
+	
+
 		let playerTileX = (this.pos.x / TILE_W) | 0;
-        let playerTileY = (this.pos.x / TILE_H) | 0;
+        let playerTileY = (this.pos.y / TILE_H) | 0;
 
-        let lW = playerTileX - 2;
-        let rW = playerTileX + 2;
-        let uH = playerTileY - 2;
-		let dH = playerTileY + 2;
+        let lW = playerTileX - 1;
+        let rW = playerTileX + 1;
+        let uH = playerTileY - 1;
+		let dH = playerTileY + 1;
 
-		for(let i = lW; i < rW; i++) {
-            for(let j = uH; j < dH; j++) {
-				if(map.map[j][i].spriteID == 9) {
-					this.isIntersects(this.pos.x, this.pos.y, map.map[j][i].pos.x, map.map[j][i].pos.y);
-				}
+		if(playerTileX < map.map[0].length / 2){
+            if(lW < 0){
+                lW = 0;
+            }
+        } else {
+            if(rW > map.map[0].length){
+                rW = map.map[0].length;
+            }
+        }
+
+        if(playerTileY < map.map.length / 2){
+            if(uH < 0){
+                uH = 0;
+            }
+        } else {
+            if(dH > map.map.length){
+                dH = map.map.length;
             }
 		}
+
+
+		this.handleCollisionWithWalls(this.pos, map.map, playerTileX, playerTileY, lW, rW, uH, dH);
+		
+		//this.hadndleCollisionWithWalls(this.pos, map.map[uH][playerTileX], 'up');
+		//this.hadndleCollisionWithWalls(this.pos, map.map[playerTileY][rW], 'right');
+		//this.hadndleCollisionWithWalls(this.pos, map.map[dH][playerTileX], 'down');
+		//this.hadndleCollisionWithWalls(this.pos, map.map[playerTileY][lW], 'left');
 	}
 
-	isIntersects(plX, plY, tileX, tileY) {
-		//-->
-		if(plX > tileX && plX < tileX + TILE_W && plY > tileY && plY < tileX + TILE_H) {
-			this.pos.x = tileX - 1;
+	handleCollisionWithWalls(plCoors, map, playerTileX, playerTileY, lW, rW, uH, dH) {
+		//up
+		if(map[uH][playerTileX].spriteID == 9) {
+			if(plCoors.y <= map[uH][playerTileX].pos.y + TILE_H + 10) {
+				this.pos.y = map[uH][playerTileX].pos.y + TILE_H + 10;
+			}
+		}
+		//right
+		if(map[playerTileY][rW].spriteID == 9) {
+			if(plCoors.x >= map[playerTileY][rW].pos.x - 10) {
+				this.pos.x = map[playerTileY][rW].pos.x - 10;
+			}
+		}
+		//down
+		if(map[dH][playerTileX].spriteID == 9) {
+			if(plCoors.y >= map[dH][playerTileX].pos.y - 10) {
+				this.pos.y = map[dH][playerTileX].pos.y - 10;
+			}
+		}
+		//left
+		if(map[playerTileY][lW].spriteID == 9) {
+			if(plCoors.x <= map[playerTileY][lW].pos.x + TILE_W + 10) {
+				this.pos.x = map[playerTileY][lW].pos.x + TILE_W + 10;
+			}
 		}
 	}
 }

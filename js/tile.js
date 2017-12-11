@@ -14,10 +14,15 @@ class Tile {
             this.pos.x,
             this.pos.y, 
             TILE_W, 
-            TILE_W, 
+            TILE_H, 
             this.imgPos.x, 
             this.imgPos.y, 
             TILE_W, 
-            TILE_W);
+            TILE_H);
+    }
+
+    debugUpdate() {
+        fill(255, 50);
+        rect(this.pos.x, this.pos.y, TILE_W, TILE_H);
     }
 }
