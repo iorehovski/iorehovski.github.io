@@ -28,6 +28,10 @@ class Map {
                         imgX = 100;
                         imgY = 0;
                         break;
+                    case 5: //sand
+                        imgX = 0;
+                        imgY = 100;
+                        break;
                     case 9: //brick wall 
                         imgX = 0;
                         imgY = 200;

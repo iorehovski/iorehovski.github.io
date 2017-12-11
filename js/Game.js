@@ -17,8 +17,8 @@ function setup() {
     frameRate(60);
     createCanvas(WIN_WIDTH, WIN_HEIGHT);
     player = new Player(ENTITY_DIAMETR / 2, {
-        'x': WIN_WIDTH,
-        'y': WIN_HEIGHT});
+        'x': 2500,
+        'y': 1700});
     map = new Map({
         'x': 0,
         'y': 0
