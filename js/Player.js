@@ -62,7 +62,8 @@ class Player {
 		}
 		
 		this.controller();
-		this.checkCollisionWithSolidObjects(map);
+		
+		handleCollisionWalls(this.pos, map.map);
 		
 	}
 
@@ -125,73 +126,6 @@ class Player {
 			}
 		} else {
 			this.playerSpeed = this.boostedPlayerSpeed / 5;
-		}
-	}
-
-	checkCollisionWithSolidObjects(map) {
-	
-
-		let playerTileX = (this.pos.x / TILE_W) | 0;
-        let playerTileY = (this.pos.y / TILE_H) | 0;
-
-        let lW = playerTileX - 1;
-        let rW = playerTileX + 1;
-        let uH = playerTileY - 1;
-		let dH = playerTileY + 1;
-
-		if(playerTileX < map.map[0].length / 2){
-            if(lW < 0){
-                lW = 0;
-            }
-        } else {
-            if(rW > map.map[0].length){
-                rW = map.map[0].length;
-            }
-        }
-
-        if(playerTileY < map.map.length / 2){
-            if(uH < 0){
-                uH = 0;
-            }
-        } else {
-            if(dH > map.map.length){
-                dH = map.map.length;
-            }
-		}
-
-
-		this.handleCollisionWithWalls(this.pos, map.map, playerTileX, playerTileY, lW, rW, uH, dH);
-		
-		//this.hadndleCollisionWithWalls(this.pos, map.map[uH][playerTileX], 'up');
-		//this.hadndleCollisionWithWalls(this.pos, map.map[playerTileY][rW], 'right');
-		//this.hadndleCollisionWithWalls(this.pos, map.map[dH][playerTileX], 'down');
-		//this.hadndleCollisionWithWalls(this.pos, map.map[playerTileY][lW], 'left');
-	}
-
-	handleCollisionWithWalls(plCoors, map, playerTileX, playerTileY, lW, rW, uH, dH) {
-		//up
-		if(map[uH][playerTileX].spriteID == 9) {
-			if(plCoors.y <= map[uH][playerTileX].pos.y + TILE_H + 10) {
-				this.pos.y = map[uH][playerTileX].pos.y + TILE_H + 10;
-			}
-		}
-		//right
-		if(map[playerTileY][rW].spriteID == 9) {
-			if(plCoors.x >= map[playerTileY][rW].pos.x - 10) {
-				this.pos.x = map[playerTileY][rW].pos.x - 10;
-			}
-		}
-		//down
-		if(map[dH][playerTileX].spriteID == 9) {
-			if(plCoors.y >= map[dH][playerTileX].pos.y - 10) {
-				this.pos.y = map[dH][playerTileX].pos.y - 10;
-			}
-		}
-		//left
-		if(map[playerTileY][lW].spriteID == 9) {
-			if(plCoors.x <= map[playerTileY][lW].pos.x + TILE_W + 10) {
-				this.pos.x = map[playerTileY][lW].pos.x + TILE_W + 10;
-			}
 		}
 	}
 }

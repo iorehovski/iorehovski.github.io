@@ -36,7 +36,7 @@ function draw() {
 
     map.update(player.pos);
 
-    if(randInt(0, 1000) == 0) {
+    if(randInt(0, 500) == 0) {
         enemies.push(new Enemy(randInt(0, MAP_SIZE_X * TILE_W), randInt(0, MAP_SIZE_Y * TILE_H), ENTITY_DIAMETR / 2));
     }
 
@@ -44,7 +44,7 @@ function draw() {
 
     //update enemies
     enemies.forEach(function(itemEnemy,index,obj) {
-        let damageValue = itemEnemy.update(player.pos.x, player.pos.y);
+        let damageValue = itemEnemy.update(player.pos.x, player.pos.y, map);
         player.healthBar.value -= damageValue;
         //check player hp value
         if(player.getHealthValue() <= 0) {

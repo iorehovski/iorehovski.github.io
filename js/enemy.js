@@ -9,7 +9,7 @@ class Enemy {
         this.damageToPlayer = 0.5;
     }
 
-    update(playerX, playerY) {
+    update(playerX, playerY, map) {
         if(this.isIntersects(playerX, playerY)) {
             this.damageToPlayer = 0.5;
         } else {
@@ -36,6 +36,8 @@ class Enemy {
             this.pos.y -= 1;
         }
         ellipse(this.pos.x, this.pos.y, this.r, this.r);
+
+        handleCollisionWalls(this.pos, map.map);
 
         return this.damageToPlayer;
         
