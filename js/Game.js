@@ -37,7 +37,7 @@ function draw() {
     map.update(player.pos);
 
     if(randInt(0, 500) == 0) {
-        enemies.push(new Enemy(randInt(0, MAP_SIZE_X * TILE_W), randInt(0, MAP_SIZE_Y * TILE_H), ENTITY_DIAMETR / 2));
+        enemies.push(new Enemy(randInt(TILE_W, MAP_SIZE_X * TILE_W - TILE_W), randInt(TILE_H, MAP_SIZE_Y * TILE_H - TILE_H), ENTITY_DIAMETR / 2));
     }
 
     checkCollisionEnemies(enemies);

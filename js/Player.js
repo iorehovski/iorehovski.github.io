@@ -22,7 +22,7 @@ class Player {
 		this.barsX = 10;
 		this.barsY = 200;
 		this.healthBar = new HealthBar(HP_BAR_COLOR);
-		this.hungerBar = new HungerBar(HUNGER_BAR_COLOR);
+		//this.hungerBar = new HungerBar(HUNGER_BAR_COLOR);
 		this.coldBar = new ColdBar(COLD_BAR_COLOR);
 		this.enduranceBar = new EnduranceBar(ENDURANCE_BAR_COLOR);
 
@@ -78,12 +78,12 @@ class Player {
 	updateStateBars() {
 		push();
 		strokeWeight(2);
-		this.hungerBar.w -= 0.01;
+		//this.hungerBar.w -= 0.01;
 
 		this.barsX = this.pos.x - WIN_WIDTH_HALF + 10;
 		this.barsY = this.pos.y + 200;
 		this.healthBar.update(this.barsX, this.barsY);
-		this.hungerBar.update(this.barsX, this.barsY + 25);
+		//this.hungerBar.update(this.barsX, this.barsY + 25);
 		this.coldBar.update(this.barsX, this.barsY + 50);
 		this.enduranceBar.update(this.barsX, this.barsY + 75);
 		pop();
@@ -94,7 +94,6 @@ class Player {
 		//w
 		if(keyIsDown(87) && !this.dirMove[0]){
 			player.pos.y -= this.playerSpeed;
-
 		}
 		//a
 		if(keyIsDown(65) && !this.dirMove[1]){
