@@ -18,7 +18,8 @@ class Tile {
             this.imgPos.x, 
             this.imgPos.y, 
             TILE_W, 
-            TILE_H);
+            TILE_H
+        );
     }
 
     debugUpdate() {

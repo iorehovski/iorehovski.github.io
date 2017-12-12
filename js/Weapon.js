@@ -73,7 +73,7 @@ class Weapon {
         colorMode(HSL);
         noFill();
         strokeWeight(5);
-        stroke('rgba(70, 70, 70, 0.8)');
+        stroke('rgba(255, 255, 255, 0.8)');
         arc(60, -60, 25, 25, -Math.PI / 2, this.reload);
 
         pop();
