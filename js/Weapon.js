@@ -1,8 +1,11 @@
 class Weapon {
     constructor(weapon) {
+        this.name = weapon.name;
         this.damage = weapon.damage;
         //this.img = loadImage(weapon.srcImage);
         this.position = {'x': 0, 'y': 25};
+        this.size = {'width': weapon.width, 'height': weapon.height};
+
         this.bulletsCount = weapon.countBullets;
         this.countBulletsInHolder = weapon.countBulletsInHolder;
         this.bulletsHolder = weapon.countBulletsInHolder;
@@ -16,7 +19,7 @@ class Weapon {
     update() {
         fill('#282828');
         rotate(-0.07);  //rotate gun
-        rect(this.position.x,this.position.y, 30, 8);
+        rect(this.position.x,this.position.y, this.size.width, this.size.height);
         //image(this.img,this.position.x,this.position.y);
     }
     
@@ -63,9 +66,9 @@ class Weapon {
     }
 
     updateRecharge(pos) {
-     
         let iRecharge = Math.PI / this.timeReload * 33;
         this.reload += iRecharge;
+
         push();
 
         ellipseMode(CENTER);
@@ -79,9 +82,7 @@ class Weapon {
         pop();
     }
 
-
     allowShoot(){
         this.canShoot = true;
     }
-
 }

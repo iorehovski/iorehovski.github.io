@@ -7,14 +7,30 @@ class Player {
 		this.dirMove = [false, false, false, false]; //WASD
 		this.isblockRunning = false;
 
-		this.weapon = new Weapon({	//availible weapon
-			'damage': 100,
+		this.inventory = new Inventory();
+		this.inventory.pushItem(new Weapon({	//availible weapon is pistol
+			'name': 'pistol',
+			'damage': 20,
 			'srcImage':'src/to/image',
-			'countBullets': 600,
-			'countBulletsInHolder':5
-		}); 
+			'countBullets': 72,
+			'countBulletsInHolder':12,
+			'width': 30,
+			'height': 8
+		}));
+		this.inventory.pushItem(new Weapon({	//availible weapon is pistol
+			'name': 'ak47',
+			'damage': 120,
+			'srcImage':'src/to/image',
+			'countBullets': 120,
+			'countBulletsInHolder':30,
+			'width': 50,
+			'height': 8
+		}));
 
-		this.currentObjInHand = this.weapon; //current Object in hand
+
+		this.queueBullets = [];
+
+		this.currentObjInHand = this.inventory.getItems()[0]; //current Object in hand
 		
 		this.playerSpeed = 8;
 		this.boostedPlayerSpeed = this.playerSpeed * 5;
@@ -40,8 +56,10 @@ class Player {
 		ellipse(0, -35, this.rHand, this.rHand); //left hand
 		ellipse(0, 35, this.rHand, this.rHand); //right hand
 		
-		this.currentObjInHand.update(); //weapon
-			
+		if(this.currentObjInHand){
+			this.currentObjInHand.update();
+		}
+	
 		pop();
 
 		if(this.currentObjInHand instanceof Weapon) {
@@ -49,11 +67,18 @@ class Player {
 			if(this.currentObjInHand.reload) {
 				this.currentObjInHand.updateRecharge(this.pos);
 			}
+			this.queueBullets = player.currentObjInHand.bullets;
 		}
 
-		//render and update bullets
-		this.weapon.bullets.update(0.02);
-		this.weapon.bullets.render();
+		//render and update bullets in queue
+		this.queueBullets.update(0.02);
+		this.queueBullets.render();
+
+		//update inventory
+		this.inventory.update({
+			'current':this.currentObjInHand,
+			'pos': this.pos
+		});
 
 		//state bars
 		this.updateStateBars();
@@ -118,6 +143,28 @@ class Player {
 			if(player.currentObjInHand){
 				player.currentObjInHand.makeShot(player);
 			}
+		}
+
+		//inventory
+		//1
+		if(keyIsDown(49)){
+			this.currentObjInHand = this.inventory.getItems()[0];
+		}
+		//2
+		if(keyIsDown(50)){
+			this.currentObjInHand = this.inventory.getItems()[1];
+		}
+		//3
+		if(keyIsDown(51)){
+			this.currentObjInHand = this.inventory.getItems()[2];
+		}
+		//4
+		if(keyIsDown(52)){
+			this.currentObjInHand = this.inventory.getItems()[3];
+		}
+		//5
+		if(keyIsDown(53)){
+			this.currentObjInHand = this.inventory.getItems()[4];
 		}
 
 		//shift(boosted movement)
