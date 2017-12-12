@@ -11,7 +11,7 @@ class Player {
 			'damage': 100,
 			'srcImage':'src/to/image',
 			'countBullets': 600,
-			'countBulletsInHolder':200
+			'countBulletsInHolder':5
 		}); 
 
 		this.currentObjInHand = this.weapon; //current Object in hand
@@ -39,12 +39,17 @@ class Player {
 		ellipse(0, 0, this.r, this.r); //body
 		ellipse(0, -35, this.rHand, this.rHand); //left hand
 		ellipse(0, 35, this.rHand, this.rHand); //right hand
-
-		if(this.currentObjInHand){
-			this.currentObjInHand.update(); //weapon
-		}
 		
+		this.currentObjInHand.update(); //weapon
+			
 		pop();
+
+		if(this.currentObjInHand instanceof Weapon) {
+			//if reload, update circle animation
+			if(this.currentObjInHand.reload) {
+				this.currentObjInHand.updateRecharge(this.pos);
+			}
+		}
 
 		//render and update bullets
 		this.weapon.bullets.update(0.02);

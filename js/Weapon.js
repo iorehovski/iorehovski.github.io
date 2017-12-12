@@ -6,7 +6,8 @@ class Weapon {
         this.bulletsCount = weapon.countBullets;
         this.countBulletsInHolder = weapon.countBulletsInHolder;
         this.bulletsHolder = weapon.countBulletsInHolder;
-        this.reload = false;
+        this.reload = 0;
+        this.timeReload = 2000;
         this.canShoot = true;
 
         this.bullets = new Bullet();
@@ -14,8 +15,8 @@ class Weapon {
 
     update() {
         fill('#282828');
-        rotate(-0.07);
-        rect(this.position.x,this.position.y, 50, 8);
+        rotate(-0.07);  //rotate gun
+        rect(this.position.x,this.position.y, 30, 8);
         //image(this.img,this.position.x,this.position.y);
     }
     
@@ -50,16 +51,34 @@ class Weapon {
                 lifeTime: 30,
             });
         }else if(this.bulletsHolder == 0 && this.bulletsCount > 0 && !this.reload) {  //update bullets holder
-            this.reload = true;
-            setTimeout(this.recharge.bind(this), 2000);
+            this.reload = -Math.PI / 2; // 90*
+            setTimeout(this.recharge.bind(this), this.timeReload);
         }
     }
     
     recharge() {
         this.bulletsHolder = this.countBulletsInHolder;
         this.bulletsCount -= this.countBulletsInHolder;
-        this.reload = false;
+        this.reload = 0;
     }
+
+    updateRecharge(pos) {
+     
+        let iRecharge = Math.PI / this.timeReload * 33;
+        this.reload += iRecharge;
+        push();
+
+        ellipseMode(CENTER);
+        translate(pos.x, pos.y);
+        colorMode(HSL);
+        noFill();
+        strokeWeight(5);
+        stroke('rgba(70, 70, 70, 0.8)');
+        arc(60, -60, 25, 25, -Math.PI / 2, this.reload);
+
+        pop();
+    }
+
 
     allowShoot(){
         this.canShoot = true;
