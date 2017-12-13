@@ -5,6 +5,7 @@ let enemies;
 
 let jsonMap;
 let images;
+let playerSprites = [];
 
 let sounds = {};
 
@@ -13,24 +14,25 @@ function preload() {
     images = loadImage('../img/terrainSet.png');
 
     sounds.pistol = loadSound('../audio/gun_40_smith_wesson.wav');
+
+    playerSprites[0] = loadImage('../img/player/FixedNaiveCrossbill.gif'); //survivor-pistol.png
 }
 
 function setup() {
     enemies = [];
     frameRate(60);
     createCanvas(WIN_WIDTH, WIN_HEIGHT);
-    player = new Player(ENTITY_DIAMETR / 2, {
-        'x': 2500,
-        'y': 1700});
+    player = new Player(ENTITY_DIAMETR / 2, {'x': 2500, 'y': 1700}, playerSprites);
     map = new Map({
         'x': 0,
         'y': 0
     });
+
     map.imagesSet = images;
     map.createMap(jsonMap);
 
     background(BGCOLOR);
-    
+
     sounds.pistol.setVolume(0.4);
 }
 
