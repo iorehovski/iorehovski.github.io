@@ -15,7 +15,8 @@ class Player {
 			'countBullets': 72,
 			'countBulletsInHolder':12,
 			'width': 30,
-			'height': 8
+			'height': 8,
+			'timeBetweenShots': 500
 		}));
 		this.inventory.pushItem(new Weapon({	//availible weapon is pistol
 			'name': 'ak47',
@@ -24,7 +25,8 @@ class Player {
 			'countBullets': 120,
 			'countBulletsInHolder':30,
 			'width': 50,
-			'height': 8
+			'height': 8,
+			'timeBetweenShots': 100
 		}));
 
 
