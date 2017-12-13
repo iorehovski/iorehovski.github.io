@@ -3,11 +3,14 @@ class Tile {
         this.pos = {'x': x, 'y': y};
         this.imgPos = {'x': imgX, 'y': imgY};
         this.spriteID = spriteID;
+        this.healthValue = 1000;
     }
 
     update() {
-        if(this.spriteID == 9) {
-
+        if(this.healthValue <= 0) {
+            this.imgPos.x = 100;
+            this.imgPos.y = 200;
+            this.spriteID = 10;
         }
 
         image(images,

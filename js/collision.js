@@ -2,7 +2,7 @@ function handleCollisionWalls(objPos, map) {
 
     const objTile = determineObjectTilePos(objPos, map);
     
-    handleCollision(
+    return handleCollision(
         objPos, 
         map, 
         objTile.objTileX, 
@@ -17,29 +17,46 @@ function handleCollisionWalls(objPos, map) {
 function handleCollision(objPos, map, objTileX, objTileY, lW, rW, uH, dH) {
     //check and handle wall collisions 
     //up
+    let collidingTile = {
+        isCollide : false,
+    };
     if(map[uH][objTileX].spriteID == 9) {
         if(objPos.y <= map[uH][objTileX].pos.y + TILE_H + 10) {
             objPos.y = map[uH][objTileX].pos.y + TILE_H + 10;
+            collidingTile.isCollide = true;
+            collidingTile.tileX = objTileX;
+            collidingTile.tileY = uH;
         }
     }
     //right
     if(map[objTileY][rW].spriteID == 9) {
         if(objPos.x >= map[objTileY][rW].pos.x - 10) {
             objPos.x = map[objTileY][rW].pos.x - 10;
+            collidingTile.isCollide = true;
+            collidingTile.tileX = rW;
+            collidingTile.tileY = objTileY;
         }
     }
     //down
     if(map[dH][objTileX].spriteID == 9) {
         if(objPos.y >= map[dH][objTileX].pos.y - 10) {
             objPos.y = map[dH][objTileX].pos.y - 10;
+            collidingTile.isCollide = true;
+            collidingTile.tileX = objTileX;
+            collidingTile.tileY = dH;
         }
     }
     //left
     if(map[objTileY][lW].spriteID == 9) {
         if(objPos.x <= map[objTileY][lW].pos.x + TILE_W + 10) {
             objPos.x = map[objTileY][lW].pos.x + TILE_W + 10;
+            collidingTile.isCollide = true;
+            collidingTile.tileX = lW;
+            collidingTile.tileY = objTileY;
         }
     }
+
+    return collidingTile;
 }
 
 function determineObjectTilePos(objPos, map) {

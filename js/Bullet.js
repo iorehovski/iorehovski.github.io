@@ -22,18 +22,23 @@ class Bullet {
 
             //check if bullet flies upon wall sprite
             //bullet coll. with a wall
-            let spriteID = map[objTile.objTileY][objTile.objTileX].spriteID;
-            if(spriteID == 9 || spriteID == undefined) {
-                obj.splice(index, 1);
-            } else {
-                item.x += item.vx * dt;
-                item.y += item.vy * dt;
-    
-                item.lifeTime -= 1;
-    
-                if(item.lifeTime <= 0) {
+            if(map[objTile.objTileY][objTile.objTileX]) {
+
+                if(map[objTile.objTileY][objTile.objTileX].spriteID == 9) {
                     obj.splice(index, 1);
+                    map[objTile.objTileY][objTile.objTileX].healthValue -= player.currentObjInHand.damage;
+                } else {
+                    item.x += item.vx * dt;
+                    item.y += item.vy * dt;
+        
+                    item.lifeTime -= 1;
+        
+                    if(item.lifeTime <= 0) {
+                        obj.splice(index, 1);
+                    }
                 }
+            } else {
+                obj.splice(index, 1);
             }
         });
     }

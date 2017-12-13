@@ -9,24 +9,24 @@ class Player {
 
 		this.inventory = new Inventory();
 		this.inventory.pushItem(new Weapon({	//availible weapon is pistol
-			'name': 'pistol',
-			'damage': 20,
-			'srcImage':'src/to/image',
-			'countBullets': 72,
-			'countBulletsInHolder':12,
-			'width': 30,
-			'height': 8,
-			'timeBetweenShots': 500
+			name: 'pistol',
+			damage: 20,
+			srcImage:'src/to/image',
+			countBullets: 72,
+			countBulletsInHolder: 12,
+			width: 30,
+			height: 8,
+			timeBetweenShots: 500
 		}));
 		this.inventory.pushItem(new Weapon({	//availible weapon is pistol
-			'name': 'ak47',
-			'damage': 120,
-			'srcImage':'src/to/image',
-			'countBullets': 120,
-			'countBulletsInHolder':30,
-			'width': 50,
-			'height': 8,
-			'timeBetweenShots': 100
+			name: 'ak47',
+			damage: 120,
+			srcImage: 'src/to/image',
+			countBullets: 120,
+			countBulletsInHolder: 30,
+			width: 50,
+			height: 8,
+			timeBetweenShots: 100
 		}));
 
 

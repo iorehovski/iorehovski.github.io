@@ -6,14 +6,15 @@ class Enemy {
         this.color = color(255);
 
         this.hp = 100;
-        this.damageToPlayer = 0.5;
+        this.damage = 0.5;
+        this.damageToWall = 2;
     }
 
     update(playerX, playerY, map) {
         if(this.isIntersects(playerX, playerY)) {
-            this.damageToPlayer = 0.5;
+            this.damage = 0.5;
         } else {
-            this.damageToPlayer = 0;
+            this.damage = 0;
         }
 
         fill(this.color);
@@ -37,9 +38,12 @@ class Enemy {
         }
         ellipse(this.pos.x, this.pos.y, this.r, this.r);
 
-        handleCollisionWalls(this.pos, map.map);
+        let collTile = handleCollisionWalls(this.pos, map.map);
+        if(collTile.isCollide) {
+            map.map[collTile.tileY][collTile.tileX].healthValue -= this.damageToWall;
+        }
 
-        return this.damageToPlayer;
+        return this.damage;
         
     }
 
