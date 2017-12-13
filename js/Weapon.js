@@ -11,6 +11,7 @@ class Weapon {
         this.bulletsHolder = weapon.countBulletsInHolder;
         this.reload = 0;
         this.timeReload = 2000;
+        this.timeBetweenShots = weapon.timeBetweenShots;
         this.canShoot = true;
 
         this.bullets = new Bullet();
@@ -28,7 +29,7 @@ class Weapon {
 
             //delay between shots
             this.canShoot = false;
-            setTimeout(this.allowShoot.bind(this), 100);
+            setTimeout(this.allowShoot.bind(this), this.timeBetweenShots);
 
             this.bulletsHolder--;
 
