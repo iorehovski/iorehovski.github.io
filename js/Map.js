@@ -4,6 +4,7 @@ class Map {
         this.origin = {'x': objOrigin.x, 'y': objOrigin.y};
         this.map = null;
         this.imagesSet = null;
+        this.ob
     }
 
     createMap(json) {

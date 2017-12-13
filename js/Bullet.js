@@ -1,6 +1,6 @@
 class Bullet {
     constructor() {
-        this.objects = [];
+        this.bulletsList = [];
     }
 
     init(bullet) {
@@ -9,24 +9,37 @@ class Bullet {
         bullet.xInit = bullet.x;
         bullet.yInit = bullet.y;
     }
+     
     pushBullet(bullet) {
         this.init(bullet);
-        this.objects.push(bullet);
+        this.bulletsList.push(bullet);
     }
-    update(dt) {
-        this.objects.forEach(function(item, index, obj) {
-            item.x += item.vx * dt;
-            item.y += item.vy * dt;
 
-            item.lifeTime -= 1;
+    update(dt, map) {
+        this.bulletsList.forEach(function(item, index, obj) {
 
-            if(item.lifeTime <= 0) {
+            const objTile = determineObjectTilePos({x: item.x, y: item.y}, map);
+
+            //check if bullet flies upon wall sprite
+            //bullet coll. with a wall
+            let spriteID = map[objTile.objTileY][objTile.objTileX].spriteID;
+            if(spriteID == 9 || spriteID == undefined) {
                 obj.splice(index, 1);
+            } else {
+                item.x += item.vx * dt;
+                item.y += item.vy * dt;
+    
+                item.lifeTime -= 1;
+    
+                if(item.lifeTime <= 0) {
+                    obj.splice(index, 1);
+                }
             }
         });
     }
+    
     render() {
-        this.objects.forEach(function(item, index, obj) {
+        this.bulletsList.forEach(function(item, index, obj) {
             push();
             
             fill(item.bulletsColor);            
@@ -39,6 +52,6 @@ class Bullet {
         });
     }
     getBullets() {
-        return this.objects;
+        return this.bulletsList;
     }
 }

@@ -1,8 +1,8 @@
 class Bar {
     constructor() {
-        this.value = 120;
+        this.value = 150;
         this.cornerRad = 20;
-        this.w = 120;
+        this.w = 150;
         this.h = 10;
         this.col = null;
         this.strokeCol = null;

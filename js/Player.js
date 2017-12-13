@@ -71,7 +71,7 @@ class Player {
 		}
 
 		//render and update bullets in queue
-		this.queueBullets.update(0.02);
+		this.queueBullets.update(0.02, map.map);
 		this.queueBullets.render();
 
 		//update inventory
@@ -82,14 +82,6 @@ class Player {
 
 		//state bars
 		this.updateStateBars();
-		if(this.enduranceBar.w < 120 && !this.blockRunning) {
-			this.enduranceBar.w += 0.1;
-		}
-		if(this.blockRunning) {
-			setTimeout(() => {
-				this.blockRunning = false;
-			}, 3000);
-		}
 		
 		this.controller();
 		
@@ -111,12 +103,25 @@ class Player {
 		//this.hungerBar.w -= 0.01;
 
 		this.barsX = this.pos.x - WIN_WIDTH_HALF + 10;
-		this.barsY = this.pos.y + 200;
+		this.barsY = this.pos.y + 225;
 		this.healthBar.update(this.barsX, this.barsY);
 		//this.hungerBar.update(this.barsX, this.barsY + 25);
-		this.coldBar.update(this.barsX, this.barsY + 50);
-		this.enduranceBar.update(this.barsX, this.barsY + 75);
+		this.coldBar.update(this.barsX, this.barsY + 25);
+		this.enduranceBar.update(this.barsX, this.barsY + 50);
 		pop();
+
+		if(this.enduranceBar.w < 120 && !this.blockRunning) {
+			this.enduranceBar.w += 0.1;
+		}
+		if(this.blockRunning) {
+			setTimeout(() => {
+				this.blockRunning = false;
+			}, 3000);
+		}
+	}
+
+	handHitAnimation() {
+
 	}
 
 	controller() {

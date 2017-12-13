@@ -24,9 +24,10 @@ class Inventory {
 
 		translate(obj.pos.x, obj.pos.y);
         colorMode(HSL);
-        strokeWeight(3);
-        stroke('rgba(128, 128, 128,1)');
-        fill(96,96,96,0.2);
+        strokeWeight(2);
+        stroke('rgba(35, 35, 35, 1)');
+        fill(50, 0.5);
+
         rect(-150,225, 60,60);   //1 
         rect(-150, 240, this.objects[0].size.width, this.objects[0].size.height);
 
@@ -36,8 +37,10 @@ class Inventory {
         rect(30,225, 60,60);     //4
         rect(90,225, 60,60);     //5 
 
-
-
 		pop();
-	}
+    }
+    
+    clearCellStrokeWidth() {
+        
+    }
 }

@@ -48,9 +48,9 @@ class Weapon {
                 x: x1,
                 y: y1,
                 angle: angleBullet,
-                v: 1800,            //speed bullet
-                bulletsLength: 10,  //length of bullet
-                bulletsColor: BULLETS_COLOR_YELLOW, //color
+                v: 1800,            //bullet speed
+                bulletsLength: 10,  //bullet lenght
+                bulletsColor: BULLET_COLOR, //color
                 lifeTime: 30,
             });
         }else if(this.bulletsHolder == 0 && this.bulletsCount > 0 && !this.reload) {  //update bullets holder

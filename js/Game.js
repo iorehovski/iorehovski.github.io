@@ -43,7 +43,7 @@ function draw() {
     checkCollisionEnemies(enemies);
 
     //update enemies
-    enemies.forEach(function(itemEnemy,index,obj) {
+    enemies.forEach(function(itemEnemy, index, obj) {
         let damageValue = itemEnemy.update(player.pos.x, player.pos.y, map);
         player.healthBar.value -= damageValue;
         //check player hp value
@@ -52,10 +52,10 @@ function draw() {
             player.healthBar.w -= damageValue;
         }
 
-        //check bullet hit the enemy
+        //check if bullet hit an enemy
         if(player.currentObjInHand instanceof Weapon) {
             let bullets = player.currentObjInHand.bullets.getBullets();
-            bullets.forEach(function(itemBullet,indexBullet,objBullets) {
+            bullets.forEach(function(itemBullet, indexBullet, objBullets) {
                 if( Math.sqrt(Math.pow(itemBullet.x - itemEnemy.pos.x,2) + Math.pow(itemBullet.y - itemEnemy.pos.y,2)) < (itemEnemy.r - itemBullet.bulletsLength*2)){
                     objBullets.splice(indexBullet, 1);
                     itemEnemy.hp -= player.currentObjInHand.damage;
