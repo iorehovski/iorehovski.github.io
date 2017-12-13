@@ -83,7 +83,15 @@ class Weapon {
         pop();
     }
 
-    allowShoot(){
+    allowShoot() {
         this.canShoot = true;
     }
+
+    isBulletHolderEmpty() {
+        if(this.bullets.bulletsList.length > 0) {
+            return false;
+        }
+        return true;
+    }
+
 }
