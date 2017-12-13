@@ -112,7 +112,7 @@ class Player {
 		this.enduranceBar.update(this.barsX, this.barsY + 50);
 		pop();
 
-		if(this.enduranceBar.w < 120 && !this.blockRunning) {
+		if(this.enduranceBar.w < 150 && !this.blockRunning) {
 			this.enduranceBar.w += 0.1;
 		}
 		if(this.blockRunning) {
