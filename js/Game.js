@@ -30,7 +30,7 @@ function setup() {
     map.createMap(jsonMap);
 
     background(BGCOLOR);
-
+    
     sounds.pistol.setVolume(0.4);
 }
 
