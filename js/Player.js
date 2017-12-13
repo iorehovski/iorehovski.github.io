@@ -29,7 +29,6 @@ class Player {
 			timeBetweenShots: 200
 		}));
 
-
 		this.queueBullets = [];
 
 		this.currentObjInHand = this.inventory.getItems()[0]; //current Object in hand
