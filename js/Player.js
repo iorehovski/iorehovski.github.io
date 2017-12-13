@@ -8,7 +8,7 @@ class Player {
 		this.isblockRunning = false;
 
 		this.inventory = new Inventory();
-		this.inventory.pushItem(new Weapon({	//availible weapon is pistol
+		this.inventory.pushItem(new Weapon({	//pistol
 			name: 'pistol',
 			damage: 20,
 			srcImage:'src/to/image',
@@ -16,17 +16,17 @@ class Player {
 			countBulletsInHolder: 12,
 			width: 30,
 			height: 8,
-			timeBetweenShots: 500
+			timeBetweenShots: 1200
 		}));
-		this.inventory.pushItem(new Weapon({	//availible weapon is pistol
-			name: 'ak47',
+		this.inventory.pushItem(new Weapon({	//rifle
+			name: 'rifle',
 			damage: 120,
 			srcImage: 'src/to/image',
 			countBullets: 120,
 			countBulletsInHolder: 30,
 			width: 50,
 			height: 8,
-			timeBetweenShots: 100
+			timeBetweenShots: 200
 		}));
 
 
@@ -149,6 +149,10 @@ class Player {
 		if(keyIsDown(32)) {
 			if(player.currentObjInHand){
 				player.currentObjInHand.makeShot(player);
+				
+				if(!sounds.pistol.isPlaying()) {
+					sounds.pistol.play();
+				}
 			}
 		}
 

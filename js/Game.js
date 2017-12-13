@@ -6,10 +6,13 @@ let enemies;
 let jsonMap;
 let images;
 
+let sounds = {};
+
 function preload() {
     jsonMap = loadJSON('/js/mapJSON.json');
     images = loadImage('../img/terrainSet.png');
 
+    sounds.pistol = loadSound('../audio/gun_40_smith_wesson.wav');
 }
 
 function setup() {
@@ -83,5 +86,6 @@ function mouseClicked() {
     //fire
     if(player.currentObjInHand) {
         player.currentObjInHand.makeShot(player);
+        sounds.pistol.play();
     }
 };
