@@ -19,7 +19,7 @@ class Weapon {
 
     update() {
         fill('#282828');
-        rotate(-0.07);  //rotate gun
+        //rotate(-0.07);  //rotate gun
         rect(this.position.x,this.position.y, this.size.width, this.size.height);
         //image(this.img,this.position.x,this.position.y);
     }
@@ -39,15 +39,15 @@ class Weapon {
 
             var x2 = mouseX + player.pos.x - WIN_WIDTH_HALF;  //mouse x
             var y2 = mouseY + player.pos.y - WIN_HEIGHT_HALF; //mouse y
-            var angleP = atan2(y2 - yp, x2 - xp);
+            var angleBullet = atan2(y2 - yp, x2 - xp);
 
-            var x1 = xp + player.r * Math.sin(- angleP + 1); // gun x
-            var y1 = yp + player.r * Math.cos(- angleP + 1); // gun y
-            var angleBullet = atan2(y2 - y1, x2 - x1);
+            //var x1 = xp + player.r * Math.sin(- angleP + 1); // gun x
+            //var y1 = yp + player.r * Math.cos(- angleP + 1); // gun y
+            //var angleBullet = atan2(y2 - y1, x2 - x1);
 
             this.bullets.pushBullet({
-                x: x1,
-                y: y1,
+                x: xp,
+                y: yp,
                 angle: angleBullet,
                 v: 1800,            //bullet speed
                 bulletsLength: 10,  //bullet lenght
