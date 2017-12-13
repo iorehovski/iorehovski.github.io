@@ -13,7 +13,7 @@ class Player {
 			damage: 20,
 			srcImage:'src/to/image',
 			countBullets: 72,
-			countBulletsInHolder: 12,
+			countBulletsInHolder: 10,
 			width: 30,
 			height: 8,
 			timeBetweenShots: 1200
@@ -148,7 +148,6 @@ class Player {
 		if(keyIsDown(32)) {
 			if(player.currentObjInHand){
 				player.currentObjInHand.makeShot(player);
-				
 				if(!sounds.pistol.isPlaying()) {
 					sounds.pistol.play();
 				}
@@ -176,6 +175,14 @@ class Player {
 		if(keyIsDown(53)){
 			this.currentObjInHand = this.inventory.getItems()[4];
 		}
+
+		//R - recharge
+		if(keyIsDown(82)){
+			if(this.currentObjInHand instanceof Weapon){
+				this.currentObjInHand.initRecharge();
+			}
+		}
+
 
 		//shift(boosted movement)
 		if(keyIsDown(16) && !this.blockRunning){

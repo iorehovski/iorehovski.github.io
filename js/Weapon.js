@@ -9,8 +9,11 @@ class Weapon {
         this.bulletsCount = weapon.countBullets;
         this.countBulletsInHolder = weapon.countBulletsInHolder;
         this.bulletsHolder = weapon.countBulletsInHolder;
+
+        this.reloadIsNow = false;
         this.reload = 0;
         this.timeReload = 2000;
+        
         this.timeBetweenShots = weapon.timeBetweenShots;
         this.canShoot = true;
 
@@ -54,15 +57,37 @@ class Weapon {
                 bulletsColor: BULLET_COLOR, //color
                 lifeTime: 30,
             });
-        }else if(this.bulletsHolder == 0 && this.bulletsCount > 0 && !this.reload) {  //update bullets holder
-            this.reload = -Math.PI / 2; // 90*
-            setTimeout(this.recharge.bind(this), this.timeReload);
         }
+        if(this.bulletsHolder == 0 && this.bulletsCount > 0 &&  !this.reloadIsNow) {  //update bullets holder
+            this.initRecharge();// 90*
+        }
+        console.log(this.reloadIsNow);
     }
     
+    initRecharge() {
+        if(!this.reloadIsNow){
+            this.reload = -Math.PI / 2; 
+            this.reloadIsNow = true;
+            setTimeout(this.recharge.bind(this), this.timeReload);
+        } 
+
+    }
     recharge() {
-        this.bulletsHolder = this.countBulletsInHolder;
-        this.bulletsCount -= this.countBulletsInHolder;
+        if(this.bulletsCount > this.countBulletsInHolder) {
+            if(this.bulletsHolder) {
+                this.bulletsCount -= this.countBulletsInHolder - this.bulletsHolder;
+                this.bulletsHolder = this.countBulletsInHolder;
+            }
+            else{
+                this.bulletsCount -= this.countBulletsInHolder;
+                this.bulletsHolder = this.countBulletsInHolder;
+            }
+        }
+        else {
+            this.bulletsHolder = this.bulletsCount;
+            this.bulletsCount = 0;
+        }
+        this.reloadIsNow = false;
         this.reload = 0;
     }
 

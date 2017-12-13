@@ -7,6 +7,7 @@ let jsonMap;
 let images;
 
 let sounds = {};
+let soundsQueue = [];
 
 function preload() {
     jsonMap = loadJSON('/js/mapJSON.json');
@@ -73,6 +74,8 @@ function draw() {
         }
     });
 
+    updateSounds();
+
     printTechData( {
         'xPlayer': player.pos.x, 
         'yPlayer': player.pos.y,
@@ -88,8 +91,19 @@ function mouseClicked() {
     //fire
     if(player.currentObjInHand) {
         player.currentObjInHand.makeShot(player);
+
         if(!sounds.pistol.isPlaying()) {
             sounds.pistol.play();
         }
     }
 };
+
+function updateSounds() {
+    soundsQueue.forEach(function(item,index,obj){
+        console.log(item)
+        if( item && !item.isPlaying()){
+            item.play();
+            obj.splice(index,1);
+        }
+    });
+}
