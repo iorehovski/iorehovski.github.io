@@ -86,6 +86,8 @@ function mouseClicked() {
     //fire
     if(player.currentObjInHand) {
         player.currentObjInHand.makeShot(player);
-        sounds.pistol.play();
+        if(!sounds.pistol.isPlaying()) {
+            sounds.pistol.play();
+        }
     }
 };
