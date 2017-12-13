@@ -16,7 +16,7 @@ function preload() {
 
     sounds.pistol = loadSound('../audio/gun_40_smith_wesson.wav');
 
-    playerSprites[0] = loadImage('../img/player/FixedNaiveCrossbill.gif'); //survivor-pistol.png
+    playerSprites[0] = loadImage('../img/player/survivor-pistol.png');
 }
 
 function setup() {
