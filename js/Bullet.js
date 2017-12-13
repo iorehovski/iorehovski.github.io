@@ -22,7 +22,7 @@ class Bullet {
 
             //check if bullet flies upon wall sprite
             //bullet coll. with a wall
-            if(map[objTile.objTileY]){
+            if(map[objTile.objTileY]){  
                 if(map[objTile.objTileY][objTile.objTileX]) {
                     if(map[objTile.objTileY][objTile.objTileX].spriteID == 9) {
                         obj.splice(index, 1);
