@@ -70,8 +70,9 @@ class Inventory {
 
             if(!item.empty) {
                 
-                //shwo gun sprite in inventory panel
-                image(currentThing.img,item.x + 10, item.y + 5, this.ceilSize*2/3, this.ceilSize*2/3);
+                //render gun sprite in inventory panel
+                this.renderItemImage(currentThing.name, currentThing.image);
+
                 if(currentThing instanceof Weapon) {
                     fill('#fff');
                     text(currentThing.bulletsCount + currentThing.bulletsHolder, item.x + 25, item.y + 55);
@@ -94,4 +95,5 @@ class Inventory {
     clearCellStrokeWidth() {
         
     }
+
 }

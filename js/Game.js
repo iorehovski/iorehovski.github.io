@@ -259,13 +259,24 @@ function setStandartPlayerKit() {
     //set standart inventory of player
     player.putThingInInventory(new Weapon({	//pistol
         name: 'glock17',
-        kindBullets: 'glock17lAmmo',
+        kindBullets: 'glock17Ammo',
         damage: 20,
         countBullets: 72,
         countBulletsInHolder: 10,
         imagePos: {x: 0, y: 0},
         pos: {x: 0, y: 0},
         timeBetweenShots: 1200
+    }));
+
+    player.putThingInInventory(new Weapon({	//pistol
+        name: 'ak47',
+        kindBullets: 'ak47Ammo',
+        damage: 100,
+        countBullets: 130,
+        countBulletsInHolder: 30,
+        imagePos: {x: 0, y: 0},
+        pos: {x: 0, y: 0},
+        timeBetweenShots: 100
     }));
 
     player.currentObjInHand = player.inventory.getItems()[0];
