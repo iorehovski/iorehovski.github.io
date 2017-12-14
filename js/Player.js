@@ -20,7 +20,7 @@ class Player {
 		this.barsY = 200;
 		this.healthBar = new HealthBar(HP_BAR_COLOR);
 		//this.hungerBar = new HungerBar(HUNGER_BAR_COLOR);
-		this.coldBar = new ColdBar(COLD_BAR_COLOR);
+		//this.coldBar = new ColdBar(COLD_BAR_COLOR);
 		this.enduranceBar = new EnduranceBar(ENDURANCE_BAR_COLOR);
 
 		this.sprites = playerSprites;
@@ -99,8 +99,8 @@ class Player {
 		this.barsY = this.pos.y + 225;
 		this.healthBar.update(this.barsX, this.barsY);
 		//this.hungerBar.update(this.barsX, this.barsY + 25);
-		this.coldBar.update(this.barsX, this.barsY + 25);
-		this.enduranceBar.update(this.barsX, this.barsY + 50);
+		//this.coldBar.update(this.barsX, this.barsY + 25);
+		this.enduranceBar.update(this.barsX, this.barsY + 25);
 		pop();
 
 		if(this.enduranceBar.w < 150 && !this.blockRunning) {
@@ -139,10 +139,6 @@ class Player {
 		//fire
 		if(keyIsDown(32)) {
 			if(this.currentObjInHand instanceof Weapon){
-				player.currentObjInHand.makeShot(player);
-				if(!sounds.pistol.isPlaying()) {
-					sounds.pistol.play();
-				}
 				this.currentObjInHand.makeShot(this);
 			}
 		}
