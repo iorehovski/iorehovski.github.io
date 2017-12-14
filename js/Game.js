@@ -10,6 +10,8 @@ let spritesBlood;
 let playerSprites = [];
 let gunSpriteSheet;
 
+let itemsGenerator;
+
 let sounds = {};
 let soundsQueue = [];
 
@@ -54,12 +56,11 @@ function setup() {
     background(BGCOLOR);
 
     sounds.pistol.setVolume(0.3);
+    sounds.pistolReload.setVolume(0.3);
 
     setStandartPlayerKit();
 
-    sounds.pistolReload.setVolume(0.3);
-    //sounds.music.track1.setVolume(0.3);
-    //sounds.music.track1.play();
+    itemsGenerator = new Generation(map);
 }
 
 function draw() {
