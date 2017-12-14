@@ -25,6 +25,10 @@ class Player {
 
 		this.playerSprites = playerSprites;
 		this.currentSprite = this.playerSprites[0];
+		
+		this.bodySpriteCurrentWidth = 115;
+		this.bodySpriteCurrentY = 0;
+		
 	}
 
 	update(map) {
@@ -48,7 +52,7 @@ class Player {
 		ellipse(0, -35, this.rHand, this.rHand); //left hand
 		ellipse(0, 35, this.rHand, this.rHand);
 		rotate(-0.1);
-		image(this.currentSprite, 0, 0, 115, 115);
+		image(this.currentSprite, 0, 0, this.bodySpriteCurrentWidth, 115);
 		//ellipse(0, 0, this.r, this.r); //body
 		 //right hand
 		
@@ -199,15 +203,19 @@ class Player {
 		switch(weaponName) {
 			case 'glock17': 
 				this.currentSprite = this.playerSprites[0];
+				this.bodySpriteCurrentWidth = 115;
 				break;
 			case 'ak47':
 				this.currentSprite = this.playerSprites[1];
+				this.bodySpriteCurrentWidth = 150;
 				break;
 			case 'm16': 
 				this.currentSprite = this.playerSprites[2];
+				this.bodySpriteCurrentWidth = 150;
 				break;
 			case 'awp':
 				this.currentSprite = this.playerSprites[3];
+				this.bodySpriteCurrentWidth = 150;
 				break;
 			default:
 				this.currentSprite = this.playerSprites[0];
