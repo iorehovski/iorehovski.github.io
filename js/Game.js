@@ -8,6 +8,7 @@ let images;
 let blood;
 let spritesBlood; 
 let playerSprites = [];
+let gunSpriteSheet;
 
 let sounds = {};
 let soundsQueue = [];
@@ -20,6 +21,7 @@ function preload() {
     jsonMap = loadJSON('/js/mapJSON.json');
     images = loadImage('../img/terrainSet.png');
     spritesBlood = loadImage('../img/blood_spot.png');
+    gunSpriteSheet = loadImage('../img/gunSpriteSheet.png');
 
     sounds.pistol = loadSound('../audio/gun_40_smith_wesson.wav');
     sounds.pistolReload = loadSound('../audio/gun_reload.mp3');
