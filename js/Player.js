@@ -23,7 +23,8 @@ class Player {
 		//this.coldBar = new ColdBar(COLD_BAR_COLOR);
 		this.enduranceBar = new EnduranceBar(ENDURANCE_BAR_COLOR);
 
-		this.sprites = playerSprites;
+		this.playerSprites = playerSprites;
+		this.currentSprite = this.playerSprites[0];
 	}
 
 	update(map) {
@@ -47,7 +48,7 @@ class Player {
 		ellipse(0, -35, this.rHand, this.rHand); //left hand
 		ellipse(0, 35, this.rHand, this.rHand);
 		rotate(-0.1);
-		image(this.sprites[0], 0, 0, 115, 115);
+		image(this.currentSprite, 0, 0, 115, 115);
 		//ellipse(0, 0, this.r, this.r); //body
 		 //right hand
 		
@@ -187,6 +188,23 @@ class Player {
 
 	putThingInInventory(thing) {
 		this.inventory.pushItem(thing);
+	}
+
+	changePlayerSkin(weaponName) {
+		switch(weaponName) {
+			case 'glock': 
+				this.currentSprite = this.playerSprites[0];
+				break;
+			case 'ak47':
+				this.currentSprite = this.playerSprites[1];
+				break;
+			case 'm16': 
+				this.currentSprite = this.playerSprites[2];
+				break;
+			case 'awp':
+				this.currentSprite = this.playerSprites[3];
+				break;
+		}
 	}
 
 }

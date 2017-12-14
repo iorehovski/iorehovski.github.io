@@ -26,10 +26,14 @@ function preload() {
     sounds.pistol = loadSound('../audio/gun_40_smith_wesson.wav');
     sounds.pistolReload = loadSound('../audio/gun_reload.mp3');
     sounds.music = {};
+    
     //sounds.music.track1 = loadSound('../audio/Resident_Evil_movie_soundtrack_2008.mp3');
     //sounds.music.track2 = loadSound('../audio/Resident_Evil_Corp_Umbrella.mp3');
 
-    playerSprites[0] = loadImage('../img/player/survivor-pistol.png');
+    playerSprites[0] = loadImage('../img/player/survivor-glock.png');
+    playerSprites[1] = loadImage('../img/player/survivor-ak47.png');
+    playerSprites[2] = loadImage('../img/player/survivor-m16.png');
+    playerSprites[3] = loadImage('../img/player/survivor-awp.png');
 }
 
 function setup() {
