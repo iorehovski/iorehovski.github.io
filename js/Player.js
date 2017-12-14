@@ -10,7 +10,7 @@ class Player {
 		this.inventory = new Inventory();
 		this.inventory.pushItem(new Weapon({	//pistol
 			name: 'pistol',
-			damage: 20,
+			damage: 40,
 			srcImage:'src/to/image',
 			countBullets: 72,
 			countBulletsInHolder: 10,
@@ -22,7 +22,7 @@ class Player {
 			name: 'rifle',
 			damage: 120,
 			srcImage: 'src/to/image',
-			countBullets: 120,
+			countBullets: 10,
 			countBulletsInHolder: 30,
 			width: 50,
 			height: 8,
@@ -159,11 +159,6 @@ class Player {
 		if(keyIsDown(32)) {
 			if(this.currentObjInHand){
 				this.currentObjInHand.makeShot(this);
-				if(this.currentObjInHand.countBulletsInHolder) {
-					if(!sounds.pistol.isPlaying()) {
-						sounds.pistol.play();
-					}
-				}
 			}
 		}
 

@@ -31,6 +31,10 @@ class Weapon {
         console.log(this.countBulletsInHolder);
         if(this.bulletsHolder > 0 && this.canShoot) {
 
+            if(!sounds.pistol.isPlaying()) {
+                sounds.pistol.play();
+            }
+
             //delay between shots
             this.canShoot = false;
             setTimeout(this.allowShoot.bind(this), this.timeBetweenShots);
