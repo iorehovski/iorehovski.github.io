@@ -13,7 +13,7 @@ class Weapon {
 
         this.reloadIsNow = false;
         this.reload = 0;
-        this.timeReload = 5000;
+        this.timeReload = 3530;
         
         this.timeBetweenShots = weapon.timeBetweenShots;
         this.canShoot = true;
@@ -29,7 +29,6 @@ class Weapon {
     }
     
     makeShot(player) {
-        console.log(this.countBulletsInHolder);
         if(this.bulletsHolder > 0 && this.canShoot) {
 
             if(!sounds.pistol.isPlaying()) {

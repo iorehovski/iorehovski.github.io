@@ -5,6 +5,8 @@ let enemies;
 
 let jsonMap;
 let images;
+let blood;
+let spritesBlood; 
 let playerSprites = [];
 
 let sounds = {};
@@ -15,9 +17,13 @@ let things = [];    //things as medicine kit, ammo, weapons, etc.
 function preload() {
     jsonMap = loadJSON('/js/mapJSON.json');
     images = loadImage('../img/terrainSet.png');
+    spritesBlood = loadImage('../img/blood_spot.png');
 
     sounds.pistol = loadSound('../audio/gun_40_smith_wesson.wav');
     sounds.pistolReload = loadSound('../audio/gun_reload.mp3');
+    sounds.music = {};
+    sounds.music.track1 = loadSound('../audio/Resident_Evil_movie_soundtrack_2008.mp3');
+    //sounds.music.track2 = loadSound('../audio/Resident_Evil_Corp_Umbrella.mp3');
 
     playerSprites[0] = loadImage('../img/player/survivor-pistol.png');
 }
@@ -35,9 +41,12 @@ function setup() {
     map.imagesSet = images;
     map.createMap(jsonMap);
 
+    blood = new Blood(spritesBlood);
+
     background(BGCOLOR);
 
     sounds.pistol.setVolume(0.4);
+
 
     //set standart inventory of player
     player.putThingInInventory(new Weapon({	//pistol
@@ -94,7 +103,11 @@ function setup() {
          height: 40,
          timeBetweenShots: 200
  }));
+
     sounds.pistolReload.setVolume(0.4);
+    sounds.music.track1.setVolume(0.3);
+
+    sounds.music.track1.play();
 }
 
 function draw() {
@@ -127,6 +140,7 @@ function draw() {
                 if(distantionFromAtoB(itemBullet,itemEnemy.pos) < (itemEnemy.r - itemBullet.bulletsLength*2)){
                     objBullets.splice(indexBullet, 1);
                     itemEnemy.hp -= player.currentObjInHand.damage;
+                    blood.createBloodSpot(itemEnemy.pos.x, itemEnemy.pos.y);
                 }
             });
         }
@@ -146,6 +160,7 @@ function draw() {
         'enemiesNum': enemies.length
     });
 
+    blood.update();
     player.update(map);
 }
 
