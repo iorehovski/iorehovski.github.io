@@ -51,7 +51,6 @@ function setup() {
 
     sounds.pistol.setVolume(0.3);
 
-
     //set standart inventory of player
     player.putThingInInventory(new Weapon({	//pistol
         name: 'pistol',
