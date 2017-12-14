@@ -60,7 +60,7 @@ function setup() {
         height: 30,
         timeBetweenShots: 1200
     }));
-
+    player.currentObjInHand = player.inventory.getItems()[0];
     //add medicine kit to inventory
     player.putThingInInventory(new Thing({
         'name': 'medicineKit',
