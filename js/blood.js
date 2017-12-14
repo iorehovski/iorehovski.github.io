@@ -3,13 +3,16 @@ class BloodItem {
         this.x = posX;
         this.y = posY;
         this.lifeTime = 500;
+        this.angle = Math.PI/Math.random() * 3;
     }
 
     update() {
         push();
-        //angleMode(DEGREES);
         imageMode(CENTER);
-        image(spritesBlood, this.x, this.y);
+       
+        translate(this.x, this.y);
+        rotate(this.angle);
+        image(spritesBlood, 0, 0);
         pop();
 
         this.lifeTime--;
