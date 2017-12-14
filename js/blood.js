@@ -1,19 +1,27 @@
+class BloodItem {
+    constructor(posX, posY, ) {
+        this.x = posX;
+        this.y = posY;
+    }
+
+    render() {
+        push();
+        //angleMode(DEGREES);
+        imageMode(CENTER);
+        image(spritesBlood, this.x, this.y);
+        pop();
+    }
+    
+} 
+
 class Blood {
-    constructor(spritesObj) {
-        this.spritesSet = spritesObj;
+    constructor() {
         this.bloodList = [];
         this.lifeTimeTimer = 500;
     }
 
     createBloodSpot(posX, posY) {
-        let obj = {
-            x: posX,
-            y: posY,
-            render: function() {
-                image(this.spritesSet, this.x, this.y);
-            }
-        };
-        this.bloodList.push(obj);
+        this.bloodList.push(new BloodItem(posX, posY));
     }
 
     update() {
@@ -22,9 +30,3 @@ class Blood {
         }
     }
 }
-
-class BloodItem {
-    constructor() {
-        
-    }
-} 
