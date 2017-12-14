@@ -12,8 +12,7 @@ class Inventory {
     }
 
     pushItem(itemToAdd) {
-        console.log(itemToAdd)
-        console.log(this.inventoryThings)
+
         let added = false;
         this.inventoryCeil.forEach(function(item, index, obj) {
             if(added){

@@ -29,13 +29,15 @@ class Weapon {
     }
     
     makeShot(player) {
-        if(this.bulletsHolder > 0 && this.canShoot) {
-
+        console.log(this.canShoot);
+        if(this.bulletsHolder > 0 && this.canShoot && !this.reloadIsNow) {
+           
+            
             if(!sounds.pistol.isPlaying()) {
                 sounds.pistol.play();
             }
 
-            //delay between shots
+             //delay between shots
             this.canShoot = false;
             setTimeout(this.allowShoot.bind(this), this.timeBetweenShots);
 
