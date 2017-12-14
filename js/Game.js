@@ -60,8 +60,12 @@ function setup() {
 
     setStandartPlayerKit();
 
-    putAWPOnMap(200,100);
-    putAWPAmmoOnMap(200,200);
+    putAWPOnMap(100, 200);
+    putAk47AmmoOnMap(100, 100);
+    putAk47OnMap(200, 200);
+    putAk47AmmoOnMap(200,100);
+    putM16AmmoOnMap(300,100);
+    putM16OnMap(300,200);
 
     itemsGenerator = new Generation(map);
     itemsGenerator = new Generation(map.map);
@@ -278,7 +282,7 @@ function setStandartPlayerKit() {
         damage: 100,
         countBullets: 130,
         countBulletsInHolder: 30,
-        imagePos: {x: 0, y: 0},
+        imagePos: {x: 100, y: 0},
         pos: {x: 0, y: 0},
         timeBetweenShots: 100
     }));

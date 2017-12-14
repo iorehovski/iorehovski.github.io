@@ -145,31 +145,34 @@ class Player {
 		}
 
 		//inventory
-		//1
-		if(keyIsDown(49)){
-			this.currentObjInHand = this.inventory.getItems()[0];
-			this.changePlayerSkin(this.currentObjInHand.name);
+		if(this.currentObjInHand instanceof Weapon || this.currentObjInHand  instanceof Thing) {
+			//1
+			if(keyIsDown(49)){
+				this.currentObjInHand = this.inventory.getItems()[0];
+				this.changePlayerSkin(this.currentObjInHand.name);
+			}
+			//2
+			if(keyIsDown(50)){
+				this.currentObjInHand = this.inventory.getItems()[1];
+				this.changePlayerSkin(this.currentObjInHand.name);
+			}
+			//3
+			if(keyIsDown(51)){
+				this.currentObjInHand = this.inventory.getItems()[2];
+				this.changePlayerSkin(this.currentObjInHand.name);
+			}
+			//4
+			if(keyIsDown(52)){
+				this.currentObjInHand = this.inventory.getItems()[3];
+				this.changePlayerSkin(this.currentObjInHand.name);
+			}
+			//5
+			if(keyIsDown(53)){
+				this.currentObjInHand = this.inventory.getItems()[4];
+				this.changePlayerSkin(this.currentObjInHand.name);
+			}
 		}
-		//2
-		if(keyIsDown(50)){
-			this.currentObjInHand = this.inventory.getItems()[1];
-			this.changePlayerSkin(this.currentObjInHand.name);
-		}
-		//3
-		if(keyIsDown(51)){
-			this.currentObjInHand = this.inventory.getItems()[2];
-			this.changePlayerSkin(this.currentObjInHand.name);
-		}
-		//4
-		if(keyIsDown(52)){
-			this.currentObjInHand = this.inventory.getItems()[3];
-			this.changePlayerSkin(this.currentObjInHand.name);
-		}
-		//5
-		if(keyIsDown(53)){
-			this.currentObjInHand = this.inventory.getItems()[4];
-			this.changePlayerSkin(this.currentObjInHand.name);
-		}
+		
 
 		//R - recharge
 		if(keyIsDown(82)){
