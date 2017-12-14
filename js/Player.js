@@ -35,12 +35,12 @@ class Player {
 		translate(this.pos.x, this.pos.y);
 		rotate(atan2(mouseY - WIN_HEIGHT_HALF, mouseX - WIN_WIDTH_HALF));
 
-		if(this.currentObjInHand instanceof Weapon){
+		// if(this.currentObjInHand instanceof Weapon){
 		
-			if(this.currentObjInHand){
-				this.currentObjInHand.update();
-			}
-		}
+		// 	if(this.currentObjInHand){
+		// 		this.currentObjInHand.update();
+		// 	}
+		// }
 
 		imageMode(CENTER);
 		//angleMode(DEGREES);
