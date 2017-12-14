@@ -24,7 +24,7 @@ function preload() {
     sounds.pistol = loadSound('../audio/gun_40_smith_wesson.wav');
     sounds.pistolReload = loadSound('../audio/gun_reload.mp3');
     sounds.music = {};
-    sounds.music.track1 = loadSound('../audio/Resident_Evil_movie_soundtrack_2008.mp3');
+    //sounds.music.track1 = loadSound('../audio/Resident_Evil_movie_soundtrack_2008.mp3');
     //sounds.music.track2 = loadSound('../audio/Resident_Evil_Corp_Umbrella.mp3');
 
     playerSprites[0] = loadImage('../img/player/survivor-pistol.png');
@@ -43,7 +43,7 @@ function setup() {
     map.imagesSet = images;
     map.createMap(jsonMap);
 
-    blood = new Blood(spritesBlood);
+    blood = new Blood();
 
     background(BGCOLOR);
 
@@ -107,9 +107,8 @@ function setup() {
  }));
 
     sounds.pistolReload.setVolume(0.4);
-    sounds.music.track1.setVolume(0.3);
-
-    sounds.music.track1.play();
+    //sounds.music.track1.setVolume(0.3);
+    //sounds.music.track1.play();
 }
 
 function draw() {
@@ -119,7 +118,9 @@ function draw() {
 
     map.update(player.pos);
 
-    if(randInt(0, 1000) == 0) {
+    blood.update();
+
+    if(randInt(0, 500) == 0) {
         enemies.push(new Enemy(randInt(TILE_W, MAP_SIZE_X * TILE_W - TILE_W), randInt(TILE_H, MAP_SIZE_Y * TILE_H - TILE_H), ENTITY_DIAMETR / 2));
     }
 
@@ -162,7 +163,6 @@ function draw() {
         'enemiesNum': enemies.length
     });
 
-    blood.update();
     player.update(map);
 }
 
