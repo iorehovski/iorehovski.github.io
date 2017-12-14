@@ -12,7 +12,7 @@ let playerSprites = [];
 let sounds = {};
 let soundsQueue = [];
 
-let things = [];    //things as medicine kit, ammo, weapons, etc.
+let things = [];    //things as medicine kit, ammo, weapons, etc. on the map
 
 let isGame = false;
 
@@ -53,7 +53,7 @@ function setup() {
     //set standart inventory of player
     player.putThingInInventory(new Weapon({	//pistol
         name: 'pistol',
-        kindBullets: 'postolAmmo',
+        kindBullets: 'pistolAmmo',
         damage: 20,
         srcImage:'../img/axe.png',
         countBullets: 72,
@@ -72,39 +72,7 @@ function setup() {
         'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
     }));
 
-    //there are some things, as medicine kit or ammo or guns on map for testing
-    things.push(new Thing({
-        'name': 'medicineKit',
-        'srcImage': '../img/heart.png',
-        'value': 50,
-        'pos': {x:100, y:100},
-        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
-    }));
-    things.push(new Thing({
-        'name': 'medicineKit',
-        'srcImage': '../img/heart.png',
-        'value': 50,
-        'pos': {x:175, y:100},
-        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
-    }));
-    things.push(new Thing({
-        'name': 'postolAmmo',
-        'srcImage': '../img/backpack.png',
-        'value': 20,
-        'pos': {x:250, y:100},
-        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
-    }));
-    things.push(new Weapon({	//rifle
-        name: 'rifle',
-        kindBullets: 'rifleAmmo',
-         damage: 120,
-         srcImage: '../img/upg_spear.png',
-         countBullets: 120,
-         countBulletsInHolder: 30,
-         width: 100,
-         height: 40,
-         timeBetweenShots: 200
- }));
+    
 
     sounds.pistolReload.setVolume(0.3);
     //sounds.music.track1.setVolume(0.3);
@@ -198,3 +166,35 @@ function distantionFromAtoB(a,b) {
     return Math.sqrt(Math.pow(a.x - b.x,2) 
          + Math.pow(a.y - b.y,2)) ; 
 }
+
+function putMedicineKitOnMap(xStart,yStart) {
+    things.push(new Thing({
+        'name': 'medicineKit',
+        'srcImage': '../img/heart.png',
+        'value': 50,
+        'pos': {x:xStart, y:yStart},
+        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+    }));
+}
+
+function putPistolAmmo(xStart,yStart) {
+    things.push(new Thing({
+        'name': 'pistolAmmo',
+        'srcImage': '../img/backpack.png',
+        'value': 20,
+        'pos': {x:xStart, y:yStart},
+        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+    }));
+}
+
+things.push(new Weapon({	//rifle
+    name: 'rifle',
+    kindBullets: 'rifleAmmo',
+     damage: 120,
+     srcImage: '../img/upg_spear.png',
+     countBullets: 120,
+     countBulletsInHolder: 30,
+     width: 100,
+     height: 40,
+     timeBetweenShots: 200
+}));
