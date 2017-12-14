@@ -1,7 +1,7 @@
 class Generation {
     constructor(map) {
         this.map = map;
-        console.log(this.map);
+        this.items = [];
     }
 
     generateEnemy(chance) {
@@ -10,6 +10,10 @@ class Generation {
 
     //generate ammo, weapons, aid in map
     generateItems(chance) {
+        
+    }
+
+    update() {
         
     }
 }
