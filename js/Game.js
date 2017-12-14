@@ -60,7 +60,9 @@ function setup() {
 
     setStandartPlayerKit();
 
-    itemsGenerator = new Generation(map);
+    itemsGenerator = new Generation(map.map);
+
+    console.log(things);
 }
 
 function draw() {
