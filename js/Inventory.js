@@ -87,24 +87,6 @@ class Inventory {
             }
         }.bind(this));
 
-        // rect(-150,225, 60,60);   //1 
-        // rect(-150, 240, this.inventoryThings[0].size.width, this.inventoryThings[0].size.height);
-        // if(this.inventoryThings[0] instanceof Weapon) {
-        //     fill('#fff');
-        //     text(this.inventoryThings[0].bulletsCount + this.inventoryThings[0].bulletsHolder,-140,280);
-        // }
-        // fill(50, 0.5);
-        // rect(-90,225, 60,60);    //2
-        // rect(-80, 240, this.inventoryThings[1].size.width, this.inventoryThings[1].size.height);
-        // if(this.inventoryThings[0] instanceof Weapon) {
-        //     fill('#fff');
-        //     text(this.inventoryThings[1].bulletsCount + this.inventoryThings[1].bulletsHolder,-80,280);
-        // }
-        // fill(50, 0.5);
-        // rect(-30,225, 60,60);    //3
-        // rect(30,225, 60,60);     //4
-        // rect(90,225, 60,60);     //5 
-
         if(player.currentObjInHand instanceof Weapon) {
             fill('#fff');
             textSize(30);

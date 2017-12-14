@@ -47,8 +47,8 @@ function setup() {
         srcImage:'../img/axe.png',
         countBullets: 72,
         countBulletsInHolder: 10,
-        width: 30,
-        height: 8,
+        width: 100,
+        height: 30,
         timeBetweenShots: 1200
     }));
 
@@ -83,6 +83,17 @@ function setup() {
         'pos': {x:250, y:100},
         'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
     }));
+    things.push(new Weapon({	//rifle
+        name: 'rifle',
+        kindBullets: 'rifleAmmo',
+         damage: 120,
+         srcImage: '../img/upg_spear.png',
+         countBullets: 120,
+         countBulletsInHolder: 30,
+         width: 100,
+         height: 40,
+         timeBetweenShots: 200
+ }));
     sounds.pistolReload.setVolume(0.4);
 }
 

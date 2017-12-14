@@ -4,7 +4,7 @@ class Weapon {
         this.kindBullets = weapon.kindBullets;
         this.damage = weapon.damage;
         this.img = loadImage(weapon.srcImage);
-        this.position = {'x': 0, 'y': 25};
+        this.pos = {'x': 0, 'y': 25};
         this.size = {'width': weapon.width, 'height': weapon.height};
 
         this.bulletsCount = weapon.countBullets;
@@ -24,8 +24,8 @@ class Weapon {
     update() {
         fill('#282828');
         //rotate(-0.07);  //rotate gun
-        rect(this.position.x,this.position.y, this.size.width, this.size.height);
-        //image(this.img,this.position.x,this.position.y);
+        image(this.img,this.pos.x,this.pos.y, this.size.width, this.size.height);
+        //image(,this.pos.x,this.pos.y);
     }
     
     makeShot(player) {
@@ -71,14 +71,12 @@ class Weapon {
     }
     
     initRecharge() {
-        
         if(!this.reloadIsNow){
             sounds.pistolReload.play();
             this.reload = -Math.PI / 2; 
             this.reloadIsNow = true;
             setTimeout(this.recharge.bind(this), this.timeReload);
         } 
-
     }
     recharge() {
         if(this.bulletsCount > this.countBulletsInHolder) {
