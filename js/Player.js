@@ -8,8 +8,33 @@ class Player {
 		this.isblockRunning = false;
 
 		this.inventory = new Inventory();
+<<<<<<< HEAD
 
 		this.queueBullets = null;
+=======
+		this.inventory.pushItem(new Weapon({	//pistol
+			name: 'pistol',
+			damage: 40,
+			srcImage:'src/to/image',
+			countBullets: 72,
+			countBulletsInHolder: 10,
+			width: 30,
+			height: 8,
+			timeBetweenShots: 1200
+		}));
+		this.inventory.pushItem(new Weapon({	//rifle
+			name: 'rifle',
+			damage: 120,
+			srcImage: 'src/to/image',
+			countBullets: 10,
+			countBulletsInHolder: 30,
+			width: 50,
+			height: 8,
+			timeBetweenShots: 200
+		}));
+
+		this.queueBullets = [];
+>>>>>>> b1d9eaeb8a1fd5663ee445deb16733d517eacc8f
 
 		this.currentObjInHand = this.inventory.getItems()[0]; //current Object in hand
 		
@@ -36,15 +61,18 @@ class Player {
 		rotate(atan2(mouseY - WIN_HEIGHT_HALF, mouseX - WIN_WIDTH_HALF));
 
 		if(this.currentObjInHand instanceof Weapon){
+		/*
+		if(this.currentObjInHand){
 			this.currentObjInHand.update();
 		}
+		*/
 
 		imageMode(CENTER);
 		//angleMode(DEGREES);
 		ellipse(0, -35, this.rHand, this.rHand); //left hand
 		ellipse(0, 35, this.rHand, this.rHand);
 		rotate(-0.1);
-		image(this.sprites[0], 0, 0, 120, 120);
+		image(this.sprites[0], 0, 0, 115, 115);
 		//ellipse(0, 0, this.r, this.r); //body
 		 //right hand
 		
@@ -135,11 +163,16 @@ class Player {
 
 		//fire
 		if(keyIsDown(32)) {
+<<<<<<< HEAD
 			if(player.currentObjInHand instanceof Weapon){
 				player.currentObjInHand.makeShot(player);
 				if(!sounds.pistol.isPlaying()) {
 					sounds.pistol.play();
 				}
+=======
+			if(this.currentObjInHand){
+				this.currentObjInHand.makeShot(this);
+>>>>>>> b1d9eaeb8a1fd5663ee445deb16733d517eacc8f
 			}
 		}
 

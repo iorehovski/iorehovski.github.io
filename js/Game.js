@@ -17,6 +17,7 @@ function preload() {
     images = loadImage('../img/terrainSet.png');
 
     sounds.pistol = loadSound('../audio/gun_40_smith_wesson.wav');
+    sounds.pistolReload = loadSound('../audio/gun_reload.mp3');
 
     playerSprites[0] = loadImage('../img/player/survivor-pistol.png');
 }
@@ -82,6 +83,7 @@ function setup() {
         'pos': {x:250, y:100},
         'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
     }));
+    sounds.pistolReload.setVolume(0.4);
 }
 
 function draw() {
