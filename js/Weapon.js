@@ -12,7 +12,7 @@ class Weapon {
 
         this.reloadIsNow = false;
         this.reload = 0;
-        this.timeReload = 2000;
+        this.timeReload = 5000;
         
         this.timeBetweenShots = weapon.timeBetweenShots;
         this.canShoot = true;
@@ -28,6 +28,7 @@ class Weapon {
     }
     
     makeShot(player) {
+        console.log(this.countBulletsInHolder);
         if(this.bulletsHolder > 0 && this.canShoot) {
 
             //delay between shots
@@ -35,6 +36,7 @@ class Weapon {
             setTimeout(this.allowShoot.bind(this), this.timeBetweenShots);
 
             this.bulletsHolder--;
+            
 
             //player property
             var xp = player.pos.x;
@@ -65,7 +67,9 @@ class Weapon {
     }
     
     initRecharge() {
+        
         if(!this.reloadIsNow){
+            sounds.pistolReload.play();
             this.reload = -Math.PI / 2; 
             this.reloadIsNow = true;
             setTimeout(this.recharge.bind(this), this.timeReload);

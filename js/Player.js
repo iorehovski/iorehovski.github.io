@@ -55,16 +55,18 @@ class Player {
 		translate(this.pos.x, this.pos.y);
 		rotate(atan2(mouseY - WIN_HEIGHT_HALF, mouseX - WIN_WIDTH_HALF));
 
+		/*
 		if(this.currentObjInHand){
 			this.currentObjInHand.update();
 		}
+		*/
 
 		imageMode(CENTER);
 		//angleMode(DEGREES);
 		ellipse(0, -35, this.rHand, this.rHand); //left hand
 		ellipse(0, 35, this.rHand, this.rHand);
 		rotate(-0.1);
-		image(this.sprites[0], 0, 0, 120, 120);
+		image(this.sprites[0], 0, 0, 115, 115);
 		//ellipse(0, 0, this.r, this.r); //body
 		 //right hand
 		
@@ -155,10 +157,12 @@ class Player {
 
 		//fire
 		if(keyIsDown(32)) {
-			if(player.currentObjInHand){
-				player.currentObjInHand.makeShot(player);
-				if(!sounds.pistol.isPlaying()) {
-					sounds.pistol.play();
+			if(this.currentObjInHand){
+				this.currentObjInHand.makeShot(this);
+				if(this.currentObjInHand.countBulletsInHolder) {
+					if(!sounds.pistol.isPlaying()) {
+						sounds.pistol.play();
+					}
 				}
 			}
 		}
