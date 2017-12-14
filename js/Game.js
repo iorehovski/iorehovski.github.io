@@ -14,6 +14,8 @@ let soundsQueue = [];
 
 let things = [];    //things as medicine kit, ammo, weapons, etc.
 
+let isGame = false;
+
 function preload() {
     jsonMap = loadJSON('/js/mapJSON.json');
     images = loadImage('../img/terrainSet.png');
