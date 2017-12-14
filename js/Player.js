@@ -8,28 +8,8 @@ class Player {
 		this.isblockRunning = false;
 
 		this.inventory = new Inventory();
-		this.inventory.pushItem(new Weapon({	//pistol
-			name: 'pistol',
-			damage: 20,
-			srcImage:'src/to/image',
-			countBullets: 72,
-			countBulletsInHolder: 10,
-			width: 30,
-			height: 8,
-			timeBetweenShots: 1200
-		}));
-		this.inventory.pushItem(new Weapon({	//rifle
-			name: 'rifle',
-			damage: 120,
-			srcImage: 'src/to/image',
-			countBullets: 120,
-			countBulletsInHolder: 30,
-			width: 50,
-			height: 8,
-			timeBetweenShots: 200
-		}));
 
-		this.queueBullets = [];
+		this.queueBullets = null;
 
 		this.currentObjInHand = this.inventory.getItems()[0]; //current Object in hand
 		
@@ -55,7 +35,7 @@ class Player {
 		translate(this.pos.x, this.pos.y);
 		rotate(atan2(mouseY - WIN_HEIGHT_HALF, mouseX - WIN_WIDTH_HALF));
 
-		if(this.currentObjInHand){
+		if(this.currentObjInHand instanceof Weapon){
 			this.currentObjInHand.update();
 		}
 
@@ -68,11 +48,10 @@ class Player {
 		//ellipse(0, 0, this.r, this.r); //body
 		 //right hand
 		
-		
-	
 		pop();
 
 		if(this.currentObjInHand instanceof Weapon) {
+			
 			//if reload, update circle animation
 			if(this.currentObjInHand.reload) {
 				this.currentObjInHand.updateRecharge(this.pos);
@@ -80,13 +59,15 @@ class Player {
 			this.queueBullets = player.currentObjInHand.bullets;
 		}
 
-		//render and update bullets in queue
-		this.queueBullets.update(0.02, map.map);
-		this.queueBullets.render();
+		if(this.queueBullets){
+			//render and update bullets in queue
+			this.queueBullets.update(0.02, map.map);
+			this.queueBullets.render();
+		}
 
 		//update inventory
 		this.inventory.update({
-			'current':this.currentObjInHand,
+			'currentThingInHand':this.currentObjInHand,
 			'pos': this.pos
 		});
 
@@ -96,7 +77,6 @@ class Player {
 		this.controller();
 		
 		handleCollisionWalls(this.pos, map.map);
-		
 	}
 
 	focusCamera() {
@@ -155,7 +135,7 @@ class Player {
 
 		//fire
 		if(keyIsDown(32)) {
-			if(player.currentObjInHand){
+			if(player.currentObjInHand instanceof Weapon){
 				player.currentObjInHand.makeShot(player);
 				if(!sounds.pistol.isPlaying()) {
 					sounds.pistol.play();
@@ -192,7 +172,6 @@ class Player {
 			}
 		}
 
-
 		//shift(boosted movement)
 		if(keyIsDown(16) && !this.blockRunning){
 			if(this.enduranceBar.w > 10) {
@@ -205,4 +184,9 @@ class Player {
 			this.playerSpeed = this.boostedPlayerSpeed / 5;
 		}
 	}
+
+	putThingInInventory(thing) {
+		this.inventory.pushItem(thing);
+	}
+
 }

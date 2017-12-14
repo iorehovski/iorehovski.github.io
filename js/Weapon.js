@@ -1,8 +1,9 @@
 class Weapon {
     constructor(weapon) {
         this.name = weapon.name;
+        this.kindBullets = weapon.kindBullets;
         this.damage = weapon.damage;
-        //this.img = loadImage(weapon.srcImage);
+        this.img = loadImage(weapon.srcImage);
         this.position = {'x': 0, 'y': 25};
         this.size = {'width': weapon.width, 'height': weapon.height};
 
@@ -61,7 +62,6 @@ class Weapon {
         if(this.bulletsHolder == 0 && this.bulletsCount > 0 &&  !this.reloadIsNow) {  //update bullets holder
             this.initRecharge();// 90*
         }
-        console.log(this.reloadIsNow);
     }
     
     initRecharge() {

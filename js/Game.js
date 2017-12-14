@@ -10,6 +10,8 @@ let playerSprites = [];
 let sounds = {};
 let soundsQueue = [];
 
+let things = [];    //things as medicine kit, ammo, weapons, etc.
+
 function preload() {
     jsonMap = loadJSON('/js/mapJSON.json');
     images = loadImage('../img/terrainSet.png');
@@ -35,6 +37,51 @@ function setup() {
     background(BGCOLOR);
 
     sounds.pistol.setVolume(0.4);
+
+    //set standart inventory of player
+    player.putThingInInventory(new Weapon({	//pistol
+        name: 'pistol',
+        kindBullets: 'postolAmmo',
+        damage: 20,
+        srcImage:'../img/axe.png',
+        countBullets: 72,
+        countBulletsInHolder: 10,
+        width: 30,
+        height: 8,
+        timeBetweenShots: 1200
+    }));
+
+    //add medicine kit to inventory
+    player.putThingInInventory(new Thing({
+        'name': 'medicineKit',
+        'srcImage': '../img/heart.png',
+        'value': 50,
+        'pos': {x:0, y:0},
+        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+    }));
+
+    //there are some things, as medicine kit or ammo or guns on map for testing
+    things.push(new Thing({
+        'name': 'medicineKit',
+        'srcImage': '../img/heart.png',
+        'value': 50,
+        'pos': {x:100, y:100},
+        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+    }));
+    things.push(new Thing({
+        'name': 'medicineKit',
+        'srcImage': '../img/heart.png',
+        'value': 50,
+        'pos': {x:175, y:100},
+        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+    }));
+    things.push(new Thing({
+        'name': 'postolAmmo',
+        'srcImage': '../img/backpack.png',
+        'value': 20,
+        'pos': {x:250, y:100},
+        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+    }));
 }
 
 function draw() {
@@ -64,7 +111,7 @@ function draw() {
         if(player.currentObjInHand instanceof Weapon) {
             let bullets = player.currentObjInHand.bullets.getBullets();
             bullets.forEach(function(itemBullet, indexBullet, objBullets) {
-                if( Math.sqrt(Math.pow(itemBullet.x - itemEnemy.pos.x,2) + Math.pow(itemBullet.y - itemEnemy.pos.y,2)) < (itemEnemy.r - itemBullet.bulletsLength*2)){
+                if(distantionFromAtoB(itemBullet,itemEnemy.pos) < (itemEnemy.r - itemBullet.bulletsLength*2)){
                     objBullets.splice(indexBullet, 1);
                     itemEnemy.hp -= player.currentObjInHand.damage;
                 }
@@ -77,6 +124,7 @@ function draw() {
     });
 
     updateSounds();
+    updateThings();
 
     printTechData( {
         'xPlayer': player.pos.x, 
@@ -91,7 +139,7 @@ function draw() {
 function mouseClicked() {
     
     //fire
-    if(player.currentObjInHand) {
+    if(player.currentObjInHand instanceof Weapon) {
         player.currentObjInHand.makeShot(player);
 
         if(!sounds.pistol.isPlaying()) {
@@ -108,4 +156,19 @@ function updateSounds() {
             obj.splice(index,1);
         }
     });
+}
+
+function updateThings() {
+    things.forEach(function(item,index,obj){
+        item.update();
+        if(distantionFromAtoB(player.pos,item.pos) < item.size.width){
+            player.putThingInInventory(item);
+            obj.splice(index,1);
+        }
+    });
+}
+
+function distantionFromAtoB(a,b) {
+    return Math.sqrt(Math.pow(a.x - b.x,2) 
+         + Math.pow(a.y - b.y,2)) ; 
 }
