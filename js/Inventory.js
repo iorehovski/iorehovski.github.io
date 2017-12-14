@@ -39,10 +39,6 @@ class Inventory {
                 }
             }
         }.bind(this));
-
-        // if(this.inventoryThings.length < 5){
-        //     this.inventoryThings.push(itemToAdd);
-        // }
     }
 
     getItems() {

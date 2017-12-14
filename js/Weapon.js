@@ -29,7 +29,6 @@ class Weapon {
     }
     
     makeShot(player) {
-        console.log(this.countBulletsInHolder);
         if(this.bulletsHolder > 0 && this.canShoot) {
 
             if(!sounds.pistol.isPlaying()) {
