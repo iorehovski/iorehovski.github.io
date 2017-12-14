@@ -22,7 +22,7 @@ class Weapon {
     }
 
     update() {
-        image(SPRITE_THINGS,
+        image(this.img,
             this.pos.x,
             this.pos.y,
             INVENTORY_THING_SIZE,
@@ -36,7 +36,6 @@ class Weapon {
     makeShot(player) {
         console.log(this.canShoot);
         if(this.bulletsHolder > 0 && this.canShoot && !this.reloadIsNow) {
-           
             
             if(!sounds.pistol.isPlaying()) {
                 sounds.pistol.play();

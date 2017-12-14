@@ -10,7 +10,7 @@ class Thing {
     }
     
     update() {
-        image(SPRITE_THINGS,
+        image(this.img,
             this.pos.x,
             this.pos.y,
             INVENTORY_THING_SIZE,

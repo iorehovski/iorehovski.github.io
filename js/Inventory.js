@@ -67,12 +67,20 @@ class Inventory {
                 fill(50, 0.5);
                 rect(item.x,item.y,this.ceilSize,this.ceilSize);
             }
-
+            
             if(!item.empty) {
                 
-                //render gun sprite in inventory panel
-                this.renderItemImage(currentThing.name, currentThing.image);
-
+                //shwo gun sprite in inventory panel
+                image(currentThing.img,item.x + 10, 
+                    item.y + 5, 
+                    this.ceilSize*2/3, 
+                    this.ceilSize*2/3,
+                    currentThing.imagePos.x,
+                    currentThing.imagePos.y,
+                    INVENTORY_THING_SIZE,
+                    INVENTORY_THING_SIZE
+                );
+                    
                 if(currentThing instanceof Weapon) {
                     fill('#fff');
                     text(currentThing.bulletsCount + currentThing.bulletsHolder, item.x + 25, item.y + 55);

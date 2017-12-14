@@ -60,6 +60,10 @@ function setup() {
 
     setStandartPlayerKit();
 
+    putAWPOnMap(200,100);
+    putAWPAmmoOnMap(200,200);
+
+    itemsGenerator = new Generation(map);
     itemsGenerator = new Generation(map.map);
 
     console.log(things);
@@ -141,7 +145,7 @@ function updateSounds() {
 function updateThings() {
     things.forEach(function(item,index,obj){
         item.update();
-        if(distantionFromAtoB(player.pos,item.pos) < item.size.width){
+        if(distantionFromAtoB(player.pos,item.pos) < INVENTORY_THING_SIZE / 2){
             player.putThingInInventory(item);
             obj.splice(index,1);
         }
@@ -158,17 +162,17 @@ function putMedicineKitOnMap(xStart,yStart) {
         name: 'medicineKit',
         value: 50,
         pos: {x:xStart, y:yStart},
-        imagePos: {x: 0, y: 0},
+        imagePos: {x: 500, y: 0},
         size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
     }));
 }
 
 function putPistolAmmoOnMap(xStart,yStart) {
     things.push(new Thing({
-        name: 'glock17lAmmo',
+        name: 'glock17Ammo',
         value: 20,
         pos: {x:xStart, y:yStart},
-        imagePos: {x: 0, y: 0},
+        imagePos: {x: 400, y: 0},
         size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
     }));
 }
@@ -176,7 +180,7 @@ function putPistolAmmoOnMap(xStart,yStart) {
 function putPistolOnMap(xStart,yStart) {
     things.push(new Weapon({	//pistol
         name: 'glock17',
-        kindBullets: 'glock17lAmmo',
+        kindBullets: 'glock17Ammo',
         damage: 20,
         countBullets: 72,
         countBulletsInHolder: 10,
@@ -191,7 +195,7 @@ function putAk47AmmoOnMap(xStart,yStart) {
         name: 'ak47Ammo',
         value: 20,
         pos: {x:xStart, y:yStart},
-        imagePos: {x: 0, y: 0},
+        imagePos: {x: 400, y: 0},
         size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
     }));
 }
@@ -203,7 +207,7 @@ function putAk47OnMap(xStart,yStart) {
         damage: 20,
         countBullets: 72,
         countBulletsInHolder: 10,
-        imagePos: {x: 0, y: 0},
+        imagePos: {x: 100, y: 0},
         pos: {x: xStart, y: yStart},
         timeBetweenShots: 1200
     }));
@@ -214,7 +218,7 @@ function putM16AmmoOnMap(xStart,yStart) {
         name: 'm16Ammo',
         value: 20,
         pos: {x:xStart, y:yStart},
-        imagePos: {x: 0, y: 0},
+        imagePos: {x: 400, y: 0},
         size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
     }));
 }
@@ -226,7 +230,7 @@ function putM16OnMap(xStart,yStart) {
         damage: 30,
         countBullets: 90,
         countBulletsInHolder: 30,
-        imagePos: {x: 0, y: 0},
+        imagePos: {x: 200, y: 0},
         pos: {x: xStart, y: yStart},
         timeBetweenShots: 1200
     }));
@@ -237,7 +241,7 @@ function putAWPAmmoOnMap(xStart,yStart) {
         name: 'AWPAmmo',
         value: 20,
         pos: {x:xStart, y:yStart},
-        imagePos: {x: 0, y: 0},
+        imagePos: {x: 400, y: 0},
         size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
     }));
 }
@@ -249,7 +253,7 @@ function putAWPOnMap(xStart,yStart) {
         damage: 150,
         countBullets: 30,
         countBulletsInHolder: 10,
-        imagePos: {x: 0, y: 0},
+        imagePos: {x: 300, y: 0},
         pos: {x: xStart, y: yStart},
         timeBetweenShots: 1200
     }));
@@ -285,7 +289,7 @@ function setStandartPlayerKit() {
         name: 'medicineKit',
         value: 50,
         pos: {x:0, y:0},
-        imagePos: {x: 0, y: 0},
+        imagePos: {x: 500, y: 0},
         size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
     }));
 }
