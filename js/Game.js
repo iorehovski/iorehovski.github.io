@@ -13,7 +13,7 @@ let gunSpriteSheet;
 let sounds = {};
 let soundsQueue = [];
 
-let things = [];    //things as medicine kit, ammo, weapons, etc.
+let things = [];    //things as medicine kit, ammo, weapons, etc. on the map
 
 let isGame = false;
 
@@ -55,61 +55,7 @@ function setup() {
 
     sounds.pistol.setVolume(0.3);
 
-    //set standart inventory of player
-    player.putThingInInventory(new Weapon({	//pistol
-        name: 'pistol',
-        kindBullets: 'postolAmmo',
-        damage: 20,
-        srcImage:'../img/axe.png',
-        countBullets: 72,
-        countBulletsInHolder: 10,
-        width: 100,
-        height: 30,
-        timeBetweenShots: 1200
-    }));
-    player.currentObjInHand = player.inventory.getItems()[0];
-    //add medicine kit to inventory
-    player.putThingInInventory(new Thing({
-        'name': 'medicineKit',
-        'srcImage': '../img/heart.png',
-        'value': 50,
-        'pos': {x:0, y:0},
-        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
-    }));
-
-    //there are some things, as medicine kit or ammo or guns on map for testing
-    things.push(new Thing({
-        'name': 'medicineKit',
-        'srcImage': '../img/heart.png',
-        'value': 50,
-        'pos': {x:100, y:100},
-        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
-    }));
-    things.push(new Thing({
-        'name': 'medicineKit',
-        'srcImage': '../img/heart.png',
-        'value': 50,
-        'pos': {x:175, y:100},
-        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
-    }));
-    things.push(new Thing({
-        'name': 'postolAmmo',
-        'srcImage': '../img/backpack.png',
-        'value': 20,
-        'pos': {x:250, y:100},
-        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
-    }));
-    things.push(new Weapon({	//rifle
-        name: 'rifle',
-        kindBullets: 'rifleAmmo',
-         damage: 120,
-         srcImage: '../img/upg_spear.png',
-         countBullets: 120,
-         countBulletsInHolder: 30,
-         width: 100,
-         height: 40,
-         timeBetweenShots: 200
- }));
+    setStandartPlayerKit();
 
     sounds.pistolReload.setVolume(0.3);
     //sounds.music.track1.setVolume(0.3);
@@ -202,4 +148,140 @@ function updateThings() {
 function distantionFromAtoB(a,b) {
     return Math.sqrt(Math.pow(a.x - b.x,2) 
          + Math.pow(a.y - b.y,2)) ; 
+}
+
+function putMedicineKitOnMap(xStart,yStart) {
+    things.push(new Thing({
+        'name': 'medicineKit',
+        'srcImage': '../img/heart.png',
+        'value': 50,
+        'pos': {x:xStart, y:yStart},
+        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+    }));
+}
+
+function putPistolAmmoOnMap(xStart,yStart) {
+    things.push(new Thing({
+        'name': 'glock17lAmmo',
+        'srcImage': '../img/backpack.png',
+        'value': 20,
+        'pos': {x:xStart, y:yStart},
+        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+    }));
+}
+
+function putPistolOnMap(xStart,yStart) {
+    things.push(new Weapon({	//pistol
+        name: 'glock17',
+        kindBullets: 'glock17lAmmo',
+        damage: 20,
+        srcImage:'../img/axe.png',
+        countBullets: 72,
+        countBulletsInHolder: 10,
+        width: 100,
+        height: 100,
+        pos: {x: xStart, y: yStart},
+        timeBetweenShots: 1200
+    }));
+}
+
+function putAk47AmmoOnMap(xStart,yStart) {
+    things.push(new Thing({
+        'name': 'ak47Ammo',
+        'srcImage': '../img/backpack.png',
+        'value': 20,
+        'pos': {x:xStart, y:yStart},
+        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+    }));
+}
+
+function putAk47OnMap(xStart,yStart) {
+    things.push(new Weapon({	//pistol
+        name: 'ak47',
+        kindBullets: 'ak47Ammo',
+        damage: 20,
+       //srcImage:'../img/axe.png',
+        countBullets: 72,
+        countBulletsInHolder: 10,
+        width: 100,
+        height: 100,
+        pos: {x: xStart, y: yStart},
+        timeBetweenShots: 1200
+    }));
+}
+
+function putM16AmmoOnMap(xStart,yStart) {
+    things.push(new Thing({
+        'name': 'm16Ammo',
+        'srcImage': '../img/backpack.png',
+        'value': 20,
+        'pos': {x:xStart, y:yStart},
+        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+    }));
+}
+
+function putM16OnMap(xStart,yStart) {
+    things.push(new Weapon({	//pistol
+        name: 'm16',
+        kindBullets: 'm16Ammo',
+        damage: 30,
+        //srcImage:'../img/axe.png',
+        countBullets: 90,
+        countBulletsInHolder: 30,
+        width: 100,
+        height: 100,
+        pos: {x: xStart, y: yStart},
+        timeBetweenShots: 1200
+    }));
+}
+
+function putAWPAmmoOnMap(xStart,yStart) {
+    things.push(new Thing({
+        'name': 'AWPAmmo',
+        'srcImage': '../img/backpack.png',
+        'value': 20,
+        'pos': {x:xStart, y:yStart},
+        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+    }));
+}
+
+function putAWPOnMap(xStart,yStart) {
+    things.push(new Weapon({	//pistol
+        name: 'AWP',
+        kindBullets: 'AWPAmmo',
+        damage: 150,
+        //srcImage:'../img/axe.png',
+        countBullets: 30,
+        countBulletsInHolder: 10,
+        width: 100,
+        height: 100,
+        pos: {x: xStart, y: yStart},
+        timeBetweenShots: 1200
+    }));
+}
+
+function setStandartPlayerKit() {
+    //set standart inventory of player
+    player.putThingInInventory(new Weapon({	//pistol
+        name: 'glock17',
+        kindBullets: 'glock17lAmmo',
+        damage: 20,
+        //srcImage:'../img/axe.png',
+        countBullets: 72,
+        countBulletsInHolder: 10,
+        width: 100,
+        height: 100,
+        pos: {x: 0, y: 0},
+        timeBetweenShots: 1200
+    }));
+
+    player.currentObjInHand = player.inventory.getItems()[0];
+    //add medicine kit to inventory
+    player.putThingInInventory(new Thing({
+        'name': 'medicineKit',
+        'srcImage': '../img/heart.png',
+        'value': 50,
+        'pos': {x:0, y:0},
+        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+    }));
 }

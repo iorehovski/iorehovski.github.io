@@ -3,8 +3,8 @@ class Weapon {
         this.name = weapon.name;
         this.kindBullets = weapon.kindBullets;
         this.damage = weapon.damage;
-        this.img = loadImage(weapon.srcImage);
-        this.pos = {'x': 0, 'y': 25};
+        this.img = loadImage(SPRITE_THINGS);
+        this.pos = weapon.pos
         this.size = {'width': weapon.width, 'height': weapon.height};
 
         this.bulletsCount = weapon.countBullets;
@@ -24,7 +24,11 @@ class Weapon {
     update() {
         fill('#282828');
         //rotate(-0.07);  //rotate gun
-        image(this.img,this.pos.x,this.pos.y, this.size.width, this.size.height);
+        image(this.img,
+            this.pos.x,
+            this.pos.y,
+            this.size.width, 
+            this.size.height);
         //image(,this.pos.x,this.pos.y);
     }
     
