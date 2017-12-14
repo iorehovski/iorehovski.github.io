@@ -34,3 +34,5 @@ const MEDICINE_KIT_WIDTH = 60;
 const MEDICINE_KIT_HEIGHT = 60;
 const AMMO_WIDTH = 60;
 const AMMO_HEIGHT = 60;
+
+const SPRITE_THINGS = '../img/gunSpriteSheet.png'; 
