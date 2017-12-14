@@ -5,7 +5,7 @@ class Weapon {
         this.damage = weapon.damage;
         this.img = loadImage(SPRITE_THINGS);
         this.pos = weapon.pos;
-        this.imagePos = kit.imagePos;
+        this.imagePos = weapon.imagePos;
 
         this.bulletsCount = weapon.countBullets;
         this.countBulletsInHolder = weapon.countBulletsInHolder;
