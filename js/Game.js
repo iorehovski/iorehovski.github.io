@@ -45,7 +45,7 @@ function setup() {
 
     background(BGCOLOR);
 
-    sounds.pistol.setVolume(0.4);
+    sounds.pistol.setVolume(0.3);
 
 
     //set standart inventory of player
@@ -104,7 +104,7 @@ function setup() {
          timeBetweenShots: 200
  }));
 
-    sounds.pistolReload.setVolume(0.4);
+    sounds.pistolReload.setVolume(0.3);
     //sounds.music.track1.setVolume(0.3);
     //sounds.music.track1.play();
 }
@@ -169,10 +169,6 @@ function mouseClicked() {
     //fire
     if(player.currentObjInHand instanceof Weapon) {
         player.currentObjInHand.makeShot(player);
-
-        if(!sounds.pistol.isPlaying()) {
-            sounds.pistol.play();
-        }
     }
 };
 
