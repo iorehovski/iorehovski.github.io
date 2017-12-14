@@ -153,21 +153,21 @@ function distantionFromAtoB(a,b) {
 
 function putMedicineKitOnMap(xStart,yStart) {
     things.push(new Thing({
-        'name': 'medicineKit',
-        'srcImage': '../img/heart.png',
-        'value': 50,
-        'pos': {x:xStart, y:yStart},
-        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+        name: 'medicineKit',
+        value: 50,
+        pos: {x:xStart, y:yStart},
+        imagePos: {x: 0, y: 0},
+        size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
     }));
 }
 
 function putPistolAmmoOnMap(xStart,yStart) {
     things.push(new Thing({
-        'name': 'glock17lAmmo',
-        'srcImage': '../img/backpack.png',
-        'value': 20,
-        'pos': {x:xStart, y:yStart},
-        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+        name: 'glock17lAmmo',
+        value: 20,
+        pos: {x:xStart, y:yStart},
+        imagePos: {x: 0, y: 0},
+        size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
     }));
 }
 
@@ -176,11 +176,9 @@ function putPistolOnMap(xStart,yStart) {
         name: 'glock17',
         kindBullets: 'glock17lAmmo',
         damage: 20,
-        srcImage:'../img/axe.png',
         countBullets: 72,
         countBulletsInHolder: 10,
-        width: 100,
-        height: 100,
+        imagePos: {x: 0, y: 0},
         pos: {x: xStart, y: yStart},
         timeBetweenShots: 1200
     }));
@@ -188,11 +186,11 @@ function putPistolOnMap(xStart,yStart) {
 
 function putAk47AmmoOnMap(xStart,yStart) {
     things.push(new Thing({
-        'name': 'ak47Ammo',
-        'srcImage': '../img/backpack.png',
-        'value': 20,
-        'pos': {x:xStart, y:yStart},
-        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+        name: 'ak47Ammo',
+        value: 20,
+        pos: {x:xStart, y:yStart},
+        imagePos: {x: 0, y: 0},
+        size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
     }));
 }
 
@@ -201,11 +199,9 @@ function putAk47OnMap(xStart,yStart) {
         name: 'ak47',
         kindBullets: 'ak47Ammo',
         damage: 20,
-       //srcImage:'../img/axe.png',
         countBullets: 72,
         countBulletsInHolder: 10,
-        width: 100,
-        height: 100,
+        imagePos: {x: 0, y: 0},
         pos: {x: xStart, y: yStart},
         timeBetweenShots: 1200
     }));
@@ -213,11 +209,11 @@ function putAk47OnMap(xStart,yStart) {
 
 function putM16AmmoOnMap(xStart,yStart) {
     things.push(new Thing({
-        'name': 'm16Ammo',
-        'srcImage': '../img/backpack.png',
-        'value': 20,
-        'pos': {x:xStart, y:yStart},
-        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+        name: 'm16Ammo',
+        value: 20,
+        pos: {x:xStart, y:yStart},
+        imagePos: {x: 0, y: 0},
+        size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
     }));
 }
 
@@ -226,11 +222,9 @@ function putM16OnMap(xStart,yStart) {
         name: 'm16',
         kindBullets: 'm16Ammo',
         damage: 30,
-        //srcImage:'../img/axe.png',
         countBullets: 90,
         countBulletsInHolder: 30,
-        width: 100,
-        height: 100,
+        imagePos: {x: 0, y: 0},
         pos: {x: xStart, y: yStart},
         timeBetweenShots: 1200
     }));
@@ -238,11 +232,11 @@ function putM16OnMap(xStart,yStart) {
 
 function putAWPAmmoOnMap(xStart,yStart) {
     things.push(new Thing({
-        'name': 'AWPAmmo',
-        'srcImage': '../img/backpack.png',
-        'value': 20,
-        'pos': {x:xStart, y:yStart},
-        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+        name: 'AWPAmmo',
+        value: 20,
+        pos: {x:xStart, y:yStart},
+        imagePos: {x: 0, y: 0},
+        size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
     }));
 }
 
@@ -251,11 +245,9 @@ function putAWPOnMap(xStart,yStart) {
         name: 'AWP',
         kindBullets: 'AWPAmmo',
         damage: 150,
-        //srcImage:'../img/axe.png',
         countBullets: 30,
         countBulletsInHolder: 10,
-        width: 100,
-        height: 100,
+        imagePos: {x: 0, y: 0},
         pos: {x: xStart, y: yStart},
         timeBetweenShots: 1200
     }));
@@ -267,11 +259,9 @@ function setStandartPlayerKit() {
         name: 'glock17',
         kindBullets: 'glock17lAmmo',
         damage: 20,
-        //srcImage:'../img/axe.png',
         countBullets: 72,
         countBulletsInHolder: 10,
-        width: 100,
-        height: 100,
+        imagePos: {x: 0, y: 0},
         pos: {x: 0, y: 0},
         timeBetweenShots: 1200
     }));
@@ -279,10 +269,10 @@ function setStandartPlayerKit() {
     player.currentObjInHand = player.inventory.getItems()[0];
     //add medicine kit to inventory
     player.putThingInInventory(new Thing({
-        'name': 'medicineKit',
-        'srcImage': '../img/heart.png',
-        'value': 50,
-        'pos': {x:0, y:0},
-        'size': {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
+        name: 'medicineKit',
+        value: 50,
+        pos: {x:0, y:0},
+        imagePos: {x: 0, y: 0},
+        size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
     }));
 }
