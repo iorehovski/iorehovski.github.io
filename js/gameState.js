@@ -55,3 +55,4 @@ function checkCollisionEnemies(enemies) {
         }
     }
 }
+
