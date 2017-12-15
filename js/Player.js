@@ -181,7 +181,7 @@ class Player {
 		//R - recharge
 		if(keyIsDown(82)){
 			if(this.currentObjInHand instanceof Weapon){
-				this.currentObjInHand.initRecharge();
+				this.currentObjInHand.initRecharge(this.currentObjInHand.name);
 			}
 		}
 
@@ -203,6 +203,7 @@ class Player {
 	}
 
 	changePlayerSkin(weaponName) {
+		console.log('skin: ' + weaponName);
 		switch(weaponName) {
 			case 'glock17': 
 				this.currentSprite = this.playerSprites[0];
@@ -214,18 +215,20 @@ class Player {
 				this.bodySpriteCurrentWidth = 150;
 				this.bodySpriteCurrentX = 20;
 				break;
-			case 'm16': 
+			case 'm4a1': 
 				this.currentSprite = this.playerSprites[2];
 				this.bodySpriteCurrentWidth = 150;
 				this.bodySpriteCurrentX = 20;
 				break;
 			case 'awp':
 				this.currentSprite = this.playerSprites[3];
-				this.bodySpriteCurrentWidth = 150;
-				this.bodySpriteCurrentX = 20;
+				this.bodySpriteCurrentWidth = 165;
+				this.bodySpriteCurrentX = 30;
 				break;
 			default:
 				this.currentSprite = this.playerSprites[0];
+				this.bodySpriteCurrentWidth = 115;
+				this.bodySpriteCurrentX = 0;
 				break;
 		}
 	}

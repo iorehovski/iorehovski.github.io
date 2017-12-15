@@ -34,13 +34,9 @@ class Weapon {
     }
     
     makeShot(player) {
-        console.log(this.canShoot);
         if(this.bulletsHolder > 0 && this.canShoot && !this.reloadIsNow) {
             
-            if(!sounds.pistol.isPlaying()) {
-                sounds.pistol.play();
-            }
-
+            this.playGunShotSound(player.currentObjInHand.name);
              //delay between shots
             this.canShoot = false;
             setTimeout(this.allowShoot.bind(this), this.timeBetweenShots);
@@ -71,13 +67,13 @@ class Weapon {
             });
         }
         if(this.bulletsHolder == 0 && this.bulletsCount > 0 &&  !this.reloadIsNow) {  //update bullets holder
-            this.initRecharge();// 90*
+            this.initRecharge(player.currentObjInHand.name);
         }
     }
     
-    initRecharge() {
+    initRecharge(gunName) {
         if(!this.reloadIsNow){
-            sounds.pistolReload.play();
+            this.playGunReloadSound(gunName);
             this.reload = -Math.PI / 2; 
             this.reloadIsNow = true;
             setTimeout(this.recharge.bind(this), this.timeReload);
@@ -130,4 +126,37 @@ class Weapon {
         return true;
     }
 
+    playGunShotSound(weaponName) {
+		switch(weaponName) {
+			case 'glock17': 
+                sounds.glock17.play();
+				break;
+			case 'ak47':
+                sounds.ak47.play();
+				break;
+			case 'm4a1': 
+                sounds.m4a1.play();
+				break;
+			case 'awp':
+                sounds.awp.play();
+				break;
+		}
+    }
+    
+    playGunReloadSound(weaponName) {
+		switch(weaponName) {
+			case 'glock17': 
+                sounds.glock17Reload.play();
+				break;
+			case 'ak47':
+                sounds.ak47Reload.play();
+				break;
+			case 'm4a1': 
+                sounds.m4a1Reload.play();
+				break;
+			case 'awp':
+                sounds.awpReload.play();
+				break;
+		}
+	}
 }

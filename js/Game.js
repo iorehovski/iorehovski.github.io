@@ -25,8 +25,15 @@ function preload() {
     spritesBlood = loadImage('../img/blood_spot.png');
     gunSpriteSheet = loadImage('../img/gunSpriteSheet.png');
 
-    sounds.pistol = loadSound('../audio/gun_40_smith_wesson.wav');
-    sounds.pistolReload = loadSound('../audio/gun_reload.mp3');
+    sounds.glock17 = loadSound('../audio/gun/pistol_shot.wav');
+    sounds.glock17Reload = loadSound('../audio/gun/pistol_reload.mp3');
+    sounds.ak47 = loadSound('../audio/gun/ak47_shot.mp3');
+    sounds.ak47Reload = loadSound('../audio/gun/ak47_reload.mp3');
+    sounds.m4a1 = loadSound('../audio/gun/m4a1_shot.mp3');
+    sounds.m4a1Reload = loadSound('../audio/gun/m4a1_reload.mp3');
+    sounds.awp = loadSound('../audio/gun/awp_shot.mp3');
+    sounds.awpReload = loadSound('../audio/gun/awp_reload.mp3');
+
     sounds.music = {};
     
     //sounds.music.track1 = loadSound('../audio/Resident_Evil_movie_soundtrack_2008.mp3');
@@ -34,7 +41,7 @@ function preload() {
 
     playerSprites[0] = loadImage('../img/player/survivor-glock.png');
     playerSprites[1] = loadImage('../img/player/survivor-ak47.png');
-    playerSprites[2] = loadImage('../img/player/survivor-m16.png');
+    playerSprites[2] = loadImage('../img/player/survivor-m4a1.png');
     playerSprites[3] = loadImage('../img/player/survivor-awp.png');
 }
 
@@ -55,8 +62,15 @@ function setup() {
 
     background(BGCOLOR);
 
-    sounds.pistol.setVolume(0.3);
-    sounds.pistolReload.setVolume(0.3);
+    sounds.glock17.setVolume(0.3);
+    sounds.glock17Reload.setVolume(0.3);
+    sounds.ak47.setVolume(0.3);
+    sounds.ak47Reload.setVolume(0.3);
+    sounds.m4a1.setVolume(0.3);
+    sounds.m4a1Reload.setVolume(0.3);
+    sounds.awp.setVolume(0.3);
+    sounds.awpReload.setVolume(0.3);
+
 
     setStandartPlayerKit();
 
@@ -64,13 +78,12 @@ function setup() {
     putAk47AmmoOnMap(100, 100);
     putAk47OnMap(200, 200);
     putAk47AmmoOnMap(200,100);
-    putM16AmmoOnMap(300,100);
-    putM16OnMap(300,200);
+    putM4A1AmmoOnMap(300,100);
+    putM4A1OnMap(300,200);
 
     itemsGenerator = new Generation(map);
     itemsGenerator = new Generation(map.map);
 
-    console.log(things);
 }
 
 function draw() {
@@ -185,7 +198,7 @@ function putPistolOnMap(xStart,yStart) {
     things.push(new Weapon({	//pistol
         name: 'glock17',
         kindBullets: 'glock17Ammo',
-        damage: 20,
+        damage: 40,
         countBullets: 72,
         countBulletsInHolder: 10,
         imagePos: {x: 0, y: 0},
@@ -208,16 +221,16 @@ function putAk47OnMap(xStart,yStart) {
     things.push(new Weapon({	//pistol
         name: 'ak47',
         kindBullets: 'ak47Ammo',
-        damage: 20,
-        countBullets: 72,
-        countBulletsInHolder: 10,
+        damage: 100,
+        countBullets: 60,
+        countBulletsInHolder: 30,
         imagePos: {x: 100, y: 0},
         pos: {x: xStart, y: yStart},
         timeBetweenShots: 1200
     }));
 }
 
-function putM16AmmoOnMap(xStart,yStart) {
+function putM4A1AmmoOnMap(xStart,yStart) {
     things.push(new Thing({
         name: 'm16Ammo',
         value: 20,
@@ -227,22 +240,22 @@ function putM16AmmoOnMap(xStart,yStart) {
     }));
 }
 
-function putM16OnMap(xStart,yStart) {
+function putM4A1OnMap(xStart,yStart) {
     things.push(new Weapon({	//pistol
-        name: 'm16',
-        kindBullets: 'm16Ammo',
-        damage: 30,
-        countBullets: 90,
+        name: 'm4a1',
+        kindBullets: 'm4a1Ammo',
+        damage: 80,
+        countBullets: 60,
         countBulletsInHolder: 30,
         imagePos: {x: 200, y: 0},
         pos: {x: xStart, y: yStart},
-        timeBetweenShots: 1200
+        timeBetweenShots: 160
     }));
 }
 
 function putAWPAmmoOnMap(xStart,yStart) {
     things.push(new Thing({
-        name: 'AWPAmmo',
+        name: 'awpAmmo',
         value: 20,
         pos: {x:xStart, y:yStart},
         imagePos: {x: 400, y: 0},
@@ -252,14 +265,14 @@ function putAWPAmmoOnMap(xStart,yStart) {
 
 function putAWPOnMap(xStart,yStart) {
     things.push(new Weapon({	//pistol
-        name: 'AWP',
-        kindBullets: 'AWPAmmo',
-        damage: 150,
-        countBullets: 30,
-        countBulletsInHolder: 10,
+        name: 'awp',
+        kindBullets: 'awpAmmo',
+        damage: 600,
+        countBullets: 15,
+        countBulletsInHolder: 1,
         imagePos: {x: 300, y: 0},
         pos: {x: xStart, y: yStart},
-        timeBetweenShots: 1200
+        timeBetweenShots: 3000
     }));
 }
 
