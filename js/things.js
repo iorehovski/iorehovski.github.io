@@ -5,7 +5,7 @@ class Thing {
         this.pos = kit.pos;
         this.imagePos = kit.imagePos;
         this.size = kit.size;
-        this.img = loadImage(SPRITE_THINGS);
+        this.img = loadImage(ITEMS_SPRITE);
         this.count = 1;
     }
     
@@ -13,13 +13,15 @@ class Thing {
         image(this.img,
             this.pos.x,
             this.pos.y,
-            INVENTORY_THING_SIZE,
-            INVENTORY_THING_SIZE,
+            ITEM_SIZE,
+            ITEM_SIZE,
             this.imagePos.x, 
             this.imagePos.y,
-            INVENTORY_THING_SIZE,
-            INVENTORY_THING_SIZE);
+            60,
+            60,
+        );
     }
+
     addThing() {
         this.count++;
     }

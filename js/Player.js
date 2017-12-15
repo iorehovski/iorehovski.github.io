@@ -118,10 +118,6 @@ class Player {
 		}
 	}
 
-	handHitAnimation() {
-
-	}
-
 	controller() {
 		
 		//w
@@ -174,8 +170,7 @@ class Player {
 		if(keyIsDown(53)){
 			this.currentObjInHand = this.inventory.getItems()[4];
 			this.changePlayerSkin(this.currentObjInHand.name);
-		}
-		
+		}	
 		
 
 		//R - recharge

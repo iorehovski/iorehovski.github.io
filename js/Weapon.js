@@ -3,7 +3,7 @@ class Weapon {
         this.name = weapon.name;
         this.kindBullets = weapon.kindBullets;
         this.damage = weapon.damage;
-        this.img = loadImage(SPRITE_THINGS);
+        this.img = loadImage(GUN_SPRITE_SHEET);
         this.pos = weapon.pos;
         this.imagePos = weapon.imagePos;
 
