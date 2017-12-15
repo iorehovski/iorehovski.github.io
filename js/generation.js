@@ -54,7 +54,7 @@ class Generation {
     putAk47AmmoOnMap(xStart, yStart) {
         this.items.push(new Thing({
             name: 'ak47Ammo',
-            value: 20,
+            value: 30,
             pos: {x:xStart, y:yStart},
             imagePos: {x: 120, y: 0},
             size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT},
@@ -63,7 +63,7 @@ class Generation {
     
     putM4A1AmmoOnMap(xStart, yStart) {
         this.items.push(new Thing({
-            name: 'm16Ammo',
+            name: 'm4a1Ammo',
             value: 20,
             pos: {x:xStart, y:yStart},
             imagePos: {x: 60, y: 0},
@@ -74,7 +74,7 @@ class Generation {
     putAWPAmmoOnMap(xStart, yStart) {
         this.items.push(new Thing({
             name: 'awpAmmo',
-            value: 20,
+            value: 5,
             pos: {x:xStart, y:yStart},
             imagePos: {x: 180, y: 0},
             size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT},
@@ -103,7 +103,7 @@ class Generation {
             countBulletsInHolder: 30,
             imagePos: {x: 100, y: 0},
             pos: {x: xStart, y: yStart},
-            timeBetweenShots: 1200
+            timeBetweenShots: 140
         }));
     }
     
@@ -112,11 +112,11 @@ class Generation {
             name: 'm4a1',
             kindBullets: 'm4a1Ammo',
             damage: 80,
-            countBullets: 60,
-            countBulletsInHolder: 30,
+            countBullets: 40,
+            countBulletsInHolder: 20,
             imagePos: {x: 200, y: 0},
             pos: {x: xStart, y: yStart},
-            timeBetweenShots: 160
+            timeBetweenShots: 140
         }));
     }
     
@@ -125,7 +125,7 @@ class Generation {
             name: 'awp',
             kindBullets: 'awpAmmo',
             damage: 600,
-            countBullets: 15,
+            countBullets: 10,
             countBulletsInHolder: 1,
             imagePos: {x: 300, y: 0},
             pos: {x: xStart, y: yStart},

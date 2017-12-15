@@ -13,8 +13,8 @@ class Player {
 
 		this.currentObjInHand = this.inventory.getItems()[0]; //current Object in hand
 		
-		this.playerSpeed = 8;
-		this.boostedPlayerSpeed = this.playerSpeed * 5;
+		this.playerSpeed = 5;
+		this.boostedPlayerSpeed = this.playerSpeed * 2;
 
 		this.barsX = 10;
 		this.barsY = 200;
@@ -189,7 +189,7 @@ class Player {
 				this.blockRunning = true;
 			}
 		} else {
-			this.playerSpeed = this.boostedPlayerSpeed / 5;
+			this.playerSpeed = this.boostedPlayerSpeed / 2;
 		}
 	}
 

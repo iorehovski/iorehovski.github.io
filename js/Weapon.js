@@ -19,14 +19,17 @@ class Weapon {
         this.canShoot = true;
 
         this.bullets = new Bullet();
+
+        this.sizeW = weapon.w | INVENTORY_THING_SIZE;
+        this.sizeH = weapon.h | INVENTORY_THING_SIZE;
     }
 
     update() {
         image(this.img,
             this.pos.x,
             this.pos.y,
-            INVENTORY_THING_SIZE,
-            INVENTORY_THING_SIZE,
+            this.sizeW,
+            this.sizeH,
             this.imagePos.x, 
             this.imagePos.y,
             INVENTORY_THING_SIZE,
@@ -35,6 +38,8 @@ class Weapon {
     
     makeShot(player) {
         if(this.bulletsHolder > 0 && this.canShoot && !this.reloadIsNow) {
+
+            
             
             this.playGunShotSound(player.currentObjInHand.name);
              //delay between shots
