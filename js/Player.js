@@ -153,27 +153,27 @@ class Player {
 			//1
 		if(keyIsDown(49)){
 			this.currentObjInHand = this.inventory.getItems()[0];
-			this.changePlayerSkin(this.currentObjInHand);
+			this.changePlayerSkin(this.currentObjInHand.name);
 		}
 		//2
 		if(keyIsDown(50)){
 			this.currentObjInHand = this.inventory.getItems()[1];
-			this.changePlayerSkin(this.currentObjInHand);
+			this.changePlayerSkin(this.currentObjInHand.name);
 		}
 		//3
 		if(keyIsDown(51)){
 			this.currentObjInHand = this.inventory.getItems()[2];
-			this.changePlayerSkin(this.currentObjInHand);
+			this.changePlayerSkin(this.currentObjInHand.name);
 		}
 		//4
 		if(keyIsDown(52)){
 			this.currentObjInHand = this.inventory.getItems()[3];
-			this.changePlayerSkin(this.currentObjInHand);
+			this.changePlayerSkin(this.currentObjInHand.name);
 		}
 		//5
 		if(keyIsDown(53)){
 			this.currentObjInHand = this.inventory.getItems()[4];
-			this.changePlayerSkin(this.currentObjInHand);
+			this.changePlayerSkin(this.currentObjInHand.name);
 		}
 		
 		
@@ -181,7 +181,7 @@ class Player {
 		//R - recharge
 		if(keyIsDown(82)){
 			if(this.currentObjInHand instanceof Weapon){
-				this.currentObjInHand.initRecharge();
+				this.currentObjInHand.initRecharge(this.currentObjInHand.name);
 			}
 		}
 
@@ -202,25 +202,35 @@ class Player {
 		return this.inventory.pushItem(thing);
 	}
 
-	changePlayerSkin(currentObjectInHand) {
-		if(currentObjectInHand instanceof Weapon || currentObjectInHand  instanceof Thing) {
-			switch(currentObjectInHand.name) {
-				case 'glock17': 
-					this.currentSprite = this.playerSprites[0];
-					break;
-				case 'ak47':
-					this.currentSprite = this.playerSprites[1];
-					break;
-				case 'm16': 
-					this.currentSprite = this.playerSprites[2];
-					break;
-				case 'awp':
-					this.currentSprite = this.playerSprites[3];
-					break;
-				default:
-					this.currentSprite = this.playerSprites[0];
-					break;
-			}
+	changePlayerSkin(weaponName) {
+		console.log('skin: ' + weaponName);
+		//if(currentObjectInHand instanceof Weapon || currentObjectInHand  instanceof Thing)
+		switch(weaponName) {
+			case 'glock17': 
+				this.currentSprite = this.playerSprites[0];
+				this.bodySpriteCurrentWidth = 115;
+				this.bodySpriteCurrentX = 0;
+				break;
+			case 'ak47':
+				this.currentSprite = this.playerSprites[1];
+				this.bodySpriteCurrentWidth = 150;
+				this.bodySpriteCurrentX = 20;
+				break;
+			case 'm4a1': 
+				this.currentSprite = this.playerSprites[2];
+				this.bodySpriteCurrentWidth = 150;
+				this.bodySpriteCurrentX = 20;
+				break;
+			case 'awp':
+				this.currentSprite = this.playerSprites[3];
+				this.bodySpriteCurrentWidth = 165;
+				this.bodySpriteCurrentX = 30;
+				break;
+			default:
+				this.currentSprite = this.playerSprites[0];
+				this.bodySpriteCurrentWidth = 115;
+				this.bodySpriteCurrentX = 0;
+				break;
 		}
 	
 	}
