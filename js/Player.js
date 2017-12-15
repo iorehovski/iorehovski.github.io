@@ -27,7 +27,7 @@ class Player {
 		this.currentSprite = this.playerSprites[0];
 		
 		this.bodySpriteCurrentWidth = 115;
-		this.bodySpriteCurrentY = 0;
+		this.bodySpriteCurrentX = 0;
 		
 	}
 
@@ -49,10 +49,10 @@ class Player {
 
 		imageMode(CENTER);
 		//angleMode(DEGREES);
-		ellipse(0, -35, this.rHand, this.rHand); //left hand
-		ellipse(0, 35, this.rHand, this.rHand);
+		//ellipse(0, -35, this.rHand, this.rHand); //left hand
+		//ellipse(0, 35, this.rHand, this.rHand);
 		rotate(-0.1);
-		image(this.currentSprite, 0, 0, this.bodySpriteCurrentWidth, 115);
+		image(this.currentSprite, this.bodySpriteCurrentX, 0, this.bodySpriteCurrentWidth, 115);
 		//ellipse(0, 0, this.r, this.r); //body
 		 //right hand
 		
@@ -207,20 +207,22 @@ class Player {
 			case 'glock17': 
 				this.currentSprite = this.playerSprites[0];
 				this.bodySpriteCurrentWidth = 115;
-				this.bodySpriteCurrentY = 0;
+				this.bodySpriteCurrentX = 0;
 				break;
 			case 'ak47':
 				this.currentSprite = this.playerSprites[1];
 				this.bodySpriteCurrentWidth = 150;
-				this.bodySpriteCurrentY = 20;
+				this.bodySpriteCurrentX = 20;
 				break;
 			case 'm16': 
 				this.currentSprite = this.playerSprites[2];
 				this.bodySpriteCurrentWidth = 150;
+				this.bodySpriteCurrentX = 20;
 				break;
 			case 'awp':
 				this.currentSprite = this.playerSprites[3];
 				this.bodySpriteCurrentWidth = 150;
+				this.bodySpriteCurrentX = 20;
 				break;
 			default:
 				this.currentSprite = this.playerSprites[0];
