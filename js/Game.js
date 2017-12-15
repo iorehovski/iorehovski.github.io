@@ -75,7 +75,7 @@ function setup() {
     setStandartPlayerKit();
 
     putAWPOnMap(100, 200);
-    putAk47AmmoOnMap(100, 100);
+    putAWPAmmoOnMap(100, 100);
     putAk47OnMap(200, 200);
     putAk47AmmoOnMap(200,100);
     putM4A1AmmoOnMap(300,100);
@@ -162,9 +162,11 @@ function updateSounds() {
 function updateThings() {
     things.forEach(function(item,index,obj){
         item.update();
-        if(distantionFromAtoB(player.pos,item.pos) < INVENTORY_THING_SIZE / 2){
-            player.putThingInInventory(item);
-            obj.splice(index,1);
+        if(distantionFromAtoB({x: player.pos.x + INVENTORY_THING_SIZE / 2, y:player.pos.y + INVENTORY_THING_SIZE / 2},item.pos) < INVENTORY_THING_SIZE * 2){
+            //put thing in inventory and remove it from map
+            if(player.putThingInInventory(item)){
+                obj.splice(index,1);
+            }
         }
     });
 }
