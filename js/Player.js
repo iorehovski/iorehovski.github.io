@@ -204,10 +204,12 @@ class Player {
 			case 'glock17': 
 				this.currentSprite = this.playerSprites[0];
 				this.bodySpriteCurrentWidth = 115;
+				this.bodySpriteCurrentY = 0;
 				break;
 			case 'ak47':
 				this.currentSprite = this.playerSprites[1];
 				this.bodySpriteCurrentWidth = 150;
+				this.bodySpriteCurrentY = 20;
 				break;
 			case 'm16': 
 				this.currentSprite = this.playerSprites[2];
