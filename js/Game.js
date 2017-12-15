@@ -48,6 +48,7 @@ function preload() {
 }
 
 function setup() {
+
     enemies = [];
     frameRate(60);
     createCanvas(WIN_WIDTH, WIN_HEIGHT);
@@ -84,6 +85,7 @@ function setup() {
     itemsGenerator.putAk47AmmoOnMap(200,100);
     itemsGenerator.putM4A1AmmoOnMap(300,100);
     itemsGenerator.putM4A1OnMap(300,200);
+    itemsGenerator.putMedicineKitOnMap(400, 400);
 
 }
 
@@ -182,26 +184,5 @@ function setStandartPlayerKit() {
         imagePos: {x: 0, y: 0},
         pos: {x: 0, y: 0},
         timeBetweenShots: 1200
-    }));
-
-    player.putThingInInventory(new Weapon({	//pistol
-        name: 'ak47',
-        kindBullets: 'ak47Ammo',
-        damage: 100,
-        countBullets: 130,
-        countBulletsInHolder: 30,
-        imagePos: {x: 100, y: 0},
-        pos: {x: 0, y: 0},
-        timeBetweenShots: 100
-    }));
-
-    player.currentObjInHand = player.inventory.getItems()[0];
-    //add medicine kit to inventory
-    player.putThingInInventory(new Thing({
-        name: 'medicineKit',
-        value: 50,
-        pos: {x:0, y:0},
-        imagePos: {x: 500, y: 0},
-        size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT}
     }));
 }
