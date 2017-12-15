@@ -138,7 +138,7 @@ class Player {
 		}
 
 		//fire
-		if(keyIsDown(32)) {
+		if(keyIsDown(32) || mouseIsPressed) {
 			if(this.currentObjInHand instanceof Weapon){
 				this.currentObjInHand.makeShot(this);
 			}

@@ -6,7 +6,8 @@ class Inventory {
             {x:-90,y:225,empty: true},
             {x:-30,y:225,empty: true},
             {x:30,y:225,empty: true},
-            {x:90,y:225,empty: true}
+            {x:90,y:225,empty: true},
+            {x:150,y:225,empty: true}
         ];
         this.ceilSize = 60;
     }

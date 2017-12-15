@@ -154,15 +154,6 @@ function distantionFromAtoB(a,b) {
          + Math.pow(a.y - b.y,2)) ; 
 }
 
-
-function mouseClicked() {
-    
-    //fire
-    if(player.currentObjInHand instanceof Weapon) {
-        player.currentObjInHand.makeShot(player);
-    }
-};
-
 function updateSounds() {
     soundsQueue.forEach(function(item,index,obj){
         console.log(item)
@@ -172,7 +163,6 @@ function updateSounds() {
         }
     });
 }
-
 
 function setStandartPlayerKit() {
     //set standart inventory of player
