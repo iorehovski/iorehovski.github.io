@@ -50,14 +50,21 @@ class Inventory {
         return false;
     }
 
-    getItems() {
-        return this.inventoryThings;
+    getItem(id) {
+        return  id < this.inventoryThings.length ? this.inventoryThings[id] : 0;
     }
 
     removeItem(id) {
        
         if (id < this.inventoryThings.length) {
             this.inventoryThings.splice(id, 1);
+            
+            for(let i = this.inventoryCeil.length - 1; i >= 0; i--) {
+                if(!this.inventoryCeil[i].empty) {
+                    this.inventoryCeil[i].empty = true;
+                    break;
+                }
+            }
         }
     }
 

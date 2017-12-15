@@ -19,6 +19,7 @@ let soundsQueue = [];
 let things = [];    //things as medicine kit, ammo, weapons, etc. on the map
 
 let gameIsPaused = true;
+let keyIsPressed = false;
 
 function preload() {
     jsonMap = loadJSON('/js/mapJSON.json');
@@ -86,7 +87,7 @@ function setup() {
     itemsGenerator.putM4A1AmmoOnMap(300,100);
     itemsGenerator.putM4A1OnMap(300,200);
     itemsGenerator.putMedicineKitOnMap(400, 400);
-
+    itemsGenerator.putMedicineKitOnMap(500, 400);
 }
 
 function draw() {
@@ -185,4 +186,13 @@ function setStandartPlayerKit() {
         pos: {x: 0, y: 0},
         timeBetweenShots: 1200
     }));
+    player.currentObjInHand = player.inventory.getItem(0);
+}
+
+function keyPressed() {
+    keyIsPressed = true;
+}
+
+function keyReleased() {
+    keyIsPressed = false;
 }

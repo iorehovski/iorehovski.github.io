@@ -11,8 +11,6 @@ class Player {
 
 		this.queueBullets = null;
 
-		this.currentObjInHand = this.inventory.getItems()[0]; //current Object in hand
-		
 		this.playerSpeed = 5;
 		this.boostedPlayerSpeed = this.playerSpeed * 2;
 
@@ -28,6 +26,7 @@ class Player {
 		
 		this.bodySpriteCurrentWidth = 115;
 		this.bodySpriteCurrentX = 0;
+		
 		
 	}
 
@@ -227,14 +226,27 @@ class Player {
 	}
 
 	processingCurrentInventorySbj(index) {
-		this.currentObjInHand = this.inventory.getItems()[index];
+		this.currentObjInHand = this.inventory.getItem(index);
 		if(this.currentObjInHand) {
 			this.changePlayerSkin(this.currentObjInHand.name);
 			if(this.currentObjInHand.name == 'medicineKit') {
-				this.healthBar.w + this.currentObjInHand.value > this.healthBar.value ?
-				this.healthBar.w = this.healthBar.value :
-				this.healthBar.w += this.currentObjInHand.value;
-				this.inventory.removeItem(index);
+				if((this.healthBar.w + this.currentObjInHand.value) > 150) {
+					this.healthBar.w = 150;
+					this.healthBar.value = 150;
+				}else {
+					this.healthBar.w += this.currentObjInHand.value;
+					this.healthBar.value += this.currentObjInHand.value;
+				}
+				if(keyIsPressed){
+					console.log(this.currentObjInHand.count ) 
+					if(this.currentObjInHand.count == 1){
+						this.inventory.removeItem(index);
+					}else {
+						this.currentObjInHand.count--;
+					}
+					keyIsPressed = false;
+				}
+
 			}		
 		}
 	}
