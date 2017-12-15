@@ -231,6 +231,8 @@ class Player {
 		if(this.currentObjInHand) {
 			this.changePlayerSkin(this.currentObjInHand.name);
 			if(this.currentObjInHand.name == 'medicineKit') {
+				this.healthBar.w + this.currentObjInHand.value > this.healthBar.value ?
+				this.healthBar.w = this.healthBar.value :
 				this.healthBar.w += this.currentObjInHand.value;
 				this.inventory.removeItem(index);
 			}		
