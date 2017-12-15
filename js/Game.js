@@ -17,7 +17,7 @@ let soundsQueue = [];
 
 let things = [];    //things as medicine kit, ammo, weapons, etc. on the map
 
-let isGame = false;
+let gameIsPaused = true;
 
 function preload() {
     jsonMap = loadJSON('/js/mapJSON.json');
@@ -74,6 +74,10 @@ function setup() {
 }
 
 function draw() {
+    if(gameIsPaused) {
+        return;
+    }
+
     camera(player.pos.x - WIN_WIDTH_HALF, player.pos.y - WIN_HEIGHT_HALF);
 
     background(BGCOLOR);

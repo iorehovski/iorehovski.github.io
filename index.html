@@ -17,27 +17,77 @@
 				overflow-y: hidden;
 				cursor: url('img/player/crosshair.cur'), crosshair;
 			}
-			.wrap{
+			.wrap {
 				width: 100%;
 				height: 100%;
 				position: absolute;
-				
+				display: flex;
+				justify-content: center;
+				align-items: center;
 			}
-			.settings{
-				position: absolute;
-				left: 0;
-				right: 0;
-				margin: auto;
-				width: 700px;
+			.startMenu {
+				width: 100%;
 				height: 100%;
-				background: rgb(54, 52, 52);
-				opacity: 0.5;
+				background: url('img/startMenuBackground.png');
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.menuField {
+				width: 500px;
+				height: 400px;
+				background: rgba(99, 95, 95,0.8);
+				display: flex;
+			}
+			.fieldMenu{
+				width: 500px;
+				height: 100px;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 35px;
+				text-shadow: 1px 2px 20px black;
+				letter-spacing: 2px;
+				color: white;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.fieldMenu:hover {
+				background: rgba(138, 133, 133,0.8);
+				cursor: pointer;
+			}
+			.fieldMenu:active {
+				background: rgba(90, 81, 81,0.8);
+				cursor: pointer;
+			}
+
+			.pauseMenu {
+				width: 500px;
+				height: 600px;
+				background: rgba(99, 95, 95,0.8);
+				display:none;
+			}
+
+			.pauseIndicator {
+				position: absolute;
+				width:30px;
+				height: 70px;
+				border-left: 15px solid white;
+				border-right: 15px solid white;
+				top: 20px;
+				right: 20px;
+				/* background: rgb(230, 191, 191); */
+				display: none;	
 			}
 		</style>
 		<div class="wrap">
-
-			<div class="startMenu"></div>
-			<div class="pauseMenu"></div>
+			<div class="startMenu">
+				<div class="fieldMenu startBtn">Start</div>
+			</div>
+			<div class="pauseMenu">
+				<div class="fieldMenu resumeBtn">Resume</div>
+			</div>
+			<div class="pauseIndicator"></div>
 		</div>
 
 		<script type="text/javascript" src="js/p5js/p5.min.js"></script>
