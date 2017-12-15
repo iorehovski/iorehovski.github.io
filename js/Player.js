@@ -103,6 +103,7 @@ class Player {
 		this.barsX = this.pos.x - WIN_WIDTH_HALF + 10;
 		this.barsY = this.pos.y + 225;
 		this.healthBar.update(this.barsX, this.barsY);
+		
 		//this.hungerBar.update(this.barsX, this.barsY + 25);
 		//this.coldBar.update(this.barsX, this.barsY + 25);
 		this.enduranceBar.update(this.barsX, this.barsY + 25);
@@ -148,28 +149,23 @@ class Player {
 		
 			//1
 		if(keyIsDown(49)){
-			this.currentObjInHand = this.inventory.getItems()[0];
-			this.changePlayerSkin(this.currentObjInHand.name);
+			this.processingCurrentInventorySbj(0);
 		}
 		//2
 		if(keyIsDown(50)){
-			this.currentObjInHand = this.inventory.getItems()[1];
-			this.changePlayerSkin(this.currentObjInHand.name);
+			this.processingCurrentInventorySbj(1);
 		}
 		//3
 		if(keyIsDown(51)){
-			this.currentObjInHand = this.inventory.getItems()[2];
-			this.changePlayerSkin(this.currentObjInHand.name);
+			this.processingCurrentInventorySbj(2);
 		}
 		//4
 		if(keyIsDown(52)){
-			this.currentObjInHand = this.inventory.getItems()[3];
-			this.changePlayerSkin(this.currentObjInHand.name);
+			this.processingCurrentInventorySbj(3);
 		}
 		//5
 		if(keyIsDown(53)){
-			this.currentObjInHand = this.inventory.getItems()[4];
-			this.changePlayerSkin(this.currentObjInHand.name);
+			this.processingCurrentInventorySbj(4);
 		}	
 		
 
@@ -230,4 +226,14 @@ class Player {
 	
 	}
 
+	processingCurrentInventorySbj(index) {
+		this.currentObjInHand = this.inventory.getItems()[index];
+		if(this.currentObjInHand) {
+			this.changePlayerSkin(this.currentObjInHand.name);
+			if(this.currentObjInHand.name == 'medicineKit') {
+				this.healthBar.w += this.currentObjInHand.value;
+				this.inventory.removeItem(index);
+			}		
+		}
+	}
 }

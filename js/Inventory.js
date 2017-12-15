@@ -55,6 +55,7 @@ class Inventory {
     }
 
     removeItem(id) {
+       
         if (id < this.inventoryThings.length) {
             this.inventoryThings.splice(id, 1);
         }
@@ -78,8 +79,7 @@ class Inventory {
                 rect(item.x,item.y,this.ceilSize,this.ceilSize);
             }
             
-            if(!item.empty) {
-                
+            if(!item.empty && currentThing) {
                 //shwo gun sprite in inventory panel
                 image(currentThing.img,item.x + 10, 
                     item.y + 5, 
