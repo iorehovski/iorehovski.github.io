@@ -14,8 +14,9 @@ class Inventory {
     pushItem(itemToAdd) {
 
         let added = false;
+        let addGunToGun = false;
         this.inventoryCeil.forEach(function(item, index, obj) {
-            if(added){
+            if(added || addGunToGun){
                 return;
             }
             if(!item.empty){
@@ -29,6 +30,11 @@ class Inventory {
                         this.inventoryThings[index].addThing();
                         added = true;
                     }
+                }else if(this.inventoryThings[index] instanceof Weapon && itemToAdd instanceof Weapon){
+                    if(itemToAdd.name == this.inventoryThings[index].name){
+                        added = false;
+                        addGunToGun = true;
+                    }
                 }
             }else {
                 if(itemToAdd.name == 'medicineKit' || itemToAdd instanceof Weapon ){
@@ -38,6 +44,10 @@ class Inventory {
                 }
             }
         }.bind(this));
+        if(added){
+            return true;
+        }
+        return false;
     }
 
     getItems() {
