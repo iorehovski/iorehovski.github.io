@@ -2,122 +2,36 @@
 <html>
 	<head>
 		<title>Alone With Death</title>
-		
+		<link href="./css/style.css" rel="stylesheet">
 	</head>
 	<body>
-		<style type="text/css">
-			body,html {
-				margin: 0px;
-				width: 100%;
-    			height: 100%;
-			}
-
-			html {
-				overflow-x: hidden;
-				overflow-y: hidden;
-				cursor: url('img/player/crosshair.cur'), crosshair;
-			}
-			.wrap {
-				width: 100%;
-				height: 100%;
-				position: absolute;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
-			.startMenu {
-				width: 100%;
-				height: 100%;
-				background: url('img/startMenuBackground.png');
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
-			.menuField {
-				width: 500px;
-				height: 400px;
-				background: rgba(99, 95, 95,0.8);
-				display: flex;
-			}
-			.fieldMenu{
-				width: 500px;
-				height: 100px;
-				font-family: Arial, Helvetica, sans-serif;
-				font-size: 35px;
-				text-shadow: 1px 2px 20px black;
-				letter-spacing: 2px;
-				color: white;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
-
-			.fieldMenu:hover {
-				background: rgba(138, 133, 133,0.8);
-				cursor: pointer;
-			}
-			.fieldMenu:active {
-				background: rgba(90, 81, 81,0.8);
-				cursor: pointer;
-			}
-
-			.pauseMenu {
-				width: 500px;
-				height: 600px;
-				background: rgba(99, 95, 95,0.8);
-				display:none;
-			}
-
-			.pauseIndicator {
-				position: absolute;
-				width:30px;
-				height: 70px;
-				border-left: 15px solid white;
-				border-right: 15px solid white;
-				top: 20px;
-				right: 20px;
-				/* background: rgb(230, 191, 191); */
-				display: none;	
-			}
-		</style>
-
-		<audio id="musicMainMenu" autoplay preload>
+		 
+			 <audio id="musicMainMenu" autoplay preload>
 			<source  src="./audio/Resident_Evil_movie_soundtrack_2008.mp3" type="audio/mp3">
 		</audio>
+		
 
 		<div class="wrap">
 			<div class="startMenu">
-				<div class="fieldMenu startBtn">Start</div>
+				<div class="gameName">Alone with Death</div>
+				<div class="fieldMenu startBtn">START</div>
 			</div>
 			<div class="pauseMenu">
-				<div class="fieldMenu resumeBtn">Resume</div>
+				<div class="fieldMenu resumeBtn">RESUME</div>
+			</div>
+			<div class="gameOverMenu">
+				<div class="titleGameOver">GAME OVER</div>
+				<div class="gameScore"></div>
+				<div class="fieldMenu restartBtn">TO MAIN MENU</div>
 			</div>
 			<div class="pauseIndicator"></div>
 		</div>
 
-		<script type="text/javascript" src="./js/p5js/p5.min.js"></script>
-		<script type="text/javascript" src="./js/p5js/p5.sound.min.js"></script>
-		<script type="text/javascript" src="./js/jquery/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/p5js/p5.min.js"></script>
+		<script type="text/javascript" src="js/p5js/p5.sound.min.js"></script>
+		<script type="text/javascript" src="js/jquery/jquery-3.2.1.min.js"></script>
 
-		<script type="text/javascript" src="./js/bundle.js"></script>
-
-	<!-- 	<script type="text/javascript" src="./js/events.js"></script>
-
-		<script type="text/javascript" src="./js/bars.js"></script>
-		<script type="text/javascript" src="./js/data.js"></script>
-		<script type="text/javascript" src="./js/map.js"></script>
-		<script type="text/javascript" src="./js/player.js"></script>
-		<script type="text/javascript" src="./js/gameState.js"></script>
-		<script type="text/javascript" src="./js/tile.js"></script>
-		<script type="text/javascript" src="./js/enemy.js"></script>
-		<script type="text/javascript" src="./js/weapon.js"></script>
-		<script type="text/javascript" src="./js/bullet.js"></script>
-		<script type="text/javascript" src="./js/collision.js"></script>
-		<script type="text/javascript" src="./js/inventory.js"></script>
-		<script type="text/javascript" src="./js/things.js"></script>
-		<script type="text/javascript" src="./js/blood.js"></script>
-		<script type="text/javascript" src="./js/generation.js"></script>
+		<script type="text/javascript" src="js/bundle.js"></script>
 		
-		<script type="text/javascript" src="js/game.js"></script> -->
 	</body>
 </html>

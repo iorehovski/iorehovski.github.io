@@ -1,0 +1,98 @@
+{
+    "contents" : [
+        {
+            "itemID" : 0,
+            "itemType" : "aid",
+            "name" : "aidKit",
+            "value" : 50,
+            "pos": {
+                "x": null, 
+                "y": null
+            },
+            "imagePos" : {
+                "x" : 240,
+                "y" : 0
+            },
+            "size": {
+                "w": 50,
+                "h": 50
+            }
+        }, 
+
+        {
+            "itemID" : 1,
+            "itemType" : "ammo",
+            "name" : "glock17Ammo",
+            "value" : 20,
+            "pos": {
+                "x": null, 
+                "y": null
+            },
+            "imagePos" : {
+                "x" : 0,
+                "y" : 0
+            },
+            "size": {
+                "w": 50,
+                "h": 50
+            }
+        }, 
+
+        {
+            "itemID" : 2,
+            "itemType" : "ammo",
+            "name" : "ak47Ammo",
+            "value" : 30,
+            "pos": {
+                "x": null, 
+                "y": null
+            },
+            "imagePos" : {
+                "x" : 120,
+                "y" : 0
+            },
+            "size": {
+                "w": 50,
+                "h": 50
+            }
+        }, 
+
+        {
+            "itemID" : 3,
+            "itemType" : "ammo",
+            "name" : "m4a1Ammo",
+            "value" : 20,
+            "pos": {
+                "x": null, 
+                "y": null
+            },
+            "imagePos" : {
+                "x" : 60,
+                "y" : 0
+            },
+            "size": {
+                "w": 50,
+                "h": 50
+            }
+        },
+
+        {
+            "itemID" : 4,
+            "itemType" : "ammo",
+            "name" : "awpAmmo",
+            "value" : 5,
+            "pos": {
+                "x": null, 
+                "y": null
+            },
+            "imagePos" : {
+                "x" : 180,
+                "y" : 0
+            },
+            "size": {
+                "w": 50,
+                "h": 50
+            }
+        }
+    ]
+}

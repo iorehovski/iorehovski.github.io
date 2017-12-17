@@ -1,0 +1,118 @@
+{
+    "contents" : [
+        {
+            "itemID" : 0,
+            "itemType" : "weapon",
+            "name" : "glock17",
+            "bulletType" : "glock17Ammo",
+            "damage": 40,
+            "bulletAmount": 34,
+            "bulletMagazineCapacity": 17,
+            "timeBetweenShots": 800,
+            "pos": {
+                "x": null, 
+                "y": null
+            },
+            "imagePos" : {
+                "x" : 0,
+                "y" : 0
+            },
+            "size": {
+                "w": 50,
+                "h": 50
+            }
+        }, 
+
+        {
+            "itemID" : 1,
+            "itemType" : "weapon",
+            "name" : "ak47",
+            "bulletType" : "ak47Ammo",
+            "damage": 120,
+            "bulletAmount": 60,
+            "bulletMagazineCapacity": 30,
+            "timeBetweenShots": 140,
+            "pos": {
+                "x": null, 
+                "y": null
+            },
+            "imagePos" : {
+                "x" : 100,
+                "y" : 0
+            },
+            "size": {
+                "w": 100,
+                "h": 100
+            }
+        },
+
+        {
+            "itemID" : 2,
+            "itemType" : "weapon",
+            "name" : "m4a1",
+            "bulletType" : "m4a1Ammo",
+            "damage": 100,
+            "bulletAmount": 40,
+            "bulletMagazineCapacity": 20,
+            "timeBetweenShots": 140,
+            "pos": {
+                "x": null, 
+                "y": null
+            },
+            "imagePos" : {
+                "x" : 200,
+                "y" : 0
+            },
+            "size": {
+                "w": 100,
+                "h": 100
+            }
+        }, 
+
+        {
+            "itemID" : 3,
+            "itemType" : "weapon",
+            "name" : "awp",
+            "bulletType" : "awpAmmo",
+            "damage": 600,
+            "bulletAmount": 10,
+            "bulletMagazineCapacity": 1,
+            "timeBetweenShots": 3000,
+            "pos": {
+                "x": null, 
+                "y": null
+            },
+            "imagePos" : {
+                "x" : 300,
+                "y" : 0
+            },
+            "size": {
+                "w": 100,
+                "h": 100
+            }
+        },
+
+        {
+            "itemID" : 4,
+            "itemType" : "weapon",
+            "name" : "RPG",
+            "bulletType" : "RPGAmmo",
+            "damage": 40,
+            "bulletAmount": 20,
+            "bulletMagazineCapacity": 10,
+            "timeBetweenShots": 800,
+            "pos": {
+                "x": null, 
+                "y": null
+            },
+            "imagePos" : {
+                "x" : 400,
+                "y" : 0
+            },
+            "size": {
+                "w": 100,
+                "h": 100
+            }
+        }
+    ]
+}

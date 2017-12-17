@@ -1,3 +1,231 @@
+let map;
+let player = {};
+let techData;
+let enemies;
+
+let jsonMap;
+let jsonItems;
+let jsonWeapon;
+
+let images;
+let blood;
+let spritesBlood; 
+let playerSprites = [];
+let gunSpriteSheet;
+let zimbieSprites = [];
+
+let itemsGenerator;
+let itemsSpriteSheet;
+
+let sounds = {};
+let soundsQueue = [];
+
+let things = [];    //things as medicine kit, ammo, weapons, etc. on the map
+
+let gameOver = false;
+let gameIsPaused = true;
+let keyIsPressed = false;
+
+let scoreFont;
+let ammoFont;
+
+
+let fpsValue;
+
+function preload() {
+    jsonMap = loadJSON(MAP_JSON_PATH);
+    jsonItems = loadJSON(ITEMS_JSON_PATH);
+    jsonWeapon = loadJSON(WEAPON_JSON_PATH);
+
+    scoreFont = loadFont('../fonts/SquadaOne-Regular.ttf');
+    ammoFont = loadFont('../fonts/SquadaOne-Regular.ttf');
+
+    images = loadImage('../img/terrainSet.png');
+    spritesBlood = loadImage('../img/blood_spot.png');
+    gunSpriteSheet = loadImage('../img/gunSpriteSheet.png');
+    itemsSpriteSheet = loadImage('../img/itemsSheet.png');
+
+    sounds.glock17 = loadSound('../audio/gun/pistol_shot.wav');
+    sounds.glock17Reload = loadSound('../audio/gun/pistol_reload.mp3');
+    sounds.ak47 = loadSound('../audio/gun/ak47_shot.mp3');
+    sounds.ak47Reload = loadSound('../audio/gun/ak47_reload.mp3');
+    sounds.m4a1 = loadSound('../audio/gun/m4a1_shot.mp3');
+    sounds.m4a1Reload = loadSound('../audio/gun/m4a1_reload.mp3');
+    sounds.awp = loadSound('../audio/gun/awp_shot.mp3');
+    sounds.awpReload = loadSound('../audio/gun/awp_reload.mp3');
+
+    sounds.music = {};
+    
+    //sounds.music.track1 = loadSound('../audio/Resident_Evil_movie_soundtrack_2008.mp3');
+    //sounds.music.track2 = loadSound('../audio/Resident_Evil_Corp_Umbrella.mp3');
+
+    zimbieSprites[0] = [];
+    for(let i = 0; i < 16; i++) {
+        zimbieSprites[0][i] = loadImage('../img/enemy/zombieNormal/skeleton-move_' + i + '.png');
+    }
+
+    playerSprites[0] = loadImage('../img/player/survivor-glock.png');
+    playerSprites[1] = loadImage('../img/player/survivor-ak47.png');
+    playerSprites[2] = loadImage('../img/player/survivor-m4a1.png');
+    playerSprites[3] = loadImage('../img/player/survivor-awp.png');
+
+}
+
+function setup() {
+
+    enemies = [];
+    frameRate(60);
+    createCanvas(WIN_WIDTH, WIN_HEIGHT);
+
+    player = new Player(ENTITY_DIAMETR / 2, {'x': 2500, 'y': 1700}, playerSprites);
+    map = new Map({
+        'x': 0,
+        'y': 0
+    });
+
+    map.imagesSet = images;
+    map.createMap(jsonMap);
+
+    itemsGenerator = new Generation(map.map, jsonItems, jsonWeapon, player, enemies, zimbieSprites[0]);
+    setInterval(function() {
+        itemsGenerator.findEnemiesOnScreen(enemies, player.pos);
+    }.bind(this), 2000);
+
+    blood = new Blood();
+
+    background(BGCOLOR);
+
+    sounds.glock17.setVolume(0.3);
+    sounds.glock17Reload.setVolume(0.3);
+    sounds.ak47.setVolume(0.3);
+    sounds.ak47Reload.setVolume(0.3);
+    sounds.m4a1.setVolume(0.3);
+    sounds.m4a1Reload.setVolume(0.3);
+    sounds.awp.setVolume(0.3);
+    sounds.awpReload.setVolume(0.3);
+
+    setStandartPlayerKit();
+
+    //set fps update time
+    setInterval(function() {
+        fpsValue = frameRate().toFixed(0);
+    }.bind(this), 500);
+
+    itemsGenerator.addWeapon(200, 200, 1);
+    itemsGenerator.addWeapon(300, 200, 2);
+    itemsGenerator.addWeapon(400, 200, 3);
+    itemsGenerator.addThing(500, 200, 0);
+    itemsGenerator.addThing(600, 200, 0);
+    
+}
+
+function draw() {
+    if(gameOver) {
+        gameIsPaused = true;
+        $('.gameOverMenu').show();
+        // $('.gameScore').text('score:' + player.score.value);
+    }
+    if(gameIsPaused) {
+        return;
+    }
+
+    
+
+    camera(player.pos.x - WIN_WIDTH_HALF, player.pos.y - WIN_HEIGHT_HALF);
+
+    background(BGCOLOR);
+
+    map.update(player.pos);
+
+    blood.update();
+
+    itemsGenerator.generateItem();
+    itemsGenerator.updateItems();
+
+    itemsGenerator.generateEnemy();
+    itemsGenerator.updateEnemies(map.map, player);
+
+    printTechData( {
+        'xPlayer': player.pos.x, 
+        'yPlayer': player.pos.y,
+        'frameRate': fpsValue,
+        'enemiesNum': enemies.length
+    });
+
+    player.update(map);
+}
+
+function setStandartPlayerKit() {
+    //set standart inventory of player
+    //glock17
+    const item = JSON.parse(JSON.stringify(jsonWeapon.contents[0]));
+    item.pos.x = 0;
+    item.pos.y = 0;
+    player.putThingInInventory(new Weapon(item));
+    player.currentWeaponInHand = player.inventory.getItem(0);
+
+    itemsGenerator.generatedWeaponNames.push(item.name);
+}
+
+function keyPressed() {
+    keyIsPressed = true;
+}
+
+function keyReleased() {
+    keyIsPressed = false;
+}
+
+class Animation {
+    constructor(imagesSet) {
+        this.imagesSet = imagesSet;
+        this.spriteIndex = 0;
+        this.tickCount = 0;
+        this.ticksPerSprite = 2;
+        this.ticksPerSpritePlayer = 10;
+        
+        this.width = 110;
+        this.height = 130;
+
+        this.spritesMoveLength = this.imagesSet.length;
+    }
+
+    renderMove(x, y, playerPos) {
+        push();
+        imageMode(CENTER);
+        // angleMode(DEGREES);
+        translate(x, y);
+
+        let angle = atan2(y - playerPos.y, x - playerPos.x);
+        
+        rotate(angle + Math.PI);
+        
+        image(this.imagesSet[this.spriteIndex], 0, 0, this.width, this.height);
+        pop();
+
+        this.tickCount++;
+        if(this.tickCount > this.ticksPerSprite) {
+            this.spriteIndex++;
+            if(this.spriteIndex >= this.spritesMoveLength) this.spriteIndex = 0;
+            this.tickCount = 0;
+        }
+    }
+
+    renderPlayer(curWeapon, playerPos, bodySpriteCurX, bodySpriteCurY, bodySpriteCurW, bodySpriteCurH) {
+        //push();
+        imageMode(CENTER);
+        rotate(-0.1);
+        image(this.imagesSet[curWeapon][this.spriteIndex], bodySpriteCurX, bodySpriteCurY, bodySpriteCurW, bodySpriteCurH);
+        //pop();
+
+        this.tickCount++;
+        if(this.tickCount > this.ticksPerSpritePlayer) {
+            this.spriteIndex++;
+            if(this.spriteIndex >= this.spritesMoveLength) this.spriteIndex = 0;
+            this.tickCount = 0;
+        }
+    }
+}
+
 class Bar {
     constructor() {
         this.value = 150;
@@ -49,7 +277,7 @@ class ColdBar extends Bar {
 }
 
 class BloodItem {
-    constructor(posX, posY, ) {
+    constructor(posX, posY) {
         this.x = posX;
         this.y = posY;
         this.lifeTime = 500;
@@ -108,7 +336,7 @@ class Bullet {
     }
 
     update(dt, map) {
-        this.bulletsList.forEach(function(item, index, obj) {
+        this.bulletsList.forEach(function(item, index, bulletsList) {
 
             const objTile = determineObjectTilePos({x: item.x, y: item.y}, map);
 
@@ -116,9 +344,9 @@ class Bullet {
             //bullet coll. with a wall
             if(map[objTile.objTileY]){  
                 if(map[objTile.objTileY][objTile.objTileX]) {
-                    if(map[objTile.objTileY][objTile.objTileX].spriteID == 9) {
-                        obj.splice(index, 1);
-                        map[objTile.objTileY][objTile.objTileX].healthValue -= player.currentObjInHand.damage;
+                    if(map[objTile.objTileY][objTile.objTileX].hasOwnProperty('solid')) {
+                        bulletsList.splice(index, 1);
+                        map[objTile.objTileY][objTile.objTileX].healthValue -= player.currentWeaponInHand.damage;
                     } else {
                         item.x += item.vx * dt;
                         item.y += item.vy * dt;
@@ -126,13 +354,13 @@ class Bullet {
                         item.lifeTime -= 1;
             
                         if(item.lifeTime <= 0) {
-                            obj.splice(index, 1);
+                            bulletsList.splice(index, 1);
                         }
                     }
                 }
             }
              else {
-                obj.splice(index, 1);
+                bulletsList.splice(index, 1);
             }
         });
     }
@@ -155,10 +383,8 @@ class Bullet {
     }
 }
 
-function handleCollisionWalls(objPos, map) {
-
+function handleCollisionWalls(objPos, map, maxDistArg) {
     const objTile = determineObjectTilePos(objPos, map);
-    
     return handleCollision(
         objPos, 
         map, 
@@ -167,46 +393,67 @@ function handleCollisionWalls(objPos, map) {
         objTile.lW, 
         objTile.rW, 
         objTile.uH, 
-        objTile.dH
+        objTile.dH,
+        maxDistArg
     );
 }
 
-function handleCollision(objPos, map, objTileX, objTileY, lW, rW, uH, dH) {
+function handleCollision(objPos, map, objTileX, objTileY, lW, rW, uH, dH, maxDistArg) {
+
     //check and handle wall collisions 
     //up
     let collidingTile = {
         isCollide : false,
     };
-    if(map[uH][objTileX].spriteID == 9) {
-        if(objPos.y <= map[uH][objTileX].pos.y + TILE_H + 10) {
-            objPos.y = map[uH][objTileX].pos.y + TILE_H + 10;
+    
+    //ckeck if out of map borders
+    if(objTileY < 0 ||
+        objTileY >= MAP_SIZE_Y - 1 ||
+        objTileX < 0 ||
+        objTileX >= MAP_SIZE_X - 1
+    ) {
+        return collidingTile;
+    }
+
+    //collision logic
+    let maxDist;
+    if(maxDistArg == undefined) {
+        maxDist = 10;
+    } else {
+        maxDist = maxDistArg
+    }
+    
+    //up
+    if(map[uH][objTileX].hasOwnProperty('solid')) {
+        if(objPos.y <= map[uH][objTileX].pos.y + TILE_H + maxDist) {
+            objPos.y = map[uH][objTileX].pos.y + TILE_H + maxDist;
             collidingTile.isCollide = true;
             collidingTile.tileX = objTileX;
             collidingTile.tileY = uH;
         }
     }
     //right
-    if(map[objTileY][rW].spriteID == 9) {
-        if(objPos.x >= map[objTileY][rW].pos.x - 10) {
-            objPos.x = map[objTileY][rW].pos.x - 10;
+    if(map[objTileY][rW].hasOwnProperty('solid')) {
+        if(objPos.x >= map[objTileY][rW].pos.x - maxDist) {
+            objPos.x = map[objTileY][rW].pos.x - maxDist;
             collidingTile.isCollide = true;
             collidingTile.tileX = rW;
             collidingTile.tileY = objTileY;
         }
     }
     //down
-    if(map[dH][objTileX].spriteID == 9) {
-        if(objPos.y >= map[dH][objTileX].pos.y - 10) {
-            objPos.y = map[dH][objTileX].pos.y - 10;
+    if(map[dH][objTileX].hasOwnProperty('solid')) {
+        if(objPos.y >= map[dH][objTileX].pos.y - maxDist) {
+            objPos.y = map[dH][objTileX].pos.y - maxDist;
             collidingTile.isCollide = true;
             collidingTile.tileX = objTileX;
             collidingTile.tileY = dH;
         }
     }
     //left
-    if(map[objTileY][lW].spriteID == 9) {
-        if(objPos.x <= map[objTileY][lW].pos.x + TILE_W + 10) {
-            objPos.x = map[objTileY][lW].pos.x + TILE_W + 10;
+    if(map[objTileY][lW].hasOwnProperty('solid')) {
+        if(objPos.x <= map[objTileY][lW].pos.x + TILE_W + maxDist) {
+            objPos.x = map[objTileY][lW].pos.x + TILE_W + maxDist;
             collidingTile.isCollide = true;
             collidingTile.tileX = lW;
             collidingTile.tileY = objTileY;
@@ -272,7 +519,7 @@ const MAP_SIZE_X = 80;
 const MAP_SIZE_Y = 80;
 
 const TILE_W = 100; 
-const TILE_H = 100;
+const TILE_H = 100; 
 
 const REND_MAP_LEFT = ((WIN_WIDTH_HALF / TILE_W) | 0) + 1;
 const REND_MAP_RIGHT = ((WIN_WIDTH_HALF / TILE_W) | 0) + 2;
@@ -296,77 +543,164 @@ const MEDICINE_KIT_HEIGHT = 60;
 const AMMO_WIDTH = 60;
 const AMMO_HEIGHT = 60;
 
+//paths
 const ITEMS_SPRITE = '../img/itemsSheet.png'; 
 const GUN_SPRITE_SHEET = '../img/gunSpriteSheet.png';
-const INVENTORY_THING_SIZE = 100;
+const ITEMS_JSON_PATH = '/js/itemsJSON.json';
+const MAP_JSON_PATH = '/js/mapJSON.json';
+const WEAPON_JSON_PATH = '/js/weaponJSON.json';
 
+const INVENTORY_THING_SIZE = 100;
 const ITEM_SIZE = 60;
 
 class Enemy {
-    constructor(x, y, r) {
+    constructor(x, y, r, spritesMove) {
         this.r = r;
         this.pos = createVector(x, y);
-        this.moveSpeed = 2;
+        this.moveSpeed = 7;
         this.color = color(255);
+        this.animation = new Animation(spritesMove);
 
         this.hp = 100;
-        this.damage = 0.5;
+        this.damage = 0;
         this.damageToWall = 2;
+
+        this.moveQueue = [];
+
+        this.isOnScreen = false;
     }
 
-    update(playerX, playerY, map) {
-        if(this.isIntersects(playerX, playerY)) {
-            this.damage = 0.5;
-        } else {
-            this.damage = 0;
-        }
+    update(playerPos, map) {
 
-        fill(this.color);
-        let dx = playerX - this.pos.x;
-        let dy = playerY - this.pos.y;
+       
 
         let moveX = 0;
         let moveY = 0;
+       
+        // if(dy >= 0) {
+        //     moveY = this.pos.y * 2;
+        // } else{
+        //     moveY = this.pos.y / 2;
+        // }
 
-        if(dx > 0) {
-            this.pos.x += 1;
-            moveX += 1;
-        } else if(dx < 0) {
-            this.pos.x -= 1;
-        }
+        let dx = playerPos.x - this.pos.x;
+        let dy = playerPos.y - this.pos.y;
+        if(this.pos.x <= 400 || playerPos.x <= 400 ||  (Math.abs(dx) <= 100)) {
+            if(dx > 0) {    
+                this.pos.x += 1;
+            } else if(dx < 0) {
+                this.pos.x -= 1;
+            }
 
-        if(dy > 0) {
-            this.pos.y += 1;
-        } else if(dy < 0) {
-            this.pos.y -= 1;
+            if(dy > 0) {
+                this.pos.y += 1;
+            } else{
+                this.pos.y -= 1;
+            }
         }
+        if(this.moveQueue.length == 0) {
+            
+            let arrX = [this.pos.x, (this.pos.x + playerPos.x)  / 1, playerPos.x];
+            let arrY = [this.pos.y,  (this.pos.y + playerPos.y) / 1, playerPos.y];
+
+            let nPoints = arrX.length;
+            let resultY = 0,
+                s = 0;
+
+            let currentX = this.pos.x;
+            for(let k = 0; k < 15; k++) {
+                if(currentX < 400 || playerPos.x < 400 || Math.abs( playerPos.x - currentX ) < 100) { 
+                    break;
+                 }
+                resultY = arrY[0];
+                for(let i = 1; i < nPoints; i++) {
+                    let difference = 0;
+                    for(let j = 0; j <= i; j++) {
+                        s = 1;
+                        for(let m = 0; m <= i; m++) {
+                            if(m != j) {
+                                s *= arrX[j] - arrX[m];
+                            }
+                        }
+                        if(s != 0) {
+                            difference += arrY[j] / s;
+                        }
+                    }
+                    for(let m = 0; m < i; m++) {
+                        let findX = currentX;
+                        difference *= (findX - arrX[m]);
+                    }
+                    resultY += difference;
+                }
+
+                this.moveQueue.push(createVector(currentX,resultY));
+
+                if(dx > 0) {    
+                    currentX += 1;
+                } else if(dx <= 0) {
+                    currentX -= 1;
+                }
+            }
+            // console.log(this.moveQueue);
+        }else {
+            this.pos.x = this.moveQueue[0].x;
+            this.pos.y = this.moveQueue[0].y;
+            this.moveQueue.splice(0, 1);
+        }
+      
+        // this.pos.y = resultY;
+        // console.log('x: ' + this.pos.x + ' y:' + resultY);
+        // if(dy >= 0) {
+        //     this.pos.y += 1;
+        // } else{
+        //     this.pos.y -= 1;
+        // }
+       
+        this.checkCollidingWalls(map);
+
+        if(this.isOnScreen) {
+            this.animation.renderMove(this.pos.x, this.pos.y, playerPos);
+            //this.render();
+
+            if(this.isIntersects(playerPos)) {
+                this.damage = 0.5;
+            } else {
+                this.damage = 0;
+            }
+        }
+    }
+
+    render() {
+        fill(this.color);
         ellipse(this.pos.x, this.pos.y, this.r, this.r);
+    }
 
-        let collTile = handleCollisionWalls(this.pos, map.map);
-        if(collTile.isCollide) {
-            map.map[collTile.tileY][collTile.tileX].healthValue -= this.damageToWall;
-        }
-
-        return this.damage;
+    checkCollidingWalls(map) {
+        let collTile = handleCollisionWalls(this.pos, map, 25);
         
+        if(collTile.isCollide) {
+            map[collTile.tileY][collTile.tileX].healthValue -= this.damageToWall;
+        }
     }
 
     changeColor() {
         this.color = color(random(255), random(255), random(255));
     }
 
-    isIntersects(playerX, playerY) {
-        let d = dist(this.pos.x, this.pos.y, playerX, playerY);
+    isIntersects(playerPos) {
+        let d = dist(this.pos.x, this.pos.y, playerPos.x, playerPos.y);
         if(d < 50) {
             return true;
         }
         return false;
     }
 }
+
 $(document).ready(function(){
     $('.pauseMenu').hide();
     $('.pauseIndicator').hide();
     $('.startMenu').show();
+    $('.gameOverMenu').hide();
 });
 
 $('.startBtn').click(function(){
@@ -380,6 +714,12 @@ $('.resumeBtn').click(function(){
     gameIsPaused = false;
 });
 
+$('.restartBtn').click(function(){
+    $('.gameOverMenu').hide();
+    window.location.reload();
+});
+
+
 $(this).keydown(function(e){
     // alert(e.keyCode);
     if(e.keyCode == 27) {
@@ -389,194 +729,7 @@ $(this).keydown(function(e){
     }
 });
 
-let map;
-let player = {};
-let techData;
-let enemies;
-
-let jsonMap;
-let images;
-let blood;
-let spritesBlood; 
-let playerSprites = [];
-let gunSpriteSheet;
-
-let itemsGenerator;
-let itemsSpriteSheet;
-
-let sounds = {};
-let soundsQueue = [];
-
-let things = [];    //things as medicine kit, ammo, weapons, etc. on the map
-
-let gameIsPaused = true;
-let keyIsPressed = false;
-
-function preload() {
-    jsonMap = loadJSON('/js/mapJSON.json');
-    images = loadImage('../img/terrainSet.png');
-    spritesBlood = loadImage('../img/blood_spot.png');
-    gunSpriteSheet = loadImage('../img/gunSpriteSheet.png');
-    itemsSpriteSheet = loadImage('../img/itemsSheet.png');
-
-    sounds.glock17 = loadSound('../audio/gun/pistol_shot.wav');
-    sounds.glock17Reload = loadSound('../audio/gun/pistol_reload.mp3');
-    sounds.ak47 = loadSound('../audio/gun/ak47_shot.mp3');
-    sounds.ak47Reload = loadSound('../audio/gun/ak47_reload.mp3');
-    sounds.m4a1 = loadSound('../audio/gun/m4a1_shot.mp3');
-    sounds.m4a1Reload = loadSound('../audio/gun/m4a1_reload.mp3');
-    sounds.awp = loadSound('../audio/gun/awp_shot.mp3');
-    sounds.awpReload = loadSound('../audio/gun/awp_reload.mp3');
-
-    sounds.music = {};
-    
-    //sounds.music.track1 = loadSound('../audio/Resident_Evil_movie_soundtrack_2008.mp3');
-    //sounds.music.track2 = loadSound('../audio/Resident_Evil_Corp_Umbrella.mp3');
-
-    playerSprites[0] = loadImage('../img/player/survivor-glock.png');
-    playerSprites[1] = loadImage('../img/player/survivor-ak47.png');
-    playerSprites[2] = loadImage('../img/player/survivor-m4a1.png');
-    playerSprites[3] = loadImage('../img/player/survivor-awp.png');
-}
-
-function setup() {
-
-    enemies = [];
-    frameRate(60);
-    createCanvas(WIN_WIDTH, WIN_HEIGHT);
-    player = new Player(ENTITY_DIAMETR / 2, {'x': 2500, 'y': 1700}, playerSprites);
-    map = new Map({
-        'x': 0,
-        'y': 0
-    });
-
-    map.imagesSet = images;
-    map.createMap(jsonMap);
-
-    blood = new Blood();
-
-    background(BGCOLOR);
-
-    sounds.glock17.setVolume(0.3);
-    sounds.glock17Reload.setVolume(0.3);
-    sounds.ak47.setVolume(0.3);
-    sounds.ak47Reload.setVolume(0.3);
-    sounds.m4a1.setVolume(0.3);
-    sounds.m4a1Reload.setVolume(0.3);
-    sounds.awp.setVolume(0.3);
-    sounds.awpReload.setVolume(0.3);
-
-
-    setStandartPlayerKit();
-
-    itemsGenerator = new Generation(map.map);
-
-    itemsGenerator.putAWPOnMap(100, 200);
-    itemsGenerator.putAWPAmmoOnMap(100, 100);
-    itemsGenerator.putAk47OnMap(200, 200);
-    itemsGenerator.putAk47AmmoOnMap(200,100);
-    itemsGenerator.putM4A1AmmoOnMap(300,100);
-    itemsGenerator.putM4A1OnMap(300,200);
-    itemsGenerator.putMedicineKitOnMap(400, 400);
-    itemsGenerator.putMedicineKitOnMap(500, 400);
-}
-
-function draw() {
-    if(gameIsPaused) {
-        return;
-    }
-
-    camera(player.pos.x - WIN_WIDTH_HALF, player.pos.y - WIN_HEIGHT_HALF);
-
-    background(BGCOLOR);
-
-    map.update(player.pos);
-
-    blood.update();
-
-    if(randInt(0, 500) == 0) {
-        enemies.push(new Enemy(randInt(TILE_W, MAP_SIZE_X * TILE_W - TILE_W), randInt(TILE_H, MAP_SIZE_Y * TILE_H - TILE_H), ENTITY_DIAMETR / 2));
-    }
-
-    checkCollisionEnemies(enemies);
-
-    //update enemies
-    enemies.forEach(function(itemEnemy, index, obj) {
-        let damageValue = itemEnemy.update(player.pos.x, player.pos.y, map);
-        player.healthBar.value -= damageValue;
-        //check player hp value
-        if(player.getHealthValue() <= 0) {
-        } else {
-            player.healthBar.w -= damageValue;
-        }
-
-        //check if bullet hit an enemy
-        if(player.currentObjInHand instanceof Weapon) {
-            let bullets = player.currentObjInHand.bullets.getBullets();
-            bullets.forEach(function(itemBullet, indexBullet, objBullets) {
-                if(distantionFromAtoB(itemBullet,itemEnemy.pos) < (itemEnemy.r - itemBullet.bulletsLength*2)){
-                    objBullets.splice(indexBullet, 1);
-                    itemEnemy.hp -= player.currentObjInHand.damage;
-                    blood.createBloodSpot(itemEnemy.pos.x, itemEnemy.pos.y);
-                }
-            });
-        }
-
-        if(itemEnemy.hp <= 0){
-            obj.splice(index, 1);
-        }
-    });
-
-    updateSounds();
-    itemsGenerator.update();
-
-    printTechData( {
-        'xPlayer': player.pos.x, 
-        'yPlayer': player.pos.y,
-        'frameRate': frameRate().toFixed(0),
-        'enemiesNum': enemies.length
-    });
-
-    player.update(map);
-}
-
-function distantionFromAtoB(a,b) {
-    return Math.sqrt(Math.pow(a.x - b.x,2) 
-         + Math.pow(a.y - b.y,2)) ; 
-}
-
-function updateSounds() {
-    soundsQueue.forEach(function(item,index,obj){
-        console.log(item)
-        if( item && !item.isPlaying()){
-            item.play();
-            obj.splice(index,1);
-        }
-    });
-}
-
-function setStandartPlayerKit() {
-    //set standart inventory of player
-    player.putThingInInventory(new Weapon({ //pistol
-        name: 'glock17',
-        kindBullets: 'glock17Ammo',
-        damage: 20,
-        countBullets: 72,
-        countBulletsInHolder: 10,
-        imagePos: {x: 0, y: 0},
-        pos: {x: 0, y: 0},
-        timeBetweenShots: 1200
-    }));
-    player.currentObjInHand = player.inventory.getItem(0);
-}
-
-function keyPressed() {
-    keyIsPressed = true;
-}
-
-function keyReleased() {
-    keyIsPressed = false;
-}
+$("html,body").on("contextmenu", false);
 
 function printTechData(objData) {
     fill(255);
@@ -584,7 +737,6 @@ function printTechData(objData) {
     text('x: ' + objData.xPlayer + ' y: ' + objData.yPlayer, objData.xPlayer - 100, objData.yPlayer - 60);
     text('FPS: ' + objData.frameRate, objData.xPlayer - WIN_WIDTH_HALF + 5, objData.yPlayer - WIN_HEIGHT_HALF + 15);
     text('enemies: ' + objData.enemiesNum, objData.xPlayer - WIN_WIDTH_HALF + 5, objData.yPlayer - WIN_HEIGHT_HALF + 30)
-    //text('tiles rendering: ');
 }
 
 function randInt(min, max) {
@@ -592,11 +744,15 @@ function randInt(min, max) {
 }
 
 function checkCollisionEnemies(enemies) {
+    if(!enemies) {
+        return;
+    }
+
     let eLen = enemies.length;
     if(enemies.length > 1) {
         for(let i = 0; i < eLen; i++) {
             for(let j = i + 1; j < eLen; j++) {
-                let d = dist(
+                const d = dist(
                     enemies[i].pos.x,
                     enemies[i].pos.y,
                     enemies[j].pos.x,
@@ -608,27 +764,17 @@ function checkCollisionEnemies(enemies) {
                     //enemies[j].changeColor();
 
                     if(enemies[i].pos.x < enemies[j].pos.x) {
-                        enemies[i].pos.x -= 1;
-                        enemies[j].pos.x += 1;
-                        enemies[i].pos.y += randInt(-1, 1);
-                        enemies[j].pos.y += randInt(-1, 1);
                     } else {
                         enemies[i].pos.x += 1;
                         enemies[j].pos.x -= 1;
-                        enemies[i].pos.y += randInt(-1, 1);
-                        enemies[j].pos.y += randInt(-1, 1);
                     } 
 
                     if(enemies[i].pos.y < enemies[j].pos.y) {
                         enemies[i].pos.y += 1;
                         enemies[j].pos.y -= 1;
-                        enemies[i].pos.x += randInt(-1, 1);
-                        enemies[j].pos.x += randInt(-1, 1);
                     } else {
                         enemies[i].pos.y -= 1;
                         enemies[j].pos.y += 1;
-                        enemies[i].pos.x += randInt(-1, 1);
-                        enemies[j].pos.x += randInt(-1, 1);
                     }
                 }
             }
@@ -636,159 +782,236 @@ function checkCollisionEnemies(enemies) {
     }
 }
 
+function restart() {
+    enemies.lenght = 0;
+    map.createMap(jsonMap);
+    itemsGenerator = new Generation(map.map, jsonItems, jsonWeapon, player, enemies, zimbieSprites[0]);
+    
+}
+/*
+function copyObject(initialObject) {
+    const obj = {};
+
+    return obj;
+}
+
+*/
+
 class Generation {
-    constructor(map) {
+    constructor(map, jsonItems, jsonWeapon, player, enemies, enemySpritesMove) {
         this.map = map;
+        this.jsonItems = jsonItems;
+        this.jsonWeapon = jsonWeapon;
         this.items = [];
+        this.player = player;
+        this.enemies = enemies;
+        this.mapMaxSize = {x: MAP_SIZE_X * TILE_W - 100, y: MAP_SIZE_Y * TILE_W - 100};
+        this.generatedWeaponNames = [];
+        this.enemySpritesMove = enemySpritesMove;
+
+        this.chanceItems = 2; //larger value lower chance
+        this.chanceWeapon = 10;
+        this.generalChance = 100;
+
+        this.generalChanceZombie = 15;
+        this.chanceZombieNormal = 3;
+        this.chanceFastZombie = 5;
+        this.chanceFatZombie = 8;
+
+        this.enemiesOnScreen = [];
     }
 
-    generateEnemy(chance) {
-
+    generateEnemy() {
+        if(randInt(0, this.generalChanceZombie) == 0) {
+            if(randInt(0, this.chanceZombieNormal) == 0) {
+                this.addEnemy();
+            }
+        }
     }
 
     //generate ammo, weapons, aid in map
-    generateItems(chance) {
-        
+    generateItem() {
+        if(randInt(0, this.generalChance) == 0) {
+            //generate ammo, aid kit,
+            if(randInt(0, this.chanceItems) == 0) {
+                let randItemID = randInt(0, 4);
+                this.addThing(
+                    randInt(TILE_W, this.mapMaxSize.x),
+                    randInt(TILE_H, this.mapMaxSize.y),
+                    randItemID
+                );
+            }
+
+            //generate weapon
+            if(randInt(0, this.chanceWeapon) == 0) {
+                let randItemID = randInt(0, 3);
+                let weaponName = JSON.parse(JSON.stringify(this.jsonWeapon.contents[randItemID])).name;
+                if(this.generatedWeaponNames.indexOf(weaponName) >= 0) {
+                    return;
+                } else {
+                    this.generatedWeaponNames.push(weaponName);
+
+                    this.addWeapon(
+                        randInt(TILE_W, this.mapMaxSize.x),
+                        randInt(TILE_H, this.mapMaxSize.y),
+                        randItemID
+                    );
+                }
+            }
+        }
     }
 
-    update() {
+    addThing(posX, posY, randItemID) {
+
+        const item = JSON.parse(JSON.stringify(this.jsonItems.contents[randItemID]));
+        item.pos.x = posX;
+        item.pos.y = posY;
+
+        this.items.push(new Thing(item));
+    }
+
+    addWeapon(posX, posY, randItemID) {
+
+        const item = JSON.parse(JSON.stringify(this.jsonWeapon.contents[randItemID]));
+        item.pos.x = posX;
+        item.pos.y = posY;
+
+        this.items.push(new Weapon(item));
+    }
+
+    addEnemy() {
+        this.enemies.push(new Enemy(
+            randInt(TILE_W, MAP_SIZE_X * TILE_W - TILE_W),
+            randInt(TILE_H, MAP_SIZE_Y * TILE_H - TILE_H),
+            ENTITY_DIAMETR / 2,
+            this.enemySpritesMove
+        ));
+    }
+
+    updateItems() {
         for(let i = 0, len = this.items.length; i < len; i++) {
             this.items[i].update();
-            if(distantionFromAtoB({x: player.pos.x + INVENTORY_THING_SIZE / 2, y:player.pos.y + INVENTORY_THING_SIZE / 2},this.items[i].pos) < INVENTORY_THING_SIZE * 2){
-                //put thing in inventory and remove it from map
-                if(player.putThingInInventory(this.items[i])){
-                    this.items.splice(i, 1);
-                }
+
+            if(this.isIntersects(this.player.pos, this.items[i].pos)) {
+                this.player.putThingInInventory(this.items[i]);
+                this.items.splice(i, 1);
                 len--;
             }
         }
     }
-    
-    distantionFromAtoB(a,b) {
-        return Math.sqrt(((a.x - b.x) * (a.x - b.x)) + ((a.y - b.y) * (a.y - b.y))); 
+
+    updateEnemies(map, player) {
+
+        for(let i = 0, len = this.enemies.length; i < len; i++) {
+
+            this.enemies[i].update(player.pos, map);
+
+            const damage = this.enemies[i].damage;
+            player.healthBar.value -= damage;
+            //check player hp value
+            if(player.getHealthValue() <= 0) {
+            } else {
+                player.healthBar.w -= damage;
+            }
+
+            //check if bullet hit an enemy
+            if(player.currentWeaponInHand instanceof Weapon) {
+                let bullets = player.currentWeaponInHand.bullets.bulletsList;
+                for(let j = 0, lenBullets = bullets.length; j < lenBullets; j++) {
+                    if(this.isIntersects({x : bullets[j].x, y : bullets[j].y}, this.enemies[i].pos)) {
+
+                        this.enemies[i].hp -= bullets[j].penetrationCapacity;
+                        bullets[j].penetrationCapacity -= this.enemies[i].hp;
+                        if(bullets[j].penetrationCapacity <= 0) {
+                            bullets.splice(j, 1);
+                        }
+
+                        blood.createBloodSpot(this.enemies[i].pos.x, this.enemies[i].pos.y);
+                        lenBullets--;
+                    }
+                }
+            }
+
+            if(this.enemies[i].hp <= 0){
+                this.enemies.splice(i, 1);
+                len--;
+                player.score.increaseScore();
+            }
+        }
+
+        checkCollisionEnemies(this.enemiesOnScreen);
     }
 
-    putMedicineKitOnMap(xStart, yStart) {
-        this.items.push(new Thing({
-            name: 'medicineKit',
-            value: 50,
-            pos: {x: xStart, y: yStart},
-            imagePos: {x: 240, y: 0},
-            size: {width: 60, height: 60},
-        }));
+    isIntersects(playerPos, itemPos) {
+        let d = dist(itemPos.x, itemPos.y, playerPos.x, playerPos.y);
+        if(d < 50) {
+            return true;
+        }
+        return false;
     }
-    
-    putPistolAmmoOnMap(xStart, yStart) {
-        this.items.push(new Thing({
-            name: 'glock17Ammo',
-            value: 20,
-            pos: {x:xStart, y:yStart},
-            imagePos: {x: 0, y: 0},
-            size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT},
-            imgPath: ITEMS_SPRITE,
-        }));
+
+    findEnemiesOnScreen(enemiesList, playerPos) {
+
+        this.enemiesOnScreen.length = 0;
+
+        let renderBorderUp = playerPos.y - WIN_HEIGHT;
+        let renderBorderDown = playerPos.y + WIN_HEIGHT;
+        let renderBorderLeft = playerPos.x - WIN_WIDTH;
+        let renderBorderRight = playerPos.x + WIN_WIDTH;
+        
+        for(let i = 0, len = enemiesList.length; i < len; i++) {
+            if(this.isEnemyOnScreen(
+                enemiesList[i].pos,
+                renderBorderUp,
+                renderBorderDown,
+                renderBorderLeft,
+                renderBorderRight
+            )) {
+                enemiesList[i].isOnScreen = true;
+                this.enemiesOnScreen.push(enemiesList[i]);
+            } else {
+                enemiesList[i].isOnScreen = false;
+            }
+        }
     }
-    
-    putAk47AmmoOnMap(xStart, yStart) {
-        this.items.push(new Thing({
-            name: 'ak47Ammo',
-            value: 30,
-            pos: {x:xStart, y:yStart},
-            imagePos: {x: 120, y: 0},
-            size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT},
-        }));
-    }
-    
-    putM4A1AmmoOnMap(xStart, yStart) {
-        this.items.push(new Thing({
-            name: 'm4a1Ammo',
-            value: 20,
-            pos: {x:xStart, y:yStart},
-            imagePos: {x: 60, y: 0},
-            size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT},
-        }));
-    }
-    
-    putAWPAmmoOnMap(xStart, yStart) {
-        this.items.push(new Thing({
-            name: 'awpAmmo',
-            value: 5,
-            pos: {x:xStart, y:yStart},
-            imagePos: {x: 180, y: 0},
-            size: {width: MEDICINE_KIT_WIDTH, height: MEDICINE_KIT_HEIGHT},
-        }));
-    }
-    
-    putPistolOnMap(xStart, yStart) {
-        this.items.push(new Weapon({    //pistol
-            name: 'glock17',
-            kindBullets: 'glock17Ammo',
-            damage: 40,
-            countBullets: 72,
-            countBulletsInHolder: 10,
-            imagePos: {x: 0, y: 0},
-            pos: {x: xStart, y: yStart},
-            timeBetweenShots: 1200
-        }));
-    }
-    
-    putAk47OnMap(xStart, yStart) {
-        this.items.push(new Weapon({    //pistol
-            name: 'ak47',
-            kindBullets: 'ak47Ammo',
-            damage: 100,
-            countBullets: 60,
-            countBulletsInHolder: 30,
-            imagePos: {x: 100, y: 0},
-            pos: {x: xStart, y: yStart},
-            timeBetweenShots: 140
-        }));
-    }
-    
-    putM4A1OnMap(xStart, yStart) {
-        this.items.push(new Weapon({    //pistol
-            name: 'm4a1',
-            kindBullets: 'm4a1Ammo',
-            damage: 80,
-            countBullets: 40,
-            countBulletsInHolder: 20,
-            imagePos: {x: 200, y: 0},
-            pos: {x: xStart, y: yStart},
-            timeBetweenShots: 140
-        }));
-    }
-    
-    putAWPOnMap(xStart, yStart) {
-        this.items.push(new Weapon({    //pistol
-            name: 'awp',
-            kindBullets: 'awpAmmo',
-            damage: 600,
-            countBullets: 10,
-            countBulletsInHolder: 1,
-            imagePos: {x: 300, y: 0},
-            pos: {x: xStart, y: yStart},
-            timeBetweenShots: 2800
-        }));
+
+    isEnemyOnScreen(enemyPos, renderBorderUp, renderBorderDown, renderBorderLeft, renderBorderRight) {
+
+        if(enemyPos.y < renderBorderUp) {
+            return false;
+        }
+
+        if(enemyPos.y > renderBorderDown) {
+            return false;
+        }
+
+        if(enemyPos.x < renderBorderLeft) {
+            return false;
+        }
+
+        if(enemyPos.x > renderBorderRight) {
+            return false;
+        }
+
+        return true;
     }
 }
-
 
 class Inventory {
     constructor() {
         this.inventoryThings = [];
         this.inventoryCeil = [
-            {x:-150,y:225,empty: true},
-            {x:-90,y:225,empty: true},
-            {x:-30,y:225,empty: true},
-            {x:30,y:225,empty: true},
-            {x:90,y:225,empty: true},
-            {x:150,y:225,empty: true}
+            {x: -150, y: WIN_HEIGHT_HALF - 150, empty: true},
+            {x: -90, y: WIN_HEIGHT_HALF - 150, empty: true},
+            {x: -30, y: WIN_HEIGHT_HALF - 150, empty: true},
+            {x: 30, y: WIN_HEIGHT_HALF - 150, empty: true},
+            {x: 90, y: WIN_HEIGHT_HALF - 150, empty: true},
+            {x: 150, y: WIN_HEIGHT_HALF - 150, empty: true}
         ];
         this.ceilSize = 60;
     }
 
     pushItem(itemToAdd) {
-
         let added = false;
         let addGunToGun = false;
         this.inventoryCeil.forEach(function(item, index, obj) {
@@ -797,8 +1020,8 @@ class Inventory {
             }
             if(!item.empty){
                 if(this.inventoryThings[index] instanceof Weapon && itemToAdd instanceof Thing) {
-                    if(itemToAdd.name == this.inventoryThings[index].kindBullets){
-                        this.inventoryThings[index].bulletsCount += itemToAdd.value;
+                    if(itemToAdd.name == this.inventoryThings[index].bulletType){
+                        this.inventoryThings[index].bulletAmount += itemToAdd.value;
                         added = true;
                     }
                 }else if(this.inventoryThings[index] instanceof Thing && itemToAdd instanceof Thing) {
@@ -813,7 +1036,7 @@ class Inventory {
                     }
                 }
             }else {
-                if(itemToAdd.name == 'medicineKit' || itemToAdd instanceof Weapon ){
+                if(itemToAdd.name == 'aidKit' || itemToAdd instanceof Weapon ){
                     this.inventoryThings[index] = itemToAdd;
                     this.inventoryCeil[index].empty = false;
                     added = true;
@@ -850,8 +1073,9 @@ class Inventory {
         translate(obj.pos.x, obj.pos.y);
         colorMode(HSL);
         strokeWeight(2);
-        stroke('rgba(35, 35, 35, 1)');
+        //stroke('rgba(35, 35, 35, 1)');
         fill(50, 0.5); 
+
         this.inventoryCeil.forEach(function(item, index, object) {
             let currentThing = this.inventoryThings[index];
             if(obj.currentThingInHand == currentThing && currentThing) {
@@ -864,30 +1088,33 @@ class Inventory {
             
             if(!item.empty && currentThing) {
                 //shwo gun sprite in inventory panel
-                image(currentThing.img,item.x + 10, 
+                image(currentThing.img,
+                    item.x + 15, 
                     item.y + 5, 
-                    this.ceilSize*2/3, 
-                    this.ceilSize*2/3,
+                    40, 
+                    40,
                     currentThing.imagePos.x,
                     currentThing.imagePos.y,
                     INVENTORY_THING_SIZE,
                     INVENTORY_THING_SIZE
                 );
-                    
+                
                 if(currentThing instanceof Weapon) {
                     fill('#fff');
-                    text(currentThing.bulletsCount + currentThing.bulletsHolder, item.x + 25, item.y + 55);
+                    textFont(ammoFont);
+                    text(currentThing.bulletAmount + currentThing.bulletCurrentMagazine, item.x + 25, item.y + 55);
                 }else {
                     fill('#fff');
+                    textFont(ammoFont);
                     text(currentThing.count, item.x + 25, item.y + 55);
                 }
             }
         }.bind(this));
-
-        if(player.currentObjInHand instanceof Weapon) {
+        if(player.currentWeaponInHand instanceof Weapon) {
             fill('#fff');
             textSize(30);
-            text(player.currentObjInHand.bulletsCount + '/' + player.currentObjInHand.bulletsHolder,WIN_WIDTH_HALF/2 + 80,280);
+            textFont(ammoFont);
+            text(player.currentWeaponInHand.bulletCurrentMagazine + '/' + player.currentWeaponInHand.bulletAmount, WIN_WIDTH_HALF/2 + 80,WIN_HEIGHT_HALF - 120);
         }
 
         pop();
@@ -942,6 +1169,9 @@ class Map {
                         imgX = 0;
                         imgY = 300;
                         break;
+                    case 17: //infinite wall
+                        imgX = 0;
+                        imgY = 400;
                 }
 
                 tmpMap[i][j] = new Tile(tileX, tileY, imgX, imgY, json.layers[0].data[jsonIndex]);
@@ -1008,8 +1238,8 @@ class Player {
 
         this.queueBullets = null;
 
-        this.playerSpeed = 5;
-        this.boostedPlayerSpeed = this.playerSpeed * 2;
+        this.playerSpeed = 6;
+        this.boostedPlayerSpeed = this.playerSpeed * 1.5;
 
         this.barsX = 10;
         this.barsY = 200;
@@ -1018,49 +1248,37 @@ class Player {
         //this.coldBar = new ColdBar(COLD_BAR_COLOR);
         this.enduranceBar = new EnduranceBar(ENDURANCE_BAR_COLOR);
 
+        this.score = new Score();
+
         this.playerSprites = playerSprites;
-        this.currentSprite = this.playerSprites[0];
+        this.currentSprite = playerSprites[0];
         
         this.bodySpriteCurrentWidth = 115;
         this.bodySpriteCurrentX = 0;
-        
-        
+
+        //this.animationIdle = new Animation(playerSprites); 
+        //this.currentWeaponNumber = 0;
     }
 
     update(map) {
-        fill(PLAYER_COLOR);
-
+        
         push();
 
-        ellipseMode(CENTER);
+        imageMode(CENTER);
         translate(this.pos.x, this.pos.y);
         rotate(atan2(mouseY - WIN_HEIGHT_HALF, mouseX - WIN_WIDTH_HALF));
 
-        // if(this.currentObjInHand instanceof Weapon){
-        
-        //  if(this.currentObjInHand){
-        //      this.currentObjInHand.update();
-        //  }
-        // }
-
-        imageMode(CENTER);
-        //angleMode(DEGREES);
-        //ellipse(0, -35, this.rHand, this.rHand); //left hand
-        //ellipse(0, 35, this.rHand, this.rHand);
-        rotate(-0.1);
         image(this.currentSprite, this.bodySpriteCurrentX, 0, this.bodySpriteCurrentWidth, 115);
-        //ellipse(0, 0, this.r, this.r); //body
-         //right hand
         
         pop();
 
-        if(this.currentObjInHand instanceof Weapon) {
+        if(this.currentWeaponInHand instanceof Weapon) {
             
             //if reload, update circle animation
-            if(this.currentObjInHand.reload) {
-                this.currentObjInHand.updateRecharge(this.pos);
+            if(this.currentWeaponInHand.reload) {
+                this.currentWeaponInHand.updateRecharge(this.pos);
             }
-            this.queueBullets = player.currentObjInHand.bullets;
+            this.queueBullets = player.currentWeaponInHand.bullets;
         }
 
         if(this.queueBullets){
@@ -1071,9 +1289,11 @@ class Player {
 
         //update inventory
         this.inventory.update({
-            'currentThingInHand':this.currentObjInHand,
+            'currentThingInHand':this.currentWeaponInHand,
             'pos': this.pos
         });
+
+        this.score.update(this.pos);
 
         //state bars
         this.updateStateBars();
@@ -1081,6 +1301,10 @@ class Player {
         this.controller();
         
         handleCollisionWalls(this.pos, map.map);
+
+        if(this.healthBar.w <= 1) {
+            gameOver = true;
+        }
     }
 
     focusCamera() {
@@ -1136,14 +1360,14 @@ class Player {
 
         //fire
         if(keyIsDown(32) || mouseIsPressed) {
-            if(this.currentObjInHand instanceof Weapon){
-                this.currentObjInHand.makeShot(this);
+            if(this.currentWeaponInHand instanceof Weapon){
+                this.currentWeaponInHand.makeShot(this);
             }
         }
 
         //inventory
         
-            //1
+        //1
         if(keyIsDown(49)){
             this.processingCurrentInventorySbj(0);
         }
@@ -1163,12 +1387,11 @@ class Player {
         if(keyIsDown(53)){
             this.processingCurrentInventorySbj(4);
         }   
-        
 
         //R - recharge
         if(keyIsDown(82)){
-            if(this.currentObjInHand instanceof Weapon){
-                this.currentObjInHand.initRecharge(this.currentObjInHand.name);
+            if(this.currentWeaponInHand instanceof Weapon){
+                this.currentWeaponInHand.initRecharge(this.currentWeaponInHand.name);
             }
         }
 
@@ -1181,7 +1404,7 @@ class Player {
                 this.blockRunning = true;
             }
         } else {
-            this.playerSpeed = this.boostedPlayerSpeed / 2;
+            this.playerSpeed = this.boostedPlayerSpeed / 1.5;
         }
     }
 
@@ -1190,62 +1413,85 @@ class Player {
     }
 
     changePlayerSkin(weaponName) {
-        console.log('skin: ' + weaponName);
         //if(currentObjectInHand instanceof Weapon || currentObjectInHand  instanceof Thing)
         switch(weaponName) {
             case 'glock17': 
-                this.currentSprite = this.playerSprites[0];
                 this.bodySpriteCurrentWidth = 115;
                 this.bodySpriteCurrentX = 0;
+                this.currentSprite = playerSprites[0];
                 break;
             case 'ak47':
-                this.currentSprite = this.playerSprites[1];
                 this.bodySpriteCurrentWidth = 150;
                 this.bodySpriteCurrentX = 20;
+                this.currentSprite = playerSprites[1];
                 break;
             case 'm4a1': 
-                this.currentSprite = this.playerSprites[2];
                 this.bodySpriteCurrentWidth = 150;
                 this.bodySpriteCurrentX = 20;
+                this.currentSprite = playerSprites[2];
                 break;
             case 'awp':
                 this.currentSprite = this.playerSprites[3];
-                this.bodySpriteCurrentWidth = 165;
-                this.bodySpriteCurrentX = 30;
+                this.bodySpriteCurrentWidth = 167;
+                this.bodySpriteCurrentX = 29;
+                this.currentSprite = playerSprites[3];
                 break;
             default:
-                this.currentSprite = this.playerSprites[0];
                 this.bodySpriteCurrentWidth = 115;
                 this.bodySpriteCurrentX = 0;
+                this.currentSprite = playerSprites[0];
                 break;
         }
     
     }
 
     processingCurrentInventorySbj(index) {
-        this.currentObjInHand = this.inventory.getItem(index);
-        if(this.currentObjInHand) {
-            this.changePlayerSkin(this.currentObjInHand.name);
-            if(this.currentObjInHand.name == 'medicineKit') {
-                if((this.healthBar.w + this.currentObjInHand.value) > 150) {
+        this.currentWeaponInHand = this.inventory.getItem(index);
+        if(this.currentWeaponInHand) {
+            this.changePlayerSkin(this.currentWeaponInHand.name);
+            if(this.currentWeaponInHand.name == 'aidKit') {
+                if((this.healthBar.w + this.currentWeaponInHand.value) > 150) {
                     this.healthBar.w = 150;
                     this.healthBar.value = 150;
                 }else {
-                    this.healthBar.w += this.currentObjInHand.value;
-                    this.healthBar.value += this.currentObjInHand.value;
+                    this.healthBar.w += this.currentWeaponInHand.value;
+                    this.healthBar.value += this.currentWeaponInHand.value;
                 }
                 if(keyIsPressed){
-                    console.log(this.currentObjInHand.count ) 
-                    if(this.currentObjInHand.count == 1){
+                    console.log(this.currentWeaponInHand.count ) 
+                    if(this.currentWeaponInHand.count == 1){
                         this.inventory.removeItem(index);
                     }else {
-                        this.currentObjInHand.count--;
+                        this.currentWeaponInHand.count--;
                     }
                     keyIsPressed = false;
                 }
 
             }       
         }
+    }
+}
+
+class Score {
+    constructor() {
+        this.value = 0;
+        this.kills = 0;
+    }
+
+    increaseScore() {
+        this.value += 120;
+        this.kills++;
+    }
+
+    update(pos) {
+        push();
+        translate(pos.x, pos.y);
+        fill('#fff');
+        textSize(26);
+        textFont(scoreFont);
+        text('score: ' + this.value, WIN_WIDTH_HALF/2 - 100, -WIN_HEIGHT_HALF + 40);
+        text('kills: ' + this.kills, WIN_WIDTH_HALF/2 + 80, -WIN_HEIGHT_HALF + 40);
+        pop();
     }
 }
 
@@ -1257,20 +1503,25 @@ class Thing {
         this.imagePos = kit.imagePos;
         this.size = kit.size;
         this.img = loadImage(ITEMS_SPRITE);
+        this.itemType = kit.itemType;
         this.count = 1;
     }
     
     update() {
+
+        push();
+        imageMode(CENTER);
         image(this.img,
             this.pos.x,
             this.pos.y,
-            60,
-            60,
+            this.size.w,
+            this.size.h,
             this.imagePos.x, 
             this.imagePos.y,
             60,
             60,
         );
+        pop();
     }
 
     addThing() {
@@ -1283,7 +1534,19 @@ class Tile {
         this.pos = {'x': x, 'y': y};
         this.imgPos = {'x': imgX, 'y': imgY};
         this.spriteID = spriteID;
-        this.healthValue = 1000;
+
+        switch(spriteID) {
+            case 17: 
+                this.healthValue = Infinity;
+                this.solid = true;
+                break;
+            case 9: 
+                this.healthValue = 1000;
+                this.solid = true;
+                break;
+            default:
+                break;
+        }
     }
 
     update() {
@@ -1291,13 +1554,14 @@ class Tile {
             this.imgPos.x = 100;
             this.imgPos.y = 200;
             this.spriteID = 10;
+            delete this.solid; 
         }
 
         image(images,
             this.pos.x,
             this.pos.y, 
             TILE_W, 
-            TILE_H, 
+            TILE_H + 2, 
             this.imgPos.x, 
             this.imgPos.y, 
             TILE_W, 
@@ -1314,15 +1578,15 @@ class Tile {
 class Weapon {
     constructor(weapon) {
         this.name = weapon.name;
-        this.kindBullets = weapon.kindBullets;
+        this.bulletType = weapon.bulletType;
         this.damage = weapon.damage;
         this.img = loadImage(GUN_SPRITE_SHEET);
         this.pos = weapon.pos;
         this.imagePos = weapon.imagePos;
 
-        this.bulletsCount = weapon.countBullets;
-        this.countBulletsInHolder = weapon.countBulletsInHolder;
-        this.bulletsHolder = weapon.countBulletsInHolder;
+        this.bulletAmount = weapon.bulletAmount;
+        this.bulletMagazineCapacity = weapon.bulletMagazineCapacity;
+        this.bulletCurrentMagazine = weapon.bulletMagazineCapacity;
 
         this.reloadIsNow = false;
         this.reload = 0;
@@ -1333,33 +1597,34 @@ class Weapon {
 
         this.bullets = new Bullet();
 
-        this.sizeW = weapon.w | INVENTORY_THING_SIZE;
-        this.sizeH = weapon.h | INVENTORY_THING_SIZE;
+        this.size = weapon.size;
     }
 
     update() {
+        push();
+        imageMode(CENTER);
         image(this.img,
             this.pos.x,
             this.pos.y,
-            this.sizeW,
-            this.sizeH,
+            this.size.w,
+            this.size.h,
             this.imagePos.x, 
             this.imagePos.y,
             INVENTORY_THING_SIZE,
-            INVENTORY_THING_SIZE);
+            INVENTORY_THING_SIZE
+        );
+        pop();
     }
     
     makeShot(player) {
-        if(this.bulletsHolder > 0 && this.canShoot && !this.reloadIsNow) {
-
+        if(this.bulletCurrentMagazine > 0 && this.canShoot && !this.reloadIsNow) {
             
-            
-            this.playGunShotSound(player.currentObjInHand.name);
+            this.playGunShotSound(player.currentWeaponInHand.name);
              //delay between shots
             this.canShoot = false;
             setTimeout(this.allowShoot.bind(this), this.timeBetweenShots);
 
-            this.bulletsHolder--;
+            this.bulletCurrentMagazine--;
             
 
             //player property
@@ -1381,11 +1646,12 @@ class Weapon {
                 v: 1800,            //bullet speed
                 bulletsLength: 10,  //bullet lenght
                 bulletsColor: BULLET_COLOR, //color
-                lifeTime: 30,
+                lifeTime: 35,
+                penetrationCapacity: player.currentWeaponInHand.damage / 2
             });
         }
-        if(this.bulletsHolder == 0 && this.bulletsCount > 0 &&  !this.reloadIsNow) {  //update bullets holder
-            this.initRecharge(player.currentObjInHand.name);
+        if(this.bulletCurrentMagazine <= 0 && this.bulletAmount > 0 && !this.reloadIsNow) {  //update bullets holder
+            this.initRecharge(player.currentWeaponInHand.name);
         }
     }
     
@@ -1398,19 +1664,19 @@ class Weapon {
         } 
     }
     recharge() {
-        if(this.bulletsCount > this.countBulletsInHolder) {
-            if(this.bulletsHolder) {
-                this.bulletsCount -= this.countBulletsInHolder - this.bulletsHolder;
-                this.bulletsHolder = this.countBulletsInHolder;
+        if(this.bulletAmount > this.bulletMagazineCapacity) {
+            if(this.bulletCurrentMagazine) {
+                this.bulletAmount -= this.bulletMagazineCapacity - this.bulletCurrentMagazine;
+                this.bulletCurrentMagazine = this.bulletMagazineCapacity;
             }
             else{
-                this.bulletsCount -= this.countBulletsInHolder;
-                this.bulletsHolder = this.countBulletsInHolder;
+                this.bulletAmount -= this.bulletMagazineCapacity;
+                this.bulletCurrentMagazine = this.bulletMagazineCapacity;
             }
         }
         else {
-            this.bulletsHolder = this.bulletsCount;
-            this.bulletsCount = 0;
+            this.bulletCurrentMagazine = this.bulletAmount;
+            this.bulletAmount = 0;
         }
         this.reloadIsNow = false;
         this.reload = 0;

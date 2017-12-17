@@ -1,0 +1,104 @@
+@font-face {
+    font-family: "DeadKansas";
+    src: url("../fonts/Dead_Kansas.ttf");
+}
+
+body,html {
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+html {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    cursor: url('../img/player/crosshair.cur'), crosshair;
+}
+.wrap {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.startMenu {
+    width: 100%;
+    height: 100%;
+    background: url('../img/startMenuBackground.png');
+    background-repeat: no-repeat;
+    /* background-size: 100%; */
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.menuField {
+    width: 500px;
+    height: 400px;
+    background: rgba(99, 95, 95,0.8);
+    display: flex;
+}
+.fieldMenu{
+    width: 500px;
+    height: 100px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 35px;
+    text-shadow: 1px 2px 20px black;
+    letter-spacing: 2px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fieldMenu:hover {
+    background: rgba(138, 133, 133,0.8);
+    cursor: pointer;
+}
+.fieldMenu:active {
+    background: rgba(90, 81, 81,0.8);
+    cursor: pointer;
+}
+
+.pauseMenu ,.gameOverMenu{
+    width: 500px;
+    height: 600px;
+    background: rgba(99, 95, 95,0.8);
+    display: none;
+}
+
+.pauseIndicator {
+    position: absolute;
+    width:30px;
+    height: 70px;
+    border-left: 15px solid white;
+    border-right: 15px solid white;
+    top: 20px;
+    right: 20px;
+    display: none;	
+}
+
+.titleGameOver {
+    width: 100%;
+    font-size: 60px;
+    color: rgb(255, 0, 0);
+    text-shadow: 1px 2px 20px rgb(0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gameScore {
+    widows: 100%;
+    height: 100px;
+}
+
+.gameName {
+    margin-bottom: 30%;
+    font-size: 60px;
+    color: #000000;
+    text-transform: uppercase;
+    font-family: "DeadKansas", Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
