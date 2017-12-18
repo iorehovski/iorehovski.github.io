@@ -1,37 +1,285 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Alone With Death</title>
-		<link href="./css/style.css" rel="stylesheet">
-	</head>
-	<body>
-		 
-			 <audio id="musicMainMenu" autoplay preload>
-			<source  src="./audio/Resident_Evil_movie_soundtrack_2008.mp3" type="audio/mp3">
-		</audio>
-		
+<html lang="en">
 
-		<div class="wrap">
-			<div class="startMenu">
-				<div class="gameName">Alone with Death</div>
-				<div class="fieldMenu startBtn">START</div>
-			</div>
-			<div class="pauseMenu">
-				<div class="fieldMenu resumeBtn">RESUME</div>
-			</div>
-			<div class="gameOverMenu">
-				<div class="titleGameOver">GAME OVER</div>
-				<div class="gameScore"></div>
-				<div class="fieldMenu restartBtn">TO MAIN MENU</div>
-			</div>
-			<div class="pauseIndicator"></div>
-		</div>
+  <head>
 
-		<script type="text/javascript" src="js/p5js/p5.min.js"></script>
-		<script type="text/javascript" src="js/p5js/p5.sound.min.js"></script>
-		<script type="text/javascript" src="js/jquery/jquery-3.2.1.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-		<script type="text/javascript" src="js/bundle.js"></script>
-		
-	</body>
+    <title>Alone With Death - Landing Page</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Cabin:700' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="css/grayscale.css" rel="stylesheet">
+
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#description">Description</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#guide">User Guide</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#developers">Developers</a>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Intro Header -->
+    <header class="masthead">
+      <div class="intro-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <h1 class="brand-heading">ALONE WITH DEATH</h1>
+              <div class="play-buttons">
+                  <a href="./game/indexGame.html" class="btn btn-default btn-lg">Play action mode</a>
+                  <a href="#" class="btn btn-default btn-lg">Play survival mode</a>
+              </div>
+              <a href="#description" class="btn btn-circle js-scroll-trigger">
+                <i class="fa fa-angle-double-down animated"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Description Section -->
+    <section id="description" class="content-section text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Description</h2>
+            <p>Alone with Death is a post apocalyptic zombie top-down view shooter.</p>
+            <h5>ACTION MODE</h5> 
+            <p>In action mode your purpose is to survive from 5 waves of zombies. With each wave zombies become stronger and faster than other one.
+                At start Player has only a pistol and some ammo. From time to time there will be generated more different guns and ammo.</p>    
+            <h5>SURVIVAL MODE</h5>
+            <p>(In development) Also called "relax mode", where you are given an open world with full free of action. Player has 4 stats – health, hunger, endurance and cold. The Purpose – take a pleasure in survival process.
+              You can explore the ruined world, kill zombies, eat, bask in the fire.
+            </p>
+            <h5 class="technologies">Used technologies</h5>
+            <div class="technologies-div">
+              <ul>
+                <li>Javascript</li>
+                <li>p5 library</li>
+                <li>Bootstrap (<a href="https://startbootstrap.com/template-overviews/grayscale/">Used template</a>)</li>
+                <li>Jquery</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Guide Section -->
+    <section id="guide" class="download-section content-section text-center">
+      <div class="container">
+        <div class="col-lg-10 mx-auto">
+          <h2>User guide</h2>
+          <h5>Weapon</h5>
+          <p>There are 4 types of gun. At start you have a piston. With time new gun will be generated on a map.</p>
+          <ul class="weapon-list">
+            <li>
+              <div class="item-unit">
+                <img src="img/pistol.png" alt="">
+                <p>pistol</p>
+              </div>
+            </li>
+            <li>
+              <div class="item-unit">
+                <img src="img/ak47.png" alt="">
+                <p>AK-47</p>
+              </div>
+            </li>
+            <li>
+              <div class="item-unit">
+                <img src="img/m4a1.png" alt="">
+                <p>M4A1</p>
+              </div>
+            </li>
+            <li>
+              <div class="item-unit">
+                <img src="img/awp.png" alt="">
+                <p>AWP</p>
+              </div>
+            </li>
+
+          </ul>
+          <h5>Items</h5>
+          <p>Occasionally ammo for weapon, aid kits and flak jacket will be generated on a map. Don't miss them.</p>
+          
+          <ul class="items-list">
+            <li>
+              <div class="item-unit">
+                <img src="img/item3.png" alt="">
+                <p>pistol</p>
+              </div>
+            </li>
+            <li>
+              <div class="item-unit">
+                <img src="img/item1.png" alt="">
+                <p>AK-47</p>
+              </div>
+            </li>
+            <li>
+              <div class="item-unit">
+                <img src="img/item4.png" alt="">
+                <p>M4A1</p>
+              </div>
+            </li>
+            <li>
+              <div class="item-unit">
+                <img src="img/item2.png" alt="">
+                <p>AWP</p>
+              </div>
+            </li>
+            <li>
+              <div class="item-unit">
+                <img src="img/item5.png" alt="">
+                <p>standart aid kit</p>
+              </div>
+            </li>
+            <li>
+              <div class="item-unit">
+                <img src="img/item6.png" alt="">
+                <p>extended aid kit</p>
+              </div>
+            </li>
+            <li>
+              <div class="item-unit">
+                <img src="img/item7.png" alt="">
+                <p>flak jacket</p>
+              </div>
+            </li>
+            <li>
+          </ul>
+          <h5>Controls</h5>
+          <ul class="controls">
+            <li>
+              <img src="img/numbers.png" alt="" width="325" height="60">
+              <p>Use these ones to switch between inventory cells</p>
+            </li>
+            <li>
+              <img src="img/space_mouse.png" alt="" width="340" height="210">
+              <p>Use left mouse click or space to make shot</p>
+            </li>
+            <li>
+              <img src="img/wasd.png" alt="" width="200" height="124">
+              <p>Use these ones to move a player</p>
+            </li>
+            <li>
+              <img src="img/r.png" alt="" width="60 " height="60">
+              <p>R for reload a gun</p>
+            </li>
+            <li>
+              <img src="img/shift.png" alt="" width="142" height="60">
+              <p>Use shift to run away from zombies</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Developers Section -->
+    <section id="developers" class="content-section text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Developers</h2>
+            <p>Those who created this game</p>
+            <div class="dev-area">
+              <div class="team-member">
+                <img class="rounded-circle" src="img/denis-avatar.jpg" alt="" width="215" height="215">
+                <h5>Denis Papchenko</h5>
+                <p>RS School student</p>
+                <ul class="list-inline social-buttons">
+                  <li class="list-inline-item">
+                    <a href="https://github.com/Interstlr">
+                      <i class="fa fa-github fa-2x"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="https://vk.com/interstlr">
+                      <i class="fa fa-vk fa-2x"></i>
+                   </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="https://t.me/intersteller">
+                      <i class="fa fa-telegram fa-2x"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="team-member">
+                <img class="rounded-circle" src="img/ilia-avatar.jpg" alt="" width="215" height="215">
+                <h5>Ilia Orehovksy</h5>
+                <p>RS School student</p>
+                <ul class="list-inline social-buttons">
+                  <li class="list-inline-item">
+                    <a href="https://github.com/iorehovski">
+                      <i class="fa fa-github fa-2x"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="https://vk.com/me_rich">
+                      <i class="fa fa-vk fa-2x"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="https://t.me/iorehovski">
+                      <i class="fa fa-telegram fa-2x"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container text-center">
+        <p>dev#1: d.papchenko@gmail.com | dev#2 iorehovski@gmail.com, 2017</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/grayscale.min.js"></script>
+
+  </body>
+
 </html>
