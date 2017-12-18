@@ -719,7 +719,7 @@ $(this).keydown(function(e){
 });
 
 $('.landingBtn').click(function(){
-    $(location).attr('href','../index.html');
+    $(location).attr('href','/');
 });
 
 $("html,body").on("contextmenu", false);
@@ -1223,8 +1223,8 @@ class Player {
 
 		this.queueBullets = null;
 
-		this.playerSpeed = 7;
-		this.boostedPlayerSpeed = this.playerSpeed * 3;
+		this.playerSpeed = 5;
+		this.boostedPlayerSpeed = this.playerSpeed * 1.6;
 
 		this.barsX = 10;
 		this.barsY = 200;
@@ -1392,7 +1392,7 @@ class Player {
 				this.blockRunning = true;
 			}
 		} else {
-			this.playerSpeed = this.boostedPlayerSpeed / 3;
+			this.playerSpeed = this.boostedPlayerSpeed / 1.6;
 		}
 	}
 
