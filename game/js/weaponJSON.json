@@ -8,7 +8,7 @@
             "damage": 40,
             "bulletAmount": 34,
             "bulletMagazineCapacity": 17,
-            "timeBetweenShots": 800,
+            "timeBetweenShots": 300,
             "pos": {
                 "x": null, 
                 "y": null
@@ -31,7 +31,7 @@
             "damage": 120,
             "bulletAmount": 60,
             "bulletMagazineCapacity": 30,
-            "timeBetweenShots": 140,
+            "timeBetweenShots": 120,
             "pos": {
                 "x": null, 
                 "y": null
@@ -54,7 +54,7 @@
             "damage": 100,
             "bulletAmount": 40,
             "bulletMagazineCapacity": 20,
-            "timeBetweenShots": 140,
+            "timeBetweenShots": 120,
             "pos": {
                 "x": null, 
                 "y": null
