@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111365909-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-111365909-1');
-    </script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -45,6 +38,9 @@
               <a class="nav-link js-scroll-trigger" href="#description">Description</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#screenshots">Screenshots</a>
+              </li>
+            <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#guide">User Guide</a>
             </li>
             <li class="nav-item">
@@ -63,8 +59,8 @@
             <div class="col-lg-8 mx-auto">
               <h1 class="brand-heading">ALONE WITH DEATH</h1>
               <div class="play-buttons">
-                  <a href="./game/indexGame.html" class="btn btn-default btn-lg">Play action mode</a>
-                  <a href="#" class="btn btn-default btn-lg">Play survival mode</a>
+                  <a href="./game/indexArcadeMode.html" class="btn btn-default btn-lg">Play action mode</a>
+                  <a href="./game/survivalMode.html" class="btn btn-default btn-lg">Play survival mode</a>
               </div>
               <a href="#description" class="btn btn-circle js-scroll-trigger">
                 <i class="fa fa-angle-double-down animated"></i>
@@ -97,6 +93,20 @@
                 <li>Bootstrap (<a href="https://startbootstrap.com/template-overviews/grayscale/">Used template</a>)</li>
                 <li>Jquery</li>
               </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="screenshots" class="content-section text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-10 mx-auto">
+            <h2>Screenshots</h2>
+            <div class="screens">
+              <img class="screenshot" src="img/screen1.jpg" alt="" width="400" height="260">
+              <img class="screenshot" src="img/screen2.jpg" alt="" width="400" height="260">
             </div>
           </div>
         </div>
@@ -138,7 +148,7 @@
 
           </ul>
           <h5>Items</h5>
-          <p>Occasionally ammo for weapon, aid kits and flak jacket will be generated on a map. Don't miss them.</p>
+          <p>Occasionally ammo for weapon, aid kits and flak jacket will be generated on a map. Don't miss them. To activate aid kit just switch to its inventory cell.</p>
           
           <ul class="items-list">
             <li>
@@ -177,13 +187,6 @@
                 <p>extended aid kit</p>
               </div>
             </li>
-            <li>
-              <div class="item-unit">
-                <img src="img/item7.png" alt="">
-                <p>flak jacket</p>
-              </div>
-            </li>
-            <li>
           </ul>
           <h5>Controls</h5>
           <ul class="controls">
@@ -202,6 +205,14 @@
             <li>
               <img src="img/r.png" alt="" width="60 " height="60">
               <p>R for reload a gun</p>
+            </li>
+            <li>
+              <img src="img/t.png" alt="" width="60 " height="60">
+              <p>Use T to open your backpack</p>
+            </li>
+            <li>
+              <img src="img/m.png" alt="" width="60 " height="60">
+              <p>M to open a minimap </p>
             </li>
             <li>
               <img src="img/shift.png" alt="" width="142" height="60">
