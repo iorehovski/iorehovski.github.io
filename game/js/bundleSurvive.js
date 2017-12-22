@@ -2203,7 +2203,7 @@ class Player {
 		//shift(boosted movement)
 		if(keyIsDown(16) && !this.blockRunning){
 			if(this.enduranceBar.w > 10) {
-				this.enduranceBar.w -= 0;
+				this.enduranceBar.w -= 0.5;
 				this.playerSpeed = this.playerspeedBoosted;
 			} else {
 				this.blockRunning = true;
