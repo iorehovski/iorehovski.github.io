@@ -1,3 +1,3 @@
-post-apocalyptic game
-developer #1(Denis Papchenko): https://github.com/Interstlr/alone-with-death
-game: https://iorehovski.github.io/
+post-apocalyptic game: https://iorehovski.github.io/ | 
+developer#1: https://github.com/Interstlr | 
+developer#2: https://github.com/iorehovski
