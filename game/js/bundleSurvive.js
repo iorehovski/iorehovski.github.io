@@ -996,7 +996,7 @@ class Generation {
         this.chanceItems = 4; //larger value lower chance
         this.chanceWeapon = 15;
         this.generalChance = 20;
-        this.chanceZombie = 30;
+        this.chanceZombie = 60;
         this.generItemsTryNumber = 10; 
         this.generWeaponTryNumber = 2;
 
@@ -2932,7 +2932,7 @@ function draw() {
     itemsGenerator.generateItems();
     itemsGenerator.updateItems();
 
-    //itemsGenerator.generateEnemy();
+    itemsGenerator.generateEnemy();
     itemsGenerator.updateEnemiesSurvivalMode(map, player);
 
     printTechData( {
