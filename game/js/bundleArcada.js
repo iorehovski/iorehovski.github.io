@@ -938,7 +938,7 @@ function checkCollisionEnemies(enemies) {
                     enemies[i].pos.x,
                     enemies[i].pos.y,
                     enemies[j].pos.x,
-                    enemies[j].pos.y,
+                    enemies[j].pos.y
                 );
 
                 if(d < 100) {
