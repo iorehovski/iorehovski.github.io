@@ -1051,7 +1051,7 @@ class Generation {
     }
 
     generateWeaponAmount(number) {
-        let number = randInt(0, this.generWeaponTryNumber);
+        number = randInt(0, this.generWeaponTryNumber);
         for(let i = 0, len = number; i < len; i++) {
             if(randInt(0, this.chanceWeapon) == 0) {
                 let randItemID = randInt(0, 3);
